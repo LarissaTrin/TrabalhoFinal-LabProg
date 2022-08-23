@@ -36,7 +36,7 @@ void criaTtabuleiro() {
         {
             printf(" %c",tabuleiro1[i][j]);
         }
-        printf("*\n");
+        printf("*\n"); 
     }
     printf("* *     * *\n");
     

@@ -52,6 +52,42 @@ void movimento()
 {
 }
 
+char checarTipoPeca(char letra) //Funcional - tabuleiro2
+{
+    for (int i = 0; i < 5; i++)
+    {
+        for (int j = 0; j < 6; j++)
+        {
+            if (tabuleiro2[i][j] == letra) {
+                // avalia repetição de letras horizontais
+                // tipo 1 / tipo 2 / tipo 3
+                if (tabuleiro2[i][j + 1]  == letra)
+                {
+                    // verifica se possui pelo menos 1 letra abaixo
+                    if(tabuleiro2[i + 1][j]  == letra) {
+                        // verifica se é a donzela
+                        if (tabuleiro2[i + 1][j + 1]  == letra)
+                        {
+                           return 'D';
+                        }
+                        return 'B';                        
+                    }
+                    return 'S';
+                } else if (tabuleiro2[i + 1][j]  == letra) // avalia repetição de letras verticais sem a primeira linha horizontal
+                {
+                    if (j != 0 && tabuleiro2[i + 1][j - 1]  == letra)
+                    {
+                        return 'C';
+                    }
+                    
+                    return 'P';
+                } else return 'Q'; // avalia se é peça única                
+            }
+        }
+    }
+}
+
+
 int main()
 {
     printf("%s", "Configuracao 1 \n\n");

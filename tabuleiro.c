@@ -126,7 +126,82 @@ void moverDireita(char tipo, char letra) // Funcional para tabuleiro 2
             }
         }
     }
-    criaTabuleiroDois();
+}
+
+void moverTopo(char tipo, char letra) // Funcional para tabuleiro 2
+{
+    for (int i = 0; i < 5; i++)
+    {
+        for (int j = 0; j < 6; j++)
+        {
+            if (tabuleiro2[i][j] == letra)
+            {
+                if (i > 0 && tipo == 'D' && tabuleiro2[i - 1][j] == ' ' && tabuleiro2[i - 1][j + 1] == ' ')
+                {
+                    tabuleiro2[i - 1][j] = letra;
+                    tabuleiro2[i - 1][j + 1] = letra;
+                    tabuleiro2[i + 1][j] = ' ';
+                    tabuleiro2[i + 1][j + 1] = ' ';
+                    return;
+                } else if (tipo == 'D') {
+                    printf("\n Donzela - Nao e possivel mover peca\n");
+                    return;
+                }
+                
+                if (i > 0 && tipo == 'B' && tabuleiro2[i - 1][j] == ' ' && tabuleiro2[i - 1][j + 1] == ' ')
+                {
+                    tabuleiro2[i - 1][j] = letra;
+                    tabuleiro2[i - 1][j + 1] = letra;
+                    tabuleiro2[i][j + 1] = ' ';
+                    tabuleiro2[i + 1][j] = ' ';
+                    return;
+                } else if (tipo == 'B') {
+                    printf("\nNao e possivel mover peca\n");
+                    return;
+                }
+                if (i > 0 && tipo == 'P' && tabuleiro2[i - 1][j] == ' ')
+                {
+                    tabuleiro2[i - 1][j] = letra;
+                    tabuleiro2[i + 1][j] = ' ';
+                    return;
+                } else if (tipo == 'P') {
+                    printf("\nNao e possivel mover peca\n");
+                    return;
+                }
+                if (i > 0 && tipo == 'Q' && tabuleiro2[i - 1][j] == ' ')
+                {
+                    tabuleiro2[i - 1][j] = letra;
+                    tabuleiro2[i][j] = ' ';
+                    return;
+                } else if (tipo == 'Q') {
+                    printf("\nNao e possivel mover peca\n");
+                    return;
+                }
+                if (i > 0 && tipo == 'S' && tabuleiro2[i - 1][j] == ' ' && tabuleiro2[i - 1][j + 1] == ' ')
+                {
+                    tabuleiro2[i - 1][j] = letra;
+                    tabuleiro2[i - 1][j + 1] = letra;
+                    tabuleiro2[i][j] = ' ';
+                    tabuleiro2[i][j + 1] = ' ';
+                    return;
+                } else if (tipo == 'S') {
+                    printf("\nNao e possivel mover peca\n");
+                    return;
+                }
+                if (tipo = 'C' && tabuleiro2[i - 1][j] == ' ' && tabuleiro2[i][j - 1] == ' ')
+                {
+                    tabuleiro2[i - 1][j] = letra;
+                    tabuleiro2[i][j - 1] = letra;
+                    tabuleiro2[i + 1][j] = ' ';
+                    tabuleiro2[i + 1][j - 1] = ' ';
+                    return;
+                } else {
+                    printf("\nNao e possivel mover peca\n");
+                    return;
+                }
+            }
+        }
+    }
 }
 
 char checarTipoPeca(char letra) //Funcional - tabuleiro2
@@ -167,12 +242,12 @@ char checarTipoPeca(char letra) //Funcional - tabuleiro2
 
 int main()
 {
-    char letra = 'k';
+    char letra = 'D';
     printf("%s", "Configuracao 2 \n\n");
     criaTabuleiroDois();
     char tipo = checarTipoPeca(letra);
     printf("\npeca movida - tipo: %c\n", tipo);
-    moverDireita(tipo, letra);
+    moverTopo(tipo, letra);
     criaTabuleiroDois();
 
     return 0;

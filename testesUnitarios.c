@@ -126,6 +126,7 @@ void moverDireita(char letra)
 
     criaTabuleiroDois();
 }
+
 // D - tipo donzela - D
 // L cabeça para baixo - tipo barraca - B
 // i em pé - tipo poste - P

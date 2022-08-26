@@ -279,6 +279,12 @@ void help(void) {
 int main(int argc, char* argv[]){
     banner();
 
+    int configTabuleiro = 1;
+    int usuarioMovePecaTerminal = 0;
+    int x = 0;
+    int y = 0;
+    char direcao = 0;
+
     if (argc == 1){
         criaTabuleiroUm();
         return 0;
@@ -300,11 +306,13 @@ int main(int argc, char* argv[]){
         char* argumento = argv[1];
 
         if (argumento[0] == '-' && argumento[1] == 'c'){
-            if (argumento[2] == '1'){
+
+            if (argumento[2] == '1' || argumento[2] == '\0'){
                 criaTabuleiroUm();
                 return 0;
 
             } else if (argumento[2] == '2'){
+                configTabuleiro = 2;
                 criaTabuleiroDois();
                 return 0;
 
@@ -325,15 +333,18 @@ int main(int argc, char* argv[]){
         }
 
     if (argc == 5 || argc == 6){
-        int configTabuleiro = 1;
-        for (int i = 1; i <= 2; i++){
-            char* argumento = argv[1];
 
-            if (argumento[0] == '-' && argumento[1] == 'c'){
-                if (argumento[2] == '1'){
+        for (int i = 1; i <= 2; i++){
+            char* argumento = argv[i];
+
+            if (argumento[0] == '-' && argumento[1] == 'c') {
+
+                if (argumento[2] == '1' || argumento[2] == '\0'){
                     configTabuleiro = 1;
 
-                } else if (argumento[2] == '2'){
+                } else
+
+                if (argumento[2] == '2'){
                     configTabuleiro = 2;
 
                 } else {
@@ -344,30 +355,48 @@ int main(int argc, char* argv[]){
             } else 
 
             if (argumento[0] == '-' && argumento[1] == 'm'){
-                // char direcao = argv[i+3][0];
+                direcao = argv[i+3][0];
 
-                // if (direcao != 'D' && direcao != 'E' && direcao != 'T' && direcao != 'B'){
-                //     printf("[!] Erro: Direção inválida\n\n");
-                //     help();
-                //     return 1;
-
-                // } 
-                
-                // char x_ = argv[i+1][0];
-                // char y_ = argv[i+2][0];
-
-                // int x = x_ - '0';
-                // int y = y_ - '0';
-                // printf("%d %d", x, y);
-
-                
-                } else {
-                    printf("[!] Erro: Argumentos inválidos\n\n");
+                if (direcao != 'D' && direcao != 'E' && direcao != 'T' && direcao != 'B'){
+                    printf("[!] Erro: Direção inválida\n\n");
                     help();
                     return 1;
+                } 
+                
+                char x_ = argv[i+1][0];
+                char y_ = argv[i+2][0];
+
+                x = x_ - '0';
+                y = y_ - '0';
+
+                if (configTabuleiro == 1){
+                    if (x >=1 && x <= 5 && y >= 1 && y <= 4){
+                        usuarioMovePecaTerminal = 1;
+                    } else {
+                        printf("[!] Erro1: Coordenadas inválidas\n\n");
+                        help();
+                        return 1;
+                    } 
+                }
+                
+                if (configTabuleiro == 2){
+                    if (x >= 1 && x <= 5 && y >= 1 && y <= 6) {
+                    usuarioMovePecaTerminal = 1;
+                    } else {
+                        printf("[!] Erro2: Coordenadas inválidas\n\n");
+                        help();
+                        return 1;
+                    }
                 }
             }
+        }
 
+    printf("Testes linha de comando\n");
+    printf("Tabuleiro escolhido: %d\n", configTabuleiro);
+    if (usuarioMovePecaTerminal == 1){
+        printf("Coordenadas escolhidas: %d, %d\n", x,y);
+        printf("Direção escolhida: %c\n", direcao);
+    }
 
 
     
@@ -383,4 +412,3 @@ int main(int argc, char* argv[]){
     return 0;
 }
 }
-

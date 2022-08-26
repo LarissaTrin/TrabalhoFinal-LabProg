@@ -112,7 +112,7 @@ void moverDireita(char tipo, char letra) // Funcional para tabuleiro 2
                     printf("\nNao e possivel mover peca\n");
                     return;
                 }
-                if (tipo = 'C' && tabuleiro2[i][j + 1] == ' ' && tabuleiro2[i + 1][j + 1] == ' ')
+                if (tipo == 'C' && tabuleiro2[i][j + 1] == ' ' && tabuleiro2[i + 1][j + 1] == ' ')
                 {
                     tabuleiro2[i][j + 1] = letra;
                     tabuleiro2[i + 1][j + 1] = letra;
@@ -188,7 +188,7 @@ void moverTopo(char tipo, char letra) // Funcional para tabuleiro 2
                     printf("\nNao e possivel mover peca\n");
                     return;
                 }
-                if (tipo = 'C' && tabuleiro2[i - 1][j] == ' ' && tabuleiro2[i][j - 1] == ' ')
+                if (tipo == 'C' && tabuleiro2[i - 1][j] == ' ' && tabuleiro2[i][j - 1] == ' ')
                 {
                     tabuleiro2[i - 1][j] = letra;
                     tabuleiro2[i][j - 1] = letra;
@@ -240,15 +240,147 @@ char checarTipoPeca(char letra) //Funcional - tabuleiro2
 }
 
 
-int main()
-{
-    char letra = 'D';
-    printf("%s", "Configuracao 2 \n\n");
-    criaTabuleiroDois();
-    char tipo = checarTipoPeca(letra);
-    printf("\npeca movida - tipo: %c\n", tipo);
-    moverTopo(tipo, letra);
-    criaTabuleiroDois();
+void banner(void) {
+
+  printf("\n");
+  printf("-----------------\n");
+  printf("HAIKORI    \n");
+  printf("Por Larissa, Mirian e Yuri\n");
+  printf("-----------------\n");
+  printf("\n");
+
+}
+
+void help(void) {
+
+  printf("Modo de uso: ./tabuleiro [opções]\n");
+
+  printf("\n========================= NOTAS =========================\n");
+  printf("FASE 1 - Linha de comando e movimento de peças\n");
+
+
+  printf("\n======================== OPÇÕES ========================\n");
+  printf(" -c<config_tabuleiro> : Especifica qual tabuleiro o jogo deve utilizar.\n");
+  printf("                        Configurações: 1 - Menor [default] | 2 - Maior\n");
+  printf(" -m <x> <y> <direcao> : Movimenta a peça que está nas coordenadas (x,y) para a direção d.\n");
+  printf("                        Direções: D - Direita | E - Esquerda | B - Baixo | T - Topo\n");
+    
+  printf("\n======================== EXEMPLOS =======================\n");
+  printf(" ./tabuleiro\n");
+  printf(" ./tabuleiro -c1\n");
+  printf(" ./tabuleiro -c2\n");
+  printf(" ./tabuleiro -c2 -m 1 1 D\n");
+  printf(" ./tabuleiro -c2 -m 2 2 B\n");
+  printf(" ./tabuleiro -m 2 2 T\n");
+
+
+}
+
+int main(int argc, char* argv[]){
+    banner();
+
+    if (argc == 1){
+        criaTabuleiroUm();
+        return 0;
+    }
+
+    if (argc > 2 && argc < 5){
+        printf("[!] Erro nos argumentos\n\n");
+        help();
+        return 1;
+    }
+
+    if (argc > 6){
+        printf("[!] Erro: Ultrapassou limite de argumentos\n\n");
+        help();
+        return 1;
+    }
+
+    if (argc == 2){
+        char* argumento = argv[1];
+
+        if (argumento[0] == '-' && argumento[1] == 'c'){
+            if (argumento[2] == '1'){
+                criaTabuleiroUm();
+                return 0;
+
+            } else if (argumento[2] == '2'){
+                criaTabuleiroDois();
+                return 0;
+
+            } else {
+                printf("[!] Erro: Configuração de tabuleiro inválida\n\n");
+                help();
+                return 1;
+            }
+        } else if (argumento[0] == '-' && argumento[1] == 'm'){
+            printf("[!] Erro: Opção -m exige coordenadas e direção\n\n");
+            help();
+            return 1;
+            } else {
+                printf("[!] Erro: Argumento inválido\n\n");
+                help();
+                return 1;
+            }
+        }
+
+    if (argc == 5 || argc == 6){
+        int configTabuleiro = 1;
+        for (int i = 1; i <= 2; i++){
+            char* argumento = argv[1];
+
+            if (argumento[0] == '-' && argumento[1] == 'c'){
+                if (argumento[2] == '1'){
+                    configTabuleiro = 1;
+
+                } else if (argumento[2] == '2'){
+                    configTabuleiro = 2;
+
+                } else {
+                    printf("[!] Erro: Configuração de tabuleiro inválida\n\n");
+                    help();
+                    return 1;
+                }
+            } else 
+
+            if (argumento[0] == '-' && argumento[1] == 'm'){
+                // char direcao = argv[i+3][0];
+
+                // if (direcao != 'D' && direcao != 'E' && direcao != 'T' && direcao != 'B'){
+                //     printf("[!] Erro: Direção inválida\n\n");
+                //     help();
+                //     return 1;
+
+                // } 
+                
+                // char x_ = argv[i+1][0];
+                // char y_ = argv[i+2][0];
+
+                // int x = x_ - '0';
+                // int y = y_ - '0';
+                // printf("%d %d", x, y);
+
+                
+                } else {
+                    printf("[!] Erro: Argumentos inválidos\n\n");
+                    help();
+                    return 1;
+                }
+            }
+
+
+
+    
+
+    // char letra = 'D';
+    // printf("%s", "Configuracao 2 \n\n");
+    // criaTabuleiroDois();
+    // char tipo = checarTipoPeca(letra);
+    // printf("\npeca movida - tipo: %c\n", tipo);
+    // moverTopo(tipo, letra);
+    // criaTabuleiroDois();
 
     return 0;
 }
+}
+

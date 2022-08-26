@@ -204,6 +204,10 @@ void moverTopo(char tipo, char letra) // Funcional para tabuleiro 2
     }
 }
 
+char encontraLetra(int x, int y){
+    return 'z';
+}
+
 char checarTipoPeca(char letra) //Funcional - tabuleiro2
 {
     for (int i = 0; i < 5; i++)
@@ -395,19 +399,27 @@ int main(int argc, char* argv[]){
     printf("Tabuleiro escolhido: %d\n", configTabuleiro);
     if (usuarioMovePecaTerminal == 1){
         printf("Coordenadas escolhidas: %d, %d\n", x,y);
-        printf("Direção escolhida: %c\n", direcao);
+        printf("Direção escolhida: %c\n\n", direcao);
     }
 
+    /* TO DO:
 
-    
+    - Função para encontrar letra a movimentar a partir das coordenadas passadas pela linha de comando
+    - Montar as chamadas corretas para as funções a partir das informações coletadas na linha de comando
 
-    // char letra = 'D';
-    // printf("%s", "Configuracao 2 \n\n");
-    // criaTabuleiroDois();
-    // char tipo = checarTipoPeca(letra);
-    // printf("\npeca movida - tipo: %c\n", tipo);
-    // moverTopo(tipo, letra);
-    // criaTabuleiroDois();
+        letra = encontraLetra(x,y);
+        criaTabuleiroGenerico(configTabuleiro);
+        moverDirecao(direcao);
+
+    */
+
+    char letra = 'D';
+    printf("%s", "Configuracao 2 \n\n");
+    criaTabuleiroDois();
+    char tipo = checarTipoPeca(letra);
+    printf("\npeca movida - tipo: %c\n", tipo);
+    moverTopo(tipo, letra);
+    criaTabuleiroDois();
 
     return 0;
 }

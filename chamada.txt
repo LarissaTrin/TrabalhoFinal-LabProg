@@ -1,4 +1,4 @@
-gcc tabuleiro.c -o t | ./t
+gcc -Wall tabuleiro.c -o t && ./t
 
 
 CASO DE EMERGENCIA

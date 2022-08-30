@@ -1,119 +1,118 @@
 #include <stdio.h>
 
-static char tabuleiro1[5][4] = {
-    {'a', 'D', 'D', 'b'},
-    {'a', 'D', 'D', 'b'},
-    {'c', 'd', 'd', 'e'},
-    {'c', 'g', 'h', 'e'},
-    {'f', ' ', ' ', 'i'}};
+#define TAM_MAX_COL 7
 
-static char tabuleiro2[5][6] = {
-    {'D', 'D', ' ', 'a', 'a', 'b'},
-    {'D', 'D', ' ', 'a', 'c', 'd'},
-    {'e', 'e', 'f', 'g', 'd', 'd'},
-    {'h', 'h', 'i', 'j', 'k', 'l'},
-    {'h', 'i', 'i', 'm', 'k', 'l'}};
+static char tabuleiro1[5][TAM_MAX_COL] = {
+    {'a', 'D', 'D', 'b', '\0', '\0', '\0'},
+    {'a', 'D', 'D', 'b', '\0', '\0', '\0'},
+    {'c', 'd', 'd', 'e', '\0', '\0', '\0'},
+    {'c', 'g', 'h', 'e', '\0', '\0', '\0'},
+    {'f', ' ', ' ', 'i', '\0', '\0', '\0'}};
+    
+static char tabuleiro2[5][TAM_MAX_COL] = {
+    {'D', 'D', ' ', 'a', 'a', 'b', '\0'},
+    {'D', 'D', ' ', 'a', 'c', 'd', '\0'},
+    {'e', 'e', 'f', 'g', 'd', 'd', '\0'},
+    {'h', 'h', 'i', 'j', 'k', 'l', '\0'},
+    {'h', 'i', 'i', 'm', 'k', 'l', '\0'}};
 
-char jogo[5][6];
+char tabuleiroJogo[5][TAM_MAX_COL];
 
-void criaTabuleiroUm()
+void printarTabuleiro(int num)
 {
-    printf("* * * * * *\n");
-    for (int i = 0; i < 5; i++)
-    {
-        printf("*");
-        for (int j = 0; j < 4; j++)
-        {
-            printf(" %c", tabuleiro1[i][j]);
-        }
-        printf(" *\n");
-    }
-    printf("* *     * *\n");
-}
-
-void criaTabuleiroDois()
-{
+    num == 1 ? printf("* * * * * *\n") : printf("* * * * * * * *\n");
+    
     int cont = 0;
-    printf("* * * * * * * *\n");
     for (int i = 0; i < 5; i++)
     {
         printf("*");
-        for (int j = 0; j < 6; j++)
+        for (int j = 0; j < TAM_MAX_COL; j++)
         {
-            printf(" %c", tabuleiro2[i][j]);
+          if(tabuleiroJogo[i][j] == '\0') continue;
+          printf(" %c", tabuleiroJogo[i][j]);
         }
-        cont == 3 || cont == 4 ? printf("\n") : printf(" *\n");
+        (num == 2 && (cont == 3 || cont == 4)) ? printf("\n") : printf(" *\n");
         cont++;
     }
-    printf("* * * * * * * *\n");
+    num == 1 ? printf("* *     * *\n") : printf("* * * * * * * *\n");
 }
 
-void moverDireita(char tipo, char letra) // Funcional para tabuleiro 2
+void copiarMatriz(char matriz[5][TAM_MAX_COL]){  
+    for (int i = 0; i < 5; i++)
+    {
+        for (int j = 0; j < TAM_MAX_COL; j++)
+        {
+            tabuleiroJogo[i][j] = matriz[i][j];
+        }
+    } 
+}
+
+void moverDireita(char tipo, char letra)
 {
     for (int i = 0; i < 5; i++)
     {
         for (int j = 0; j < 6; j++)
         {
-            if (tabuleiro2[i][j] == letra)
+            if (tabuleiroJogo[i][j] == letra)
             {
-                if (tipo == 'D' && tabuleiro2[i][j + 2] == ' ' && tabuleiro2[i + 1][j + 2] == ' ')
+                if (tipo == 'D' && tabuleiroJogo[i][j + 2] == ' ' && tabuleiroJogo[i + 1][j + 2] == ' ')
                 {
-                    tabuleiro2[i][j + 2] = letra;
-                    tabuleiro2[i + 1][j + 2] = letra;
-                    tabuleiro2[i][j] = ' ';
-                    tabuleiro2[i + 1][j] = ' ';
+                    tabuleiroJogo[i][j + 2] = letra;
+                    tabuleiroJogo[i + 1][j + 2] = letra;
+                    tabuleiroJogo[i][j] = ' ';
+                    tabuleiroJogo[i + 1][j] = ' ';
                     return;
                 } else if (tipo == 'D') {
-                    printf("\n Donzela - Nao e possivel mover peca\n");
+                    printf("\nNao e possivel mover peca\n");
                     return;
                 }
                 
-                if (tipo == 'B' && tabuleiro2[i][j + 2] == ' ' && tabuleiro2[i + 1][j + 1] == ' ')
+                if (tipo == 'B' && tabuleiroJogo[i][j + 2] == ' ' && tabuleiroJogo[i + 1][j + 1] == ' ')
                 {
-                    tabuleiro2[i][j + 2] = letra;
-                    tabuleiro2[i + 1][j + 1] = letra;
-                    tabuleiro2[i][j] = ' ';
-                    tabuleiro2[i + 1][j] = ' ';
+                    tabuleiroJogo[i][j + 2] = letra;
+                    tabuleiroJogo[i + 1][j + 1] = letra;
+                    tabuleiroJogo[i][j] = ' ';
+                    tabuleiroJogo[i + 1][j] = ' ';
                     return;
                 } else if (tipo == 'B') {
                     printf("\nNao e possivel mover peca\n");
                     return;
                 }
-                if (tipo == 'P' && tabuleiro2[i][j + 1] == ' ' && tabuleiro2[i + 1][j + 1] == ' ')
+                if (tipo == 'P' && tabuleiroJogo[i][j + 1] == ' ' && tabuleiroJogo[i + 1][j + 1] == ' ')
                 {
-                    tabuleiro2[i][j + 1] = letra;
-                    tabuleiro2[i + 1][j + 1] = letra;
-                    tabuleiro2[i][j] = ' ';
-                    tabuleiro2[i + 1][j] = ' ';
+                    tabuleiroJogo[i][j + 1] = letra;
+                    tabuleiroJogo[i + 1][j + 1] = letra;
+                    tabuleiroJogo[i][j] = ' ';
+                    tabuleiroJogo[i + 1][j] = ' ';
                     return;
                 } else if (tipo == 'P') {
                     printf("\nNao e possivel mover peca\n");
                     return;
                 }
-                if (tipo == 'Q' && tabuleiro2[i][j + 1] == ' ')
+                if (tipo == 'Q' && tabuleiroJogo[i][j + 1] == ' ')
                 {
-                    tabuleiro2[i][j + 1] = letra;
-                    tabuleiro2[i][j] = ' ';
+                    tabuleiroJogo[i][j + 1] = letra;
+                    tabuleiroJogo[i][j] = ' ';
                     return;
                 } else if (tipo == 'Q') {
                     printf("\nNao e possivel mover peca\n");
                     return;
                 }
-                if (tipo == 'S' && tabuleiro2[i][j + 2] == ' ')
+                if (tipo == 'S' && tabuleiroJogo[i][j + 2] == ' ')
                 {
-                    tabuleiro2[i][j + 2] = letra;
-                    tabuleiro2[i][j] = ' ';
+                    tabuleiroJogo[i][j + 2] = letra;
+                    tabuleiroJogo[i][j] = ' ';
                     return;
                 } else if (tipo == 'S') {
                     printf("\nNao e possivel mover peca\n");
                     return;
                 }
-                if (tipo == 'C' && tabuleiro2[i][j + 1] == ' ' && tabuleiro2[i + 1][j + 1] == ' ')
+                if (tipo == 'C' && tabuleiroJogo[i][j + 1] == ' ' && tabuleiroJogo[i + 1][j + 1] == ' ')
                 {
-                    tabuleiro2[i][j + 1] = letra;
-                    tabuleiro2[i + 1][j + 1] = letra;
-                    tabuleiro2[i][j] = ' ';
-                    tabuleiro2[i + 1][j - 1] = ' ';
+                    tabuleiroJogo[i][j + 1] = letra;
+                    tabuleiroJogo[i + 1][j + 1] = letra;
+                    tabuleiroJogo[i][j] = ' ';
+                    tabuleiroJogo[i + 1][j - 1] = ' ';
                     return;
                 } else {
                     printf("\nNao e possivel mover peca\n");
@@ -124,72 +123,72 @@ void moverDireita(char tipo, char letra) // Funcional para tabuleiro 2
     }
 }
 
-void moverEsquerda(char tipo, char letra) // Funcional para tabuleiro 2
+void moverEsquerda(char tipo, char letra)
 {
     for (int i = 0; i < 5; i++)
     {
         for (int j = 0; j < 6; j++)
         {
-            if (tabuleiro2[i][j] == letra)
+            if (tabuleiroJogo[i][j] == letra)
             {
-                if (j > 0 && tipo == 'D' && tabuleiro2[i][j - 1] == ' ' && tabuleiro2[i + 1][j - 1] == ' ')
+                if (j > 0 && tipo == 'D' && tabuleiroJogo[i][j - 1] == ' ' && tabuleiroJogo[i + 1][j - 1] == ' ')
                 {
-                    tabuleiro2[i][j - 1] = letra;
-                    tabuleiro2[i + 1][j - 1] = letra;
-                    tabuleiro2[i][j + 1] = ' ';
-                    tabuleiro2[i + 1][j + 1] = ' ';
+                    tabuleiroJogo[i][j - 1] = letra;
+                    tabuleiroJogo[i + 1][j - 1] = letra;
+                    tabuleiroJogo[i][j + 1] = ' ';
+                    tabuleiroJogo[i + 1][j + 1] = ' ';
                     return;
                 } else if (tipo == 'D') {
-                    printf("\n Donzela - Nao e possivel mover peca\n");
+                    printf("\nNao e possivel mover peca\n");
                     return;
                 }
                 
-                if (j > 0 && tipo == 'B' && tabuleiro2[i][j - 1] == ' ' && tabuleiro2[i + 1][j - 1] == ' ')
+                if (j > 0 && tipo == 'B' && tabuleiroJogo[i][j - 1] == ' ' && tabuleiroJogo[i + 1][j - 1] == ' ')
                 {
-                    tabuleiro2[i][j - 1] = letra;
-                    tabuleiro2[i + 1][j - 1] = letra;
-                    tabuleiro2[i][j + 1] = ' ';
-                    tabuleiro2[i + 1][j] = ' ';
+                    tabuleiroJogo[i][j - 1] = letra;
+                    tabuleiroJogo[i + 1][j - 1] = letra;
+                    tabuleiroJogo[i][j + 1] = ' ';
+                    tabuleiroJogo[i + 1][j] = ' ';
                     return;
                 } else if (tipo == 'B') {
                     printf("\nNao e possivel mover peca\n");
                     return;
                 }
-                if (j > 0 && tipo == 'P' && tabuleiro2[i][j - 1] == ' ' && tabuleiro2[i + 1][j - 1] == ' ')
+                if (j > 0 && tipo == 'P' && tabuleiroJogo[i][j - 1] == ' ' && tabuleiroJogo[i + 1][j - 1] == ' ')
                 {
-                    tabuleiro2[i][j - 1] = letra;
-                    tabuleiro2[i + 1][j - 1] = letra;
-                    tabuleiro2[i][j] = ' ';
-                    tabuleiro2[i + 1][j] = ' ';
+                    tabuleiroJogo[i][j - 1] = letra;
+                    tabuleiroJogo[i + 1][j - 1] = letra;
+                    tabuleiroJogo[i][j] = ' ';
+                    tabuleiroJogo[i + 1][j] = ' ';
                     return;
                 } else if (tipo == 'P') {
                     printf("\nNao e possivel mover peca\n");
                     return;
                 }
-                if (j > 0 && tipo == 'Q' && tabuleiro2[i][j - 1] == ' ')
+                if (j > 0 && tipo == 'Q' && tabuleiroJogo[i][j - 1] == ' ')
                 {
-                    tabuleiro2[i][j - 1] = letra;
-                    tabuleiro2[i][j] = ' ';
+                    tabuleiroJogo[i][j - 1] = letra;
+                    tabuleiroJogo[i][j] = ' ';
                     return;
                 } else if (tipo == 'Q') {
                     printf("\nNao e possivel mover peca\n");
                     return;
                 }
-                if (j > 0 && tipo == 'S' && tabuleiro2[i][j - 1] == ' ')
+                if (j > 0 && tipo == 'S' && tabuleiroJogo[i][j - 1] == ' ')
                 {
-                    tabuleiro2[i][j - 1] = letra;
-                    tabuleiro2[i][j + 1] = ' ';
+                    tabuleiroJogo[i][j - 1] = letra;
+                    tabuleiroJogo[i][j + 1] = ' ';
                     return;
                 } else if (tipo == 'S') {
                     printf("\nNao e possivel mover peca\n");
                     return;
                 }
-                if (j > 0 && tipo == 'C' && tabuleiro2[i][j - 1] == ' ' && tabuleiro2[i + 1][j - 2] == ' ')
+                if (j > 0 && tipo == 'C' && tabuleiroJogo[i][j - 1] == ' ' && tabuleiroJogo[i + 1][j - 2] == ' ')
                 {
-                    tabuleiro2[i][j - 1] = letra;
-                    tabuleiro2[i + 1][j - 2] = letra;
-                    tabuleiro2[i][j] = ' ';
-                    tabuleiro2[i + 1][j] = ' ';
+                    tabuleiroJogo[i][j - 1] = letra;
+                    tabuleiroJogo[i + 1][j - 2] = letra;
+                    tabuleiroJogo[i][j] = ' ';
+                    tabuleiroJogo[i + 1][j] = ' ';
                     return;
                 } else {
                     printf("\nNao e possivel mover peca\n");
@@ -200,72 +199,72 @@ void moverEsquerda(char tipo, char letra) // Funcional para tabuleiro 2
     }
 }
 
-void moverTopo(char tipo, char letra) // Funcional para tabuleiro 2
+void moverTopo(char tipo, char letra)
 {
     for (int i = 0; i < 5; i++)
     {
         for (int j = 0; j < 6; j++)
         {
-            if (tabuleiro2[i][j] == letra)
+            if (tabuleiroJogo[i][j] == letra)
             {
-                if (i > 0 && tipo == 'D' && tabuleiro2[i - 1][j] == ' ' && tabuleiro2[i - 1][j + 1] == ' ')
+                if (i > 0 && tipo == 'D' && tabuleiroJogo[i - 1][j] == ' ' && tabuleiroJogo[i - 1][j + 1] == ' ')
                 {
-                    tabuleiro2[i - 1][j] = letra;
-                    tabuleiro2[i - 1][j + 1] = letra;
-                    tabuleiro2[i + 1][j] = ' ';
-                    tabuleiro2[i + 1][j + 1] = ' ';
+                    tabuleiroJogo[i - 1][j] = letra;
+                    tabuleiroJogo[i - 1][j + 1] = letra;
+                    tabuleiroJogo[i + 1][j] = ' ';
+                    tabuleiroJogo[i + 1][j + 1] = ' ';
                     return;
                 } else if (tipo == 'D') {
-                    printf("\n Donzela - Nao e possivel mover peca\n");
+                    printf("\nNao e possivel mover peca\n");
                     return;
                 }
                 
-                if (i > 0 && tipo == 'B' && tabuleiro2[i - 1][j] == ' ' && tabuleiro2[i - 1][j + 1] == ' ')
+                if (i > 0 && tipo == 'B' && tabuleiroJogo[i - 1][j] == ' ' && tabuleiroJogo[i - 1][j + 1] == ' ')
                 {
-                    tabuleiro2[i - 1][j] = letra;
-                    tabuleiro2[i - 1][j + 1] = letra;
-                    tabuleiro2[i][j + 1] = ' ';
-                    tabuleiro2[i + 1][j] = ' ';
+                    tabuleiroJogo[i - 1][j] = letra;
+                    tabuleiroJogo[i - 1][j + 1] = letra;
+                    tabuleiroJogo[i][j + 1] = ' ';
+                    tabuleiroJogo[i + 1][j] = ' ';
                     return;
                 } else if (tipo == 'B') {
                     printf("\nNao e possivel mover peca\n");
                     return;
                 }
-                if (i > 0 && tipo == 'P' && tabuleiro2[i - 1][j] == ' ')
+                if (i > 0 && tipo == 'P' && tabuleiroJogo[i - 1][j] == ' ')
                 {
-                    tabuleiro2[i - 1][j] = letra;
-                    tabuleiro2[i + 1][j] = ' ';
+                    tabuleiroJogo[i - 1][j] = letra;
+                    tabuleiroJogo[i + 1][j] = ' ';
                     return;
                 } else if (tipo == 'P') {
                     printf("\nNao e possivel mover peca\n");
                     return;
                 }
-                if (i > 0 && tipo == 'Q' && tabuleiro2[i - 1][j] == ' ')
+                if (i > 0 && tipo == 'Q' && tabuleiroJogo[i - 1][j] == ' ')
                 {
-                    tabuleiro2[i - 1][j] = letra;
-                    tabuleiro2[i][j] = ' ';
+                    tabuleiroJogo[i - 1][j] = letra;
+                    tabuleiroJogo[i][j] = ' ';
                     return;
                 } else if (tipo == 'Q') {
                     printf("\nNao e possivel mover peca\n");
                     return;
                 }
-                if (i > 0 && tipo == 'S' && tabuleiro2[i - 1][j] == ' ' && tabuleiro2[i - 1][j + 1] == ' ')
+                if (i > 0 && tipo == 'S' && tabuleiroJogo[i - 1][j] == ' ' && tabuleiroJogo[i - 1][j + 1] == ' ')
                 {
-                    tabuleiro2[i - 1][j] = letra;
-                    tabuleiro2[i - 1][j + 1] = letra;
-                    tabuleiro2[i][j] = ' ';
-                    tabuleiro2[i][j + 1] = ' ';
+                    tabuleiroJogo[i - 1][j] = letra;
+                    tabuleiroJogo[i - 1][j + 1] = letra;
+                    tabuleiroJogo[i][j] = ' ';
+                    tabuleiroJogo[i][j + 1] = ' ';
                     return;
                 } else if (tipo == 'S') {
                     printf("\nNao e possivel mover peca\n");
                     return;
                 }
-                if (tipo == 'C' && tabuleiro2[i - 1][j] == ' ' && tabuleiro2[i][j - 1] == ' ')
+                if (tipo == 'C' && tabuleiroJogo[i - 1][j] == ' ' && tabuleiroJogo[i][j - 1] == ' ')
                 {
-                    tabuleiro2[i - 1][j] = letra;
-                    tabuleiro2[i][j - 1] = letra;
-                    tabuleiro2[i + 1][j] = ' ';
-                    tabuleiro2[i + 1][j - 1] = ' ';
+                    tabuleiroJogo[i - 1][j] = letra;
+                    tabuleiroJogo[i][j - 1] = letra;
+                    tabuleiroJogo[i + 1][j] = ' ';
+                    tabuleiroJogo[i + 1][j - 1] = ' ';
                     return;
                 } else {
                     printf("\nNao e possivel mover peca\n");
@@ -276,72 +275,72 @@ void moverTopo(char tipo, char letra) // Funcional para tabuleiro 2
     }
 }
 
-void moverBaixo(char tipo, char letra) // Funcional para tabuleiro 2
+void moverBaixo(char tipo, char letra)
 {
     for (int i = 0; i < 5; i++)
     {
         for (int j = 0; j < 6; j++)
         {
-            if (tabuleiro2[i][j] == letra)
+            if (tabuleiroJogo[i][j] == letra)
             {
-                if (i < 5 && tipo == 'D' && tabuleiro2[i + 2][j] == ' ' && tabuleiro2[i + 2][j + 1] == ' ')
+                if (i < 5 && tipo == 'D' && tabuleiroJogo[i + 2][j] == ' ' && tabuleiroJogo[i + 2][j + 1] == ' ')
                 {
-                    tabuleiro2[i + 2][j] = letra;
-                    tabuleiro2[i + 2][j + 1] = letra;
-                    tabuleiro2[i][j] = ' ';
-                    tabuleiro2[i][j + 1] = ' ';
+                    tabuleiroJogo[i + 2][j] = letra;
+                    tabuleiroJogo[i + 2][j + 1] = letra;
+                    tabuleiroJogo[i][j] = ' ';
+                    tabuleiroJogo[i][j + 1] = ' ';
                     return;
                 } else if (tipo == 'D') {
-                    printf("\n Donzela - Nao e possivel mover peca\n");
+                    printf("\nNao e possivel mover peca\n");
                     return;
                 }
                 
-                if (i < 5 && tipo == 'B' && tabuleiro2[i + 2][j] == ' ' && tabuleiro2[i + 1][j + 1] == ' ')
+                if (i < 5 && tipo == 'B' && tabuleiroJogo[i + 2][j] == ' ' && tabuleiroJogo[i + 1][j + 1] == ' ')
                 {
-                    tabuleiro2[i + 2][j] = letra;
-                    tabuleiro2[i + 1][j + 1] = letra;
-                    tabuleiro2[i][j] = ' ';
-                    tabuleiro2[i][j + 1] = ' ';
+                    tabuleiroJogo[i + 2][j] = letra;
+                    tabuleiroJogo[i + 1][j + 1] = letra;
+                    tabuleiroJogo[i][j] = ' ';
+                    tabuleiroJogo[i][j + 1] = ' ';
                     return;
                 } else if (tipo == 'B') {
                     printf("\nNao e possivel mover peca\n");
                     return;
                 }
-                if (i < 5 && tipo == 'P' && tabuleiro2[i + 2][j] == ' ')
+                if (i < 5 && tipo == 'P' && tabuleiroJogo[i + 2][j] == ' ')
                 {
-                    tabuleiro2[i + 2][j] = letra;
-                    tabuleiro2[i][j] = ' ';
+                    tabuleiroJogo[i + 2][j] = letra;
+                    tabuleiroJogo[i][j] = ' ';
                     return;
                 } else if (tipo == 'P') {
                     printf("\nNao e possivel mover peca\n");
                     return;
                 }
-                if (i < 5 && tipo == 'Q' && tabuleiro2[i  + 1][j] == ' ')
+                if (i < 5 && tipo == 'Q' && tabuleiroJogo[i  + 1][j] == ' ')
                 {
-                    tabuleiro2[i + 1][j] = letra;
-                    tabuleiro2[i][j] = ' ';
+                    tabuleiroJogo[i + 1][j] = letra;
+                    tabuleiroJogo[i][j] = ' ';
                     return;
                 } else if (tipo == 'Q') {
                     printf("\nNao e possivel mover peca\n");
                     return;
                 }
-                if (i < 5 && tipo == 'S' && tabuleiro2[i + 1][j] == ' ' && tabuleiro2[i + 1][j + 1] == ' ')
+                if (i < 5 && tipo == 'S' && tabuleiroJogo[i + 1][j] == ' ' && tabuleiroJogo[i + 1][j + 1] == ' ')
                 {
-                    tabuleiro2[i + 1][j] = letra;
-                    tabuleiro2[i + 1][j + 1] = letra;
-                    tabuleiro2[i][j] = ' ';
-                    tabuleiro2[i][j + 1] = ' ';
+                    tabuleiroJogo[i + 1][j] = letra;
+                    tabuleiroJogo[i + 1][j + 1] = letra;
+                    tabuleiroJogo[i][j] = ' ';
+                    tabuleiroJogo[i][j + 1] = ' ';
                     return;
                 } else if (tipo == 'S') {
                     printf("\nNao e possivel mover peca\n");
                     return;
                 }
-                if (tipo == 'C' && tabuleiro2[i + 2][j] == ' ' && tabuleiro2[i + 2][j - 1] == ' ')
+                if (tipo == 'C' && tabuleiroJogo[i + 2][j] == ' ' && tabuleiroJogo[i + 2][j - 1] == ' ')
                 {
-                    tabuleiro2[i + 2][j] = letra;
-                    tabuleiro2[i + 2][j - 1] = letra;
-                    tabuleiro2[i][j] = ' ';
-                    tabuleiro2[i + 1][j - 1] = ' ';
+                    tabuleiroJogo[i + 2][j] = letra;
+                    tabuleiroJogo[i + 2][j - 1] = letra;
+                    tabuleiroJogo[i][j] = ' ';
+                    tabuleiroJogo[i + 1][j - 1] = ' ';
                     return;
                 } else {
                     printf("\nNao e possivel mover peca\n");
@@ -369,58 +368,54 @@ void moverDirecao(char direcao, char tipo, char letra)
         moverBaixo(tipo, letra);
         break;
     default:
-        printf("ERROR");
+        printf("INTERNAL ERROR: DIRECAO INVALIDA");
         break;
     }
     
 }
 
-char encontraLetra(int x, int y){
-    return tabuleiro2[x-1][y-1];
+char encontrarLetra(int x, int y){
+    return tabuleiroJogo[x-1][y-1];
 }
 
-char checarTipoPeca(char letra) //Funcional - tabuleiro2
+char checarTipoPeca(char letra)
 {
     for (int i = 0; i < 5; i++)
     {
         for (int j = 0; j < 6; j++)
         {
-            if (tabuleiro2[i][j] == letra) {
-                // avalia repetição de letras horizontais
-                // tipo 1 / tipo 2 / tipo 3
-                if (tabuleiro2[i][j + 1]  == letra)
+            if (tabuleiroJogo[i][j] == letra) {
+                if (tabuleiroJogo[i][j + 1]  == letra)
                 {
-                    // verifica se possui pelo menos 1 letra abaixo
-                    if(tabuleiro2[i + 1][j]  == letra) {
-                        // verifica se é a donzela
-                        if (tabuleiro2[i + 1][j + 1]  == letra)
+                    if(tabuleiroJogo[i + 1][j]  == letra) {
+                        if (tabuleiroJogo[i + 1][j + 1]  == letra)
                         {
                            return 'D';
                         }
                         return 'B';                        
                     }
                     return 'S';
-                } else if (tabuleiro2[i + 1][j]  == letra) // avalia repetição de letras verticais sem a primeira linha horizontal
+                } else if (tabuleiroJogo[i + 1][j]  == letra)
                 {
-                    if (j != 0 && tabuleiro2[i + 1][j - 1]  == letra)
+                    if (j != 0 && tabuleiroJogo[i + 1][j - 1]  == letra)
                     {
                         return 'C';
                     }
                     
                     return 'P';
-                } else return 'Q'; // avalia se é peça única                
+                } else return 'Q';                
             }
         }
     }
+    printf("INTERNAL ERROR: TIPO INVALIDO");
     return 'e';
 }
 
 
 void banner(void) {
 
-  printf("\n");
   printf("-----------------\n");
-  printf("HAIKORI    \n");
+  printf("HAIKORI\n");
   printf("Por Larissa, Mirian e Yuri\n");
   printf("-----------------\n");
   printf("\n");
@@ -429,17 +424,17 @@ void banner(void) {
 
 void help(void) {
 
-  printf("Modo de uso: ./tabuleiro [opções]\n");
+  printf("Modo de uso: ./tabuleiro [opcoes]\n");
 
   printf("\n========================= NOTAS =========================\n");
-  printf("FASE 1 - Linha de comando e movimento de peças\n");
+  printf("FASE 1 - Linha de comando e movimento de pecas\n");
 
 
-  printf("\n======================== OPÇÕES ========================\n");
+  printf("\n======================== OPCOES ========================\n");
   printf(" -c<config_tabuleiro> : Especifica qual tabuleiro o jogo deve utilizar.\n");
-  printf("                        Configurações: 1 - Menor [default] | 2 - Maior\n");
-  printf(" -m <x> <y> <direcao> : Movimenta a peça que está nas coordenadas (x,y) para a direção d.\n");
-  printf("                        Direções: D - Direita | E - Esquerda | B - Baixo | T - Topo\n");
+  printf("                        Configuracoes: 1 - Menor [default] | 2 - Maior\n\n");
+  printf(" -m <x> <y> <direcao> : Movimenta a peca que esta nas coordenadas (x,y) para a direcao d.\n");
+  printf("                        Direcoes: D - Direita | E - Esquerda | B - Baixo | T - Topo\n");
     
   printf("\n======================== EXEMPLOS =======================\n");
   printf(" ./tabuleiro\n");
@@ -448,7 +443,6 @@ void help(void) {
   printf(" ./tabuleiro -c2 -m 1 1 D\n");
   printf(" ./tabuleiro -c2 -m 2 2 B\n");
   printf(" ./tabuleiro -m 2 2 T\n");
-
 
 }
 
@@ -459,10 +453,13 @@ int main(int argc, char* argv[]){
     int usuarioMovePecaTerminal = 0;
     int x = 0;
     int y = 0;
-    char direcao = 0;
+    int argCfoilido = 0;
+    int argMfoilido = 0;
+    char direcao = '0';
 
     if (argc == 1){
-        criaTabuleiroUm();
+        configTabuleiro == 1 ? copiarMatriz(tabuleiro1) : copiarMatriz(tabuleiro2);
+        printarTabuleiro(configTabuleiro);
         return 0;
     }
 
@@ -484,12 +481,14 @@ int main(int argc, char* argv[]){
         if (argumento[0] == '-' && argumento[1] == 'c'){
 
             if (argumento[2] == '1' || argumento[2] == '\0'){
-                criaTabuleiroUm();
+                configTabuleiro == 1 ? copiarMatriz(tabuleiro1) : copiarMatriz(tabuleiro2);
+                printarTabuleiro(configTabuleiro);
                 return 0;
 
             } else if (argumento[2] == '2'){
                 configTabuleiro = 2;
-                criaTabuleiroDois();
+                configTabuleiro == 1 ? copiarMatriz(tabuleiro1) : copiarMatriz(tabuleiro2);
+                printarTabuleiro(configTabuleiro);
                 return 0;
 
             } else {
@@ -506,7 +505,7 @@ int main(int argc, char* argv[]){
                 help();
                 return 1;
             }
-        }
+    }
 
     if (argc == 5 || argc == 6){
 
@@ -515,12 +514,22 @@ int main(int argc, char* argv[]){
 
             if (argumento[0] == '-' && argumento[1] == 'c') {
 
+                if (argMfoilido == 1){
+                    printf("[!] Erro: Ordem inválida de argumentos\n\n");
+                    help();
+                    return 1;
+                } else if (argCfoilido == 1){
+                    printf("[!] Erro: Argumentos inválidos\n\n");
+                    help();
+                    return 1;
+                } else {
+                    argCfoilido = 1;
+                }
+
                 if (argumento[2] == '1' || argumento[2] == '\0'){
                     configTabuleiro = 1;
 
-                } else
-
-                if (argumento[2] == '2'){
+                } else if (argumento[2] == '2'){
                     configTabuleiro = 2;
 
                 } else {
@@ -531,6 +540,14 @@ int main(int argc, char* argv[]){
             } else 
 
             if (argumento[0] == '-' && argumento[1] == 'm'){
+                argMfoilido = 1;
+
+                if (argc == 5 && argCfoilido == 1){
+                    printf("[!] Erro: Argumentos inválidos\n\n");
+                    help();
+                    return 1;
+                }
+
                 direcao = argv[i+3][0];
 
                 if (direcao != 'D' && direcao != 'E' && direcao != 'T' && direcao != 'B'){
@@ -566,50 +583,22 @@ int main(int argc, char* argv[]){
                 }
             }
         }
+    }
 
-    printf("Testes linha de comando\n");
-    printf("Tabuleiro escolhido: %d\n", configTabuleiro);
+    printf("Tabuleiro: %d\n", configTabuleiro);
     if (usuarioMovePecaTerminal == 1){
-        printf("Coordenadas escolhidas: %d, %d\n", x,y);
-        printf("Direção escolhida: %c\n\n", direcao);
+        printf("Coordenadas: %d, %d\n", x,y);
+        printf("Direção do movimento: %c\n\n", direcao);
     }
 
-    /* TO DO:
+    configTabuleiro == 1 ? copiarMatriz(tabuleiro1) : copiarMatriz(tabuleiro2);
+    printarTabuleiro(configTabuleiro);
 
-    - Função para encontrar letra a movimentar a partir das coordenadas passadas pela linha de comando
-    - Montar as chamadas corretas para as funções a partir das informações coletadas na linha de comando
-
-        letra = encontraLetra(x,y);
-        criaTabuleiroGenerico(configTabuleiro);
-        moverDirecao(direcao);
-
-    */
-
-    char letra = 'D';
-    printf("%s", "Configuracao 2 \n\n");
-    criaTabuleiroDois();
+    char letra = encontrarLetra(x,y);
     char tipo = checarTipoPeca(letra);
-    printf("\npeca movida - tipo: %c\n", tipo);
-    moverTopo(tipo, letra);
-    criaTabuleiroDois();
-
-    return 0;
-    }
-    
-    // int i = 4;
-    // int j = 5;
-    // printf("Posicoes: i: %d   j:%d\n\n",i,j);
-    // char letra = encontraLetra(i,j);
-    // printf("Letra %c\n\n",letra);
-
-    // char letra = 'D';
-    // printf("Configuracao 2 \n\n");
-    // criaTabuleiroDois();
-    // char tipo = checarTipoPeca(letra);
-    // printf("\npeca movida - tipo: %c\n", tipo);
-    // char direcao = 'T';
-    // moverDirecao(direcao,tipo, letra);
-    // criaTabuleiroDois();
+    moverDirecao(direcao, tipo, letra);
+    printf("\n");
+    printarTabuleiro(configTabuleiro);
 
     return 0;
 }

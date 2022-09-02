@@ -219,4 +219,19 @@ int main()
     tipo = checarTipoPeca('e');
     printf("%c\n", tipo);
     return 0;
+
+    // int i = 4;
+    // int j = 5;
+    // printf("Posicoes: i: %d   j:%d\n\n",i,j);
+    // char letra = encontraLetra(i,j);
+    // printf("Letra %c\n\n",letra);
+
+    // char letra = 'D';
+    // printf("Configuracao 2 \n\n");
+    // criaTabuleiroDois();
+    // char tipo = checarTipoPeca(letra);
+    // printf("\npeca movida - tipo: %c\n", tipo);
+    // char direcao = 'T';
+    // moverDirecao(direcao,tipo, letra);
+    // criaTabuleiroDois();
 }

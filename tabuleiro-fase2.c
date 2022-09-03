@@ -1,7 +1,10 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 #define TAM_MAX_COL 7
-#define MAX_INPUT_USER 10 
+#define MAX_INPUT_USER 10
+
+/*
 
 static char tabuleiro1[5][TAM_MAX_COL] = {
     {'a', 'D', 'D', 'b', '\0', '\0', '\0'},
@@ -16,6 +19,8 @@ static char tabuleiro2[5][TAM_MAX_COL] = {
     {'e', 'e', 'f', 'g', 'd', 'd', '\0'},
     {'h', 'h', 'i', 'j', 'k', 'l', '\0'},
     {'h', 'i', 'i', 'm', 'k', 'l', '\0'}};
+
+*/
 
 char tabuleiroJogo[5][TAM_MAX_COL];
 
@@ -490,6 +495,7 @@ int interacoesUsuario(int argc, char argumento[], int configTabuleiro, int jaEsc
                     printf("Digite 1 para Sim e qualquer outra tecla para Nao: ");
                     char temCerteza[MAX_INPUT_USER];
                     scanf("%c", temCerteza);
+                    printf("\n");
                     if (temCerteza[0] == '1'){
                         return 2; // troca para o tabuleiro C2 e mostra o tabuleiro C2
                     } else {
@@ -507,6 +513,7 @@ int interacoesUsuario(int argc, char argumento[], int configTabuleiro, int jaEsc
                     printf("Digite 1 para Sim e qualquer outra tecla para Nao: ");
                     char temCerteza[MAX_INPUT_USER];
                     scanf("%c", temCerteza);
+                    printf("\n");
                     if (temCerteza[0] == '1'){
                         return 1; // troca para o tabuleiro C1 e mostra o tabuleiro C1
                     } else {
@@ -572,6 +579,8 @@ int interacoesUsuario(int argc, char argumento[], int configTabuleiro, int jaEsc
             return 0;            
         }
     }
+    printf("[!] ERRO 9: INTERNAL ERROR\n\n");
+    return 0;
 }
 
 void abreArquivo(char nomeArquivoTxt[]){
@@ -584,7 +593,14 @@ void abreArquivo(char nomeArquivoTxt[]){
     } else {
         printf("Arquivo aberto com sucesso.\n\n");
 
-        // TO DO: Converter arquivo nas matrizes tabuleiro1 e tabuleiro2;
+        // TO FINISH: Converter arquivo nas matrizes tabuleiro1 e tabuleiro2;
+        // FILE *teste;
+        int c;
+
+        while ((c = getc(arqTxtTabuleiros)) != EOF) {
+            putc(c, stdout);
+        }
+        printf("\n\n");
 
         fclose(arqTxtTabuleiros);
     }
@@ -632,6 +648,7 @@ int main(int argc, char* argv[]){
             printf("Digite 1 para Sim e qualquer outra tecla para Nao: ");
             char temCerteza[MAX_INPUT_USER];
             scanf("%c", temCerteza);
+            printf("\n");
             if (temCerteza[0] == '1'){
                 printf("\nTchau, obrigado por ter jogado!");
                 fim = 1;

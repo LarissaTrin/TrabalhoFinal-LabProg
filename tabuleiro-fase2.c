@@ -486,7 +486,8 @@ int interacoesUsuario(int argc, char argumento[], int configTabuleiro, int jaEsc
 
             if (argumento[2] == '1'){
                 if (jaEscolheuTabuleiro){
-                    printf("Tem certeza que quer trocar de tabuleiro? Todo o seu progresso será perdido");
+                    printf("Tem certeza que quer trocar de tabuleiro? Todo o seu progresso sera perdido.\n");
+                    printf("Digite 1 para Sim e qualquer outra tecla para Nao: ");
                     char temCerteza[MAX_INPUT_USER];
                     scanf("%c", temCerteza);
                     if (temCerteza[0] == '1'){
@@ -502,7 +503,8 @@ int interacoesUsuario(int argc, char argumento[], int configTabuleiro, int jaEsc
             } else if (argumento[2] == '2'){
 
                 if (jaEscolheuTabuleiro){
-                    printf("Tem certeza que quer trocar de tabuleiro? Todo o seu progresso será perdido");
+                    printf("Tem certeza que quer trocar de tabuleiro? Todo o seu progresso sera perdido.\n");
+                    printf("Digite 1 para Sim e qualquer outra tecla para Nao: ");
                     char temCerteza[MAX_INPUT_USER];
                     scanf("%c", temCerteza);
                     if (temCerteza[0] == '1'){
@@ -515,7 +517,7 @@ int interacoesUsuario(int argc, char argumento[], int configTabuleiro, int jaEsc
 
                 }
             } else {
-                printf("[!]3 Erro: Configuração de tabuleiro inválida\n\n");
+                printf("[!]3 Erro: Configuração de tabuleiro invalida\n\n");
                 help2();
                 return 0;
             }
@@ -533,7 +535,7 @@ int interacoesUsuario(int argc, char argumento[], int configTabuleiro, int jaEsc
                 direcao = argumento[6];
 
                 if (direcao != 'D' && direcao != 'E' && direcao != 'T' && direcao != 'B'){
-                    printf("[!]5 Erro: Direção inválida\n\n");
+                    printf("[!]5 Erro: Direção invalida\n\n");
                     help2();
                     return 0;
                 } 
@@ -548,7 +550,7 @@ int interacoesUsuario(int argc, char argumento[], int configTabuleiro, int jaEsc
                     if (i >=1 && i <= 5 && j >= 1 && j <= 4){
                     
                     } else {
-                        printf("[!] Erro6: Coordenadas inválidas\n\n");
+                        printf("[!] Erro6: Coordenadas invalidas\n\n");
                         help2();
                         return 0;
                     } 
@@ -558,22 +560,37 @@ int interacoesUsuario(int argc, char argumento[], int configTabuleiro, int jaEsc
                     if (i >= 1 && i <= 5 && j >= 1 && j <= 6) {
                     
                     } else {
-                        printf("[!] Erro7: Coordenadas inválidas\n\n");
+                        printf("[!] Erro7: Coordenadas invalidas\n\n");
                         help2();
                         return 0;
                     }
                 }
                 return 3; // Movimento valido da peca
         } else {
-            printf("[!] Erro8: Argumento inválido\n\n");
+            printf("[!] Erro8: Argumento invalido\n\n");
             help2();
             return 0;            
         }
     }
 }
 
-int main(int argc, char* argv[]){
+void abreArquivo(char nomeArquivoTxt[]){
+    
+    FILE *arqTxtTabuleiros;
+    
+    if ((arqTxtTabuleiros = fopen(nomeArquivoTxt,"r")) == NULL){
+        printf ("[!] Erro na abertura do arquivo de tabuleiros.\n");
+        exit(1);
+    } else {
+        printf("Arquivo aberto com sucesso.\n\n");
 
+        // TO DO: Converter arquivo nas matrizes tabuleiro1 e tabuleiro2;
+
+        fclose(arqTxtTabuleiros);
+    }
+}
+
+int main(int argc, char* argv[]){
 
     banner();
 
@@ -585,9 +602,17 @@ int main(int argc, char* argv[]){
     // ./tabuleiro >>>> argc = 1
 
     if (argc == 1){
-        // Ler arquivo haikori.txt e seguir;
+        char* nomeArquivoTxt = "haikori.txt";
+        abreArquivo(nomeArquivoTxt);
     } else if (argc == 3){
-        // Ler arquivo especificado e seguir;
+        if (argv[1][0] == '-' && argv[1][1] == 'f' && argv[1][2] == '\0'){
+            char* nomeArquivoTxt = argv[2];
+            abreArquivo(nomeArquivoTxt);
+        } else {
+            printf("[!] Erro nos argumentos\n\n");
+            help1();
+            return 1;
+        }
     } else {
         printf("[!] Erro nos argumentos\n\n");
         help1();
@@ -603,8 +628,14 @@ int main(int argc, char* argv[]){
         printf("%s\n", inputUsuario);
 
         if (inputUsuario[0] == 'q'){
-            printf("\nTchau, obrigado por ter jogado!");
-            fim = 1;
+            printf("Tem certeza que deseja sair?\n");
+            printf("Digite 1 para Sim e qualquer outra tecla para Nao: ");
+            char temCerteza[MAX_INPUT_USER];
+            scanf("%c", temCerteza);
+            if (temCerteza[0] == '1'){
+                printf("\nTchau, obrigado por ter jogado!");
+                fim = 1;
+            }    
         } else {
 
             int len = sizeof(inputUsuario)/ sizeof(inputUsuario[0]);

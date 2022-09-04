@@ -1,52 +1,81 @@
 #include <stdio.h>
 #include <stdlib.h>
+#define TAM_MAX_COL 7
 
-typedef struct ponto
+static char tabuleiro1[5][TAM_MAX_COL] = {
+    {'a', 'D', 'D', 'b', '\0', '\0', '\0'},
+    {'a', 'D', 'D', 'b', '\0', '\0', '\0'},
+    {'c', 'd', 'd', 'e', '\0', '\0', '\0'},
+    {'c', 'g', 'h', 'e', '\0', '\0', '\0'},
+    {'f', ' ', ' ', 'i', '\0', '\0', '\0'}};
+
+static char tabuleiro2[5][TAM_MAX_COL] = {
+    {'D', 'D', ' ', 'a', 'a', 'b', '\0'},
+    {'D', 'D', ' ', 'a', 'c', 'd', '\0'},
+    {'e', 'e', 'f', 'g', 'd', 'd', '\0'},
+    {'h', 'h', 'i', 'j', 'k', 'l', '\0'},
+    {'h', 'i', 'i', 'm', 'k', 'l', '\0'}};
+
+char tabuleiroJogo[5][TAM_MAX_COL];
+
+void printarTabuleiro(int num)
+{
+  num == 1 ? printf("* * * * * *\n") : printf("* * * * * * * *\n");
+
+  int cont = 0;
+  for (int i = 0; i < 5; i++)
+  {
+    printf("*");
+    for (int j = 0; j < TAM_MAX_COL; j++)
+    {
+      if (tabuleiroJogo[i][j] == '\0')
+        continue;
+      printf(" %c", tabuleiroJogo[i][j]);
+    }
+    (num == 2 && (cont == 3 || cont == 4)) ? printf("\n") : printf(" *\n");
+    cont++;
+  }
+  num == 1 ? printf("* *     * *\n") : printf("* * * * * * * *\n");
+}
+
+void historico(char tabuleiroJogo[5][TAM_MAX_COL])
+{
+}
+
+struct table
 {
 
-  int x, y;
-  struct ponto *proximo;
+  char tabu[5][TAM_MAX_COL];
 
-} t_ponto;
-
-int main(int argc, char *argv[])
+  struct table *prox;
+};
+struct table *aloca()
 {
+  return malloc(sizeof(struct table));
+};
 
-  t_ponto *ini_ponto;
-  t_ponto *proximo_ponto;
-  ini_ponto = (t_ponto *)malloc(sizeof(t_ponto));
-  if (ini_ponto == NULL)
+void addItem(struct table *cabeca)
+{
+  struct table *aux, *novo;
+  aux = cabeca;
+
+  while (aux->prox != NULL)
   {
-    exit(1);
+    aux = aux->prox;
   }
-  proximo_ponto = ini_ponto;
-  int resp;
-  while (1)
-  {
-    printf("Digite x: ");
-    scanf("%d", &proximo_ponto->x);
-    printf("Digite y: ");
-    scanf("%d", &proximo_ponto->y);
-    printf("deseja continuar? <1> SIM <outro valor> NAO:  ");
-    scanf("%d", &resp);
-    if (resp == 1)
-    {
-      proximo_ponto->proximo = (t_ponto *)malloc(sizeof(t_ponto));
-      proximo_ponto = proximo_ponto->proximo;
-    }
-    else
-    {
-      break;
-    }
-  }
-  printf("\n");
-  proximo_ponto->proximo = NULL;
-  proximo_ponto = ini_ponto;
-  while (proximo_ponto != NULL)
-  {
-    printf("x: %d, y: %d\n", proximo_ponto->x, proximo_ponto->y);
-    proximo_ponto = proximo_ponto->proximo;
-  }
+  novo = aloca();
+  gets(novo->tabu);
+  novo->prox = NULL;
+
+  aux->prox = novo;
+}
+int main()
+{
+  struct table acervo;
+  acervo.prox = NULL;
+
+  addItem(&acervo);
+  printf("%s\n", acervo.prox->tabu);
 
   return 0;
 }

@@ -28,7 +28,6 @@ void printarTabuleiro(int num, char tabuleiro[5][TAM_MAX_COL])
 
 void copiarMatriz(char matriz[5][TAM_MAX_COL], char tabuleiroJogo[5][TAM_MAX_COL])
 {
-    // , char tabuleiroJogo[5][TAM_MAX_COL]
     for (int i = 0; i < 5; i++)
     {
         for (int j = 0; j < TAM_MAX_COL; j++)
@@ -534,11 +533,11 @@ int interacoesUsuario(int argc, char argumento[], int configTabuleiro, int jaEsc
                     printf("Tem certeza que quer trocar de tabuleiro? Todo o seu progresso sera perdido.\n");
                     printf("Digite 1 para Sim e qualquer outra tecla para Nao: ");
                     char temCerteza[MAX_INPUT_USER];
-                    scanf("%c", temCerteza);
+                    fgets(temCerteza, MAX_INPUT_USER, stdin);
                     printf("\n");
                     if (temCerteza[0] == '1')
                     {
-                        return 2; // troca para o tabuleiro C2 e mostra o tabuleiro C2
+                        return 1; // troca do C2 para C1
                     }
                     else
                     {
@@ -557,11 +556,11 @@ int interacoesUsuario(int argc, char argumento[], int configTabuleiro, int jaEsc
                     printf("Tem certeza que quer trocar de tabuleiro? Todo o seu progresso sera perdido.\n");
                     printf("Digite 1 para Sim e qualquer outra tecla para Nao: ");
                     char temCerteza[MAX_INPUT_USER];
-                    scanf("%c", temCerteza);
+                    fgets(temCerteza, MAX_INPUT_USER, stdin);
                     printf("\n");
                     if (temCerteza[0] == '1')
                     {
-                        return 1; // troca para o tabuleiro C1 e mostra o tabuleiro C1
+                        return 2; // troca do C1 para C2
                     }
                     else
                     {
@@ -808,7 +807,7 @@ int main(int argc, char *argv[])
             printf("Tem certeza que deseja sair?\n");
             printf("Digite 1 para Sim e qualquer outra tecla para Nao: ");
             char temCerteza[MAX_INPUT_USER];
-            scanf("%c", temCerteza);
+            fgets(temCerteza, MAX_INPUT_USER, stdin);
             printf("\n");
             if (temCerteza[0] == '1')
             {
@@ -835,7 +834,7 @@ int main(int argc, char *argv[])
             {
                 configTabuleiro = 1;
                 jaEscolheuTabuleiro = 1;
-                memset(historico, '\0', sizeof(historico));
+                // memset(historico, '\0', sizeof(historico));
                 copiarMatriz(tabuleiro1, tabuleiroJogo);
                 printarTabuleiro(configTabuleiro, tabuleiroJogo);
             }
@@ -843,7 +842,7 @@ int main(int argc, char *argv[])
             {
                 configTabuleiro = 2;
                 jaEscolheuTabuleiro = 1;
-                memset(historico, '\0', sizeof(historico));
+                // memset(historico, '\0', sizeof(historico));
                 copiarMatriz(tabuleiro2, tabuleiroJogo);
                 printarTabuleiro(configTabuleiro, tabuleiroJogo);
             }
@@ -867,7 +866,6 @@ int main(int argc, char *argv[])
                 printf("\n\n2\n%s\n", titulo2Nome);
                 printarTabuleiro(2, tabuleiro2);
             }
-            printf("\nTO AQUI\n");
         }
     }
     return 0;

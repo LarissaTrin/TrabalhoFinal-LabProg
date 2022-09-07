@@ -338,9 +338,17 @@ int moverBaixo(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
                 }
                 if (i < 5 && tipo == 'P' && tabuleiroJogo[i + 2][j] == ' ')
                 {
-                    tabuleiroJogo[i + 2][j] = letra;
-                    tabuleiroJogo[i][j] = ' ';
-                    return 1;
+                    if (i + 2 < 5)
+                    {
+                        tabuleiroJogo[i + 2][j] = letra;
+                        tabuleiroJogo[i][j] = ' ';
+                        return 1;
+                    }
+                    else
+                    {
+                        printf("\nNao e possivel mover peca\n");
+                        return 0;
+                    }
                 }
                 else if (tipo == 'P')
                 {
@@ -349,9 +357,17 @@ int moverBaixo(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
                 }
                 if (i < 5 && tipo == 'Q' && tabuleiroJogo[i + 1][j] == ' ')
                 {
-                    tabuleiroJogo[i + 1][j] = letra;
-                    tabuleiroJogo[i][j] = ' ';
-                    return 1;
+                    if (i + 1 < 5)
+                    {
+                        tabuleiroJogo[i + 1][j] = letra;
+                        tabuleiroJogo[i][j] = ' ';
+                        return 1;
+                    }
+                    else
+                    {
+                        printf("\nNao e possivel mover peca\n");
+                        return 0;
+                    }
                 }
                 else if (tipo == 'Q')
                 {
@@ -912,7 +928,7 @@ int main(int argc, char *argv[])
 
                 if (movCerto == 1)
                 {
-                    printf("Movimento %d\n", ++contMov);
+                    printf("\nMovimento %d\n", ++contMov);
                     historico = inserirNodeNoFim(historico, configTabuleiro, tabuleiroJogo);
                 }
                 printarTabuleiro(configTabuleiro, tabuleiroJogo);

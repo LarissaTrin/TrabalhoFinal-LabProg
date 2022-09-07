@@ -37,7 +37,7 @@ void copiarMatriz(char matriz[5][TAM_MAX_COL], char tabuleiroJogo[5][TAM_MAX_COL
     }
 }
 
-void moverDireita(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
+int moverDireita(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
 {
     for (int i = 0; i < 5; i++)
     {
@@ -51,12 +51,12 @@ void moverDireita(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
                     tabuleiroJogo[i + 1][j + 2] = letra;
                     tabuleiroJogo[i][j] = ' ';
                     tabuleiroJogo[i + 1][j] = ' ';
-                    return;
+                    return 1;
                 }
                 else if (tipo == 'D')
                 {
                     printf("\nNao e possivel mover peca\n");
-                    return;
+                    return 0;
                 }
 
                 if (tipo == 'B' && tabuleiroJogo[i][j + 2] == ' ' && tabuleiroJogo[i + 1][j + 1] == ' ')
@@ -65,12 +65,12 @@ void moverDireita(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
                     tabuleiroJogo[i + 1][j + 1] = letra;
                     tabuleiroJogo[i][j] = ' ';
                     tabuleiroJogo[i + 1][j] = ' ';
-                    return;
+                    return 1;
                 }
                 else if (tipo == 'B')
                 {
                     printf("\nNao e possivel mover peca\n");
-                    return;
+                    return 0;
                 }
                 if (tipo == 'P' && tabuleiroJogo[i][j + 1] == ' ' && tabuleiroJogo[i + 1][j + 1] == ' ')
                 {
@@ -78,34 +78,34 @@ void moverDireita(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
                     tabuleiroJogo[i + 1][j + 1] = letra;
                     tabuleiroJogo[i][j] = ' ';
                     tabuleiroJogo[i + 1][j] = ' ';
-                    return;
+                    return 1;
                 }
                 else if (tipo == 'P')
                 {
                     printf("\nNao e possivel mover peca\n");
-                    return;
+                    return 0;
                 }
                 if (tipo == 'Q' && tabuleiroJogo[i][j + 1] == ' ')
                 {
                     tabuleiroJogo[i][j + 1] = letra;
                     tabuleiroJogo[i][j] = ' ';
-                    return;
+                    return 1;
                 }
                 else if (tipo == 'Q')
                 {
                     printf("\nNao e possivel mover peca\n");
-                    return;
+                    return 0;
                 }
                 if (tipo == 'S' && tabuleiroJogo[i][j + 2] == ' ')
                 {
                     tabuleiroJogo[i][j + 2] = letra;
                     tabuleiroJogo[i][j] = ' ';
-                    return;
+                    return 1;
                 }
                 else if (tipo == 'S')
                 {
                     printf("\nNao e possivel mover peca\n");
-                    return;
+                    return 0;
                 }
                 if (tipo == 'C' && tabuleiroJogo[i][j + 1] == ' ' && tabuleiroJogo[i + 1][j + 1] == ' ')
                 {
@@ -113,19 +113,19 @@ void moverDireita(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
                     tabuleiroJogo[i + 1][j + 1] = letra;
                     tabuleiroJogo[i][j] = ' ';
                     tabuleiroJogo[i + 1][j - 1] = ' ';
-                    return;
+                    return 1;
                 }
                 else
                 {
                     printf("\nNao e possivel mover peca\n");
-                    return;
+                    return 0;
                 }
             }
         }
     }
 }
 
-void moverEsquerda(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
+int moverEsquerda(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
 {
     for (int i = 0; i < 5; i++)
     {
@@ -139,12 +139,12 @@ void moverEsquerda(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
                     tabuleiroJogo[i + 1][j - 1] = letra;
                     tabuleiroJogo[i][j + 1] = ' ';
                     tabuleiroJogo[i + 1][j + 1] = ' ';
-                    return;
+                    return 1;
                 }
                 else if (tipo == 'D')
                 {
                     printf("\nNao e possivel mover peca\n");
-                    return;
+                    return 0;
                 }
 
                 if (j > 0 && tipo == 'B' && tabuleiroJogo[i][j - 1] == ' ' && tabuleiroJogo[i + 1][j - 1] == ' ')
@@ -153,12 +153,12 @@ void moverEsquerda(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
                     tabuleiroJogo[i + 1][j - 1] = letra;
                     tabuleiroJogo[i][j + 1] = ' ';
                     tabuleiroJogo[i + 1][j] = ' ';
-                    return;
+                    return 1;
                 }
                 else if (tipo == 'B')
                 {
                     printf("\nNao e possivel mover peca\n");
-                    return;
+                    return 0;
                 }
                 if (j > 0 && tipo == 'P' && tabuleiroJogo[i][j - 1] == ' ' && tabuleiroJogo[i + 1][j - 1] == ' ')
                 {
@@ -166,34 +166,34 @@ void moverEsquerda(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
                     tabuleiroJogo[i + 1][j - 1] = letra;
                     tabuleiroJogo[i][j] = ' ';
                     tabuleiroJogo[i + 1][j] = ' ';
-                    return;
+                    return 1;
                 }
                 else if (tipo == 'P')
                 {
                     printf("\nNao e possivel mover peca\n");
-                    return;
+                    return 0;
                 }
                 if (j > 0 && tipo == 'Q' && tabuleiroJogo[i][j - 1] == ' ')
                 {
                     tabuleiroJogo[i][j - 1] = letra;
                     tabuleiroJogo[i][j] = ' ';
-                    return;
+                    return 1;
                 }
                 else if (tipo == 'Q')
                 {
                     printf("\nNao e possivel mover peca\n");
-                    return;
+                    return 0;
                 }
                 if (j > 0 && tipo == 'S' && tabuleiroJogo[i][j - 1] == ' ')
                 {
                     tabuleiroJogo[i][j - 1] = letra;
                     tabuleiroJogo[i][j + 1] = ' ';
-                    return;
+                    return 1;
                 }
                 else if (tipo == 'S')
                 {
                     printf("\nNao e possivel mover peca\n");
-                    return;
+                    return 0;
                 }
                 if (j > 0 && tipo == 'C' && tabuleiroJogo[i][j - 1] == ' ' && tabuleiroJogo[i + 1][j - 2] == ' ')
                 {
@@ -201,19 +201,19 @@ void moverEsquerda(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
                     tabuleiroJogo[i + 1][j - 2] = letra;
                     tabuleiroJogo[i][j] = ' ';
                     tabuleiroJogo[i + 1][j] = ' ';
-                    return;
+                    return 1;
                 }
                 else
                 {
                     printf("\nNao e possivel mover peca\n");
-                    return;
+                    return 0;
                 }
             }
         }
     }
 }
 
-void moverTopo(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
+int moverTopo(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
 {
     for (int i = 0; i < 5; i++)
     {
@@ -227,12 +227,12 @@ void moverTopo(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
                     tabuleiroJogo[i - 1][j + 1] = letra;
                     tabuleiroJogo[i + 1][j] = ' ';
                     tabuleiroJogo[i + 1][j + 1] = ' ';
-                    return;
+                    return 1;
                 }
                 else if (tipo == 'D')
                 {
                     printf("\nNao e possivel mover peca\n");
-                    return;
+                    return 0;
                 }
 
                 if (i > 0 && tipo == 'B' && tabuleiroJogo[i - 1][j] == ' ' && tabuleiroJogo[i - 1][j + 1] == ' ')
@@ -241,34 +241,34 @@ void moverTopo(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
                     tabuleiroJogo[i - 1][j + 1] = letra;
                     tabuleiroJogo[i][j + 1] = ' ';
                     tabuleiroJogo[i + 1][j] = ' ';
-                    return;
+                    return 1;
                 }
                 else if (tipo == 'B')
                 {
                     printf("\nNao e possivel mover peca\n");
-                    return;
+                    return 0;
                 }
                 if (i > 0 && tipo == 'P' && tabuleiroJogo[i - 1][j] == ' ')
                 {
                     tabuleiroJogo[i - 1][j] = letra;
                     tabuleiroJogo[i + 1][j] = ' ';
-                    return;
+                    return 1;
                 }
                 else if (tipo == 'P')
                 {
                     printf("\nNao e possivel mover peca\n");
-                    return;
+                    return 0;
                 }
                 if (i > 0 && tipo == 'Q' && tabuleiroJogo[i - 1][j] == ' ')
                 {
                     tabuleiroJogo[i - 1][j] = letra;
                     tabuleiroJogo[i][j] = ' ';
-                    return;
+                    return 1;
                 }
                 else if (tipo == 'Q')
                 {
                     printf("\nNao e possivel mover peca\n");
-                    return;
+                    return 0;
                 }
                 if (i > 0 && tipo == 'S' && tabuleiroJogo[i - 1][j] == ' ' && tabuleiroJogo[i - 1][j + 1] == ' ')
                 {
@@ -276,12 +276,12 @@ void moverTopo(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
                     tabuleiroJogo[i - 1][j + 1] = letra;
                     tabuleiroJogo[i][j] = ' ';
                     tabuleiroJogo[i][j + 1] = ' ';
-                    return;
+                    return 1;
                 }
                 else if (tipo == 'S')
                 {
                     printf("\nNao e possivel mover peca\n");
-                    return;
+                    return 0;
                 }
                 if (tipo == 'C' && tabuleiroJogo[i - 1][j] == ' ' && tabuleiroJogo[i][j - 1] == ' ')
                 {
@@ -289,19 +289,19 @@ void moverTopo(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
                     tabuleiroJogo[i][j - 1] = letra;
                     tabuleiroJogo[i + 1][j] = ' ';
                     tabuleiroJogo[i + 1][j - 1] = ' ';
-                    return;
+                    return 1;
                 }
                 else
                 {
                     printf("\nNao e possivel mover peca\n");
-                    return;
+                    return 0;
                 }
             }
         }
     }
 }
 
-void moverBaixo(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
+int moverBaixo(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
 {
     for (int i = 0; i < 5; i++)
     {
@@ -315,12 +315,12 @@ void moverBaixo(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
                     tabuleiroJogo[i + 2][j + 1] = letra;
                     tabuleiroJogo[i][j] = ' ';
                     tabuleiroJogo[i][j + 1] = ' ';
-                    return;
+                    return 1;
                 }
                 else if (tipo == 'D')
                 {
                     printf("\nNao e possivel mover peca\n");
-                    return;
+                    return 0;
                 }
 
                 if (i < 5 && tipo == 'B' && tabuleiroJogo[i + 2][j] == ' ' && tabuleiroJogo[i + 1][j + 1] == ' ')
@@ -329,34 +329,34 @@ void moverBaixo(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
                     tabuleiroJogo[i + 1][j + 1] = letra;
                     tabuleiroJogo[i][j] = ' ';
                     tabuleiroJogo[i][j + 1] = ' ';
-                    return;
+                    return 1;
                 }
                 else if (tipo == 'B')
                 {
                     printf("\nNao e possivel mover peca\n");
-                    return;
+                    return 0;
                 }
                 if (i < 5 && tipo == 'P' && tabuleiroJogo[i + 2][j] == ' ')
                 {
                     tabuleiroJogo[i + 2][j] = letra;
                     tabuleiroJogo[i][j] = ' ';
-                    return;
+                    return 1;
                 }
                 else if (tipo == 'P')
                 {
                     printf("\nNao e possivel mover peca\n");
-                    return;
+                    return 0;
                 }
                 if (i < 5 && tipo == 'Q' && tabuleiroJogo[i + 1][j] == ' ')
                 {
                     tabuleiroJogo[i + 1][j] = letra;
                     tabuleiroJogo[i][j] = ' ';
-                    return;
+                    return 1;
                 }
                 else if (tipo == 'Q')
                 {
                     printf("\nNao e possivel mover peca\n");
-                    return;
+                    return 0;
                 }
                 if (i < 5 && tipo == 'S' && tabuleiroJogo[i + 1][j] == ' ' && tabuleiroJogo[i + 1][j + 1] == ' ')
                 {
@@ -364,12 +364,12 @@ void moverBaixo(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
                     tabuleiroJogo[i + 1][j + 1] = letra;
                     tabuleiroJogo[i][j] = ' ';
                     tabuleiroJogo[i][j + 1] = ' ';
-                    return;
+                    return 1;
                 }
                 else if (tipo == 'S')
                 {
                     printf("\nNao e possivel mover peca\n");
-                    return;
+                    return 0;
                 }
                 if (tipo == 'C' && tabuleiroJogo[i + 2][j] == ' ' && tabuleiroJogo[i + 2][j - 1] == ' ')
                 {
@@ -377,38 +377,40 @@ void moverBaixo(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
                     tabuleiroJogo[i + 2][j - 1] = letra;
                     tabuleiroJogo[i][j] = ' ';
                     tabuleiroJogo[i + 1][j - 1] = ' ';
-                    return;
+                    return 1;
                 }
                 else
                 {
                     printf("\nNao e possivel mover peca\n");
-                    return;
+                    return 0;
                 }
             }
         }
     }
 }
 
-void moverDirecao(char direcao, char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
+int moverDirecao(char direcao, char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
 {
+    int pecaMov = 0;
     switch (direcao)
     {
     case 'D':
-        moverDireita(tipo, letra, tabuleiroJogo);
+        pecaMov = moverDireita(tipo, letra, tabuleiroJogo);
         break;
     case 'E':
-        moverEsquerda(tipo, letra, tabuleiroJogo);
+        pecaMov = moverEsquerda(tipo, letra, tabuleiroJogo);
         break;
     case 'T':
-        moverTopo(tipo, letra, tabuleiroJogo);
+        pecaMov = moverTopo(tipo, letra, tabuleiroJogo);
         break;
     case 'B':
-        moverBaixo(tipo, letra, tabuleiroJogo);
+        pecaMov = moverBaixo(tipo, letra, tabuleiroJogo);
         break;
     default:
         printf("INTERNAL ERROR: DIRECAO INVALIDA");
         break;
     }
+    return pecaMov;
 }
 
 char encontrarLetra(char char_i, char char_j, char tabuleiroJogo[5][TAM_MAX_COL])
@@ -532,7 +534,7 @@ int interacoesUsuario(int argc, char argumento[], int configTabuleiro, int jaEsc
                 {
                     if (configTabuleiro == 1){
                         printf("\nTabuleiro escolhido ja esta sendo utilizado.\n\n");
-                        return 1;
+                        return 0;
                     } else {
                     printf("Tem certeza que quer trocar de tabuleiro? Todo o seu progresso sera perdido.\n");
                     printf("Digite 1 para Sim e qualquer outra tecla para Nao: ");
@@ -560,7 +562,7 @@ int interacoesUsuario(int argc, char argumento[], int configTabuleiro, int jaEsc
                 {
                     if (configTabuleiro == 2){
                         printf("\nTabuleiro escolhido ja esta sendo utilizado.\n\n");
-                        return 2;
+                        return 0;
                     } else {
                     printf("Tem certeza que quer trocar de tabuleiro? Todo o seu progresso sera perdido.\n");
                     printf("Digite 1 para Sim e qualquer outra tecla para Nao: ");
@@ -800,6 +802,7 @@ int main(int argc, char *argv[])
     int jaEscolheuTabuleiro = 0;
     int configTabuleiro = 1;
     int fim = 0;
+    int contMov = 0;
 
     char titulo1Nome[14];
     char titulo2Nome[15];
@@ -884,36 +887,39 @@ int main(int argc, char *argv[])
             {
                 configTabuleiro = 1;
                 jaEscolheuTabuleiro = 1;
+                contMov = 0;
+                historico = NULL;
                 copiarMatriz(tabuleiro1, tabuleiroJogo);
                 printarTabuleiro(configTabuleiro, tabuleiroJogo);
+                historico = inserirNodeNoFim(historico, configTabuleiro, tabuleiroJogo);
             }
             else if (resultado == 2)
             {
                 configTabuleiro = 2;
                 jaEscolheuTabuleiro = 1;
+                contMov = 0;
+                historico = NULL;
                 copiarMatriz(tabuleiro2, tabuleiroJogo);
                 printarTabuleiro(configTabuleiro, tabuleiroJogo);
+                historico = inserirNodeNoFim(historico, configTabuleiro, tabuleiroJogo);
             }
             else if (resultado == 3)
             {
                 // Movimentacao
                 char letra = encontrarLetra(inputUsuario[2], inputUsuario[4], tabuleiroJogo);
                 char tipo = checarTipoPeca(letra, tabuleiroJogo);
-                moverDirecao(inputUsuario[6], tipo, letra, tabuleiroJogo);
+                int movCerto = moverDirecao(inputUsuario[6], tipo, letra, tabuleiroJogo);
+
+                if (movCerto == 1)
+                {
+                    printf("Movimento %d\n", ++contMov);
+                    historico = inserirNodeNoFim(historico, configTabuleiro, tabuleiroJogo);
+                }
                 printarTabuleiro(configTabuleiro, tabuleiroJogo);
-
-                // TO DO: 
-                // 1 - Verificar se movimento foi valido antes de guardar no historico!
-                //     (Pois esta guardando tudo no historico) =D
-                // 2 - Guardar primeira configuracao antes de mover primeira peca
-                // 3 - Resetar historico quando trocar o tabuleiro (perder o progresso)
-                // 4 - Ir beber uma cerveja pois acabou a fase 2 e eh feriado yay
-
-                historico = inserirNodeNoFim(historico, configTabuleiro, tabuleiroJogo); 
             }
             else if (resultado == 4)
             {
-                printf("Historico de movimento\ns");
+                printf("\nHistorico de movimentos\n\n");
                 mostrarHistorico(historico);
             }
             else

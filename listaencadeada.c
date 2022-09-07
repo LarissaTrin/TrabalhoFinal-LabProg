@@ -76,7 +76,7 @@ void mostrarHistorico(Node* historico){
 
     while (auxiliar != NULL){
         printarTabuleiro(2, auxiliar -> fotoTabuleiroAtual);
-        printf("\n");
+        printf("\n\n");
         auxiliar = auxiliar -> proximo;
     }
 }
@@ -84,6 +84,13 @@ void mostrarHistorico(Node* historico){
 int main(){
 
     Node *historico = NULL;
+
+    historico = inserirNodeNoFim(historico, tabuleiro2);
+    historico = inserirNodeNoFim(historico, tabuleiro2);
+   
+    mostrarHistorico(historico);
+    printf("\nteste\n");
+    historico = NULL;
 
     historico = inserirNodeNoFim(historico, tabuleiro2);
     historico = inserirNodeNoFim(historico, tabuleiro2);

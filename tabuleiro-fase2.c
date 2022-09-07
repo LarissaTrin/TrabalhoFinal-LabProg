@@ -123,6 +123,8 @@ int moverDireita(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
             }
         }
     }
+    printf("INTERNAL ERROR");
+    return 0;
 }
 
 int moverEsquerda(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
@@ -211,6 +213,8 @@ int moverEsquerda(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
             }
         }
     }
+    printf("INTERNAL ERROR");
+    return 0;
 }
 
 int moverTopo(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
@@ -299,6 +303,8 @@ int moverTopo(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
             }
         }
     }
+    printf("INTERNAL ERROR");
+    return 0;
 }
 
 int moverBaixo(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
@@ -403,6 +409,8 @@ int moverBaixo(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
             }
         }
     }
+    printf("INTERNAL ERROR");
+    return 0;
 }
 
 int moverDirecao(char direcao, char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])

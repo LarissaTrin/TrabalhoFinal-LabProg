@@ -474,7 +474,7 @@ void help1(void)
 
     printf("\n======================== OPCOES ========================\n");
     printf(" -f <nome_arquivo.txt> : Especifica qual tabuleiro o jogo deve utilizar.\n");
-    printf("                         Default: haikori.txt\n\n");
+    printf("                         Default: haikori.txt\n");
 
     printf("\n======================== EXEMPLOS =======================\n");
     printf(" ./tabuleiro\n");
@@ -530,6 +530,10 @@ int interacoesUsuario(int argc, char argumento[], int configTabuleiro, int jaEsc
             {
                 if (jaEscolheuTabuleiro)
                 {
+                    if (configTabuleiro == 1){
+                        printf("\nTabuleiro escolhido ja esta sendo utilizado.\n\n");
+                        return 1;
+                    } else {
                     printf("Tem certeza que quer trocar de tabuleiro? Todo o seu progresso sera perdido.\n");
                     printf("Digite 1 para Sim e qualquer outra tecla para Nao: ");
                     char temCerteza[MAX_INPUT_USER];
@@ -543,6 +547,7 @@ int interacoesUsuario(int argc, char argumento[], int configTabuleiro, int jaEsc
                     {
                         return 0;
                     }
+                    }
                 }
                 else
                 {
@@ -553,6 +558,10 @@ int interacoesUsuario(int argc, char argumento[], int configTabuleiro, int jaEsc
             {
                 if (jaEscolheuTabuleiro)
                 {
+                    if (configTabuleiro == 2){
+                        printf("\nTabuleiro escolhido ja esta sendo utilizado.\n\n");
+                        return 2;
+                    } else {
                     printf("Tem certeza que quer trocar de tabuleiro? Todo o seu progresso sera perdido.\n");
                     printf("Digite 1 para Sim e qualquer outra tecla para Nao: ");
                     char temCerteza[MAX_INPUT_USER];
@@ -565,6 +574,7 @@ int interacoesUsuario(int argc, char argumento[], int configTabuleiro, int jaEsc
                     else
                     {
                         return 0;
+                    }
                     }
                 }
                 else
@@ -666,11 +676,9 @@ void abreArquivo(char nomeArquivoTxt[], char tabuleiro1[5][TAM_MAX_COL], char ta
         printf("Arquivo aberto com sucesso.\n\n");
 
         char str1;
-        // char titulo1Nome[14];
         int titulo1 = 0;
         int i = 0;
         int j = 0;
-        // char titulo2Nome[15];
         int titulo2 = 0;
 
         int contN = 0;
@@ -739,10 +747,56 @@ void abreArquivo(char nomeArquivoTxt[], char tabuleiro1[5][TAM_MAX_COL], char ta
     }
 }
 
+typedef struct node{
+    char fotoTabuleiroAtual[5][TAM_MAX_COL];
+    int numTabuleiro;
+    struct node *proximo;
+}Node;
+
+Node* criarNode(){
+    Node *novoNode = (Node*)malloc(sizeof(Node));
+    return novoNode;
+}
+
+Node* inserirNodeNoFim(Node* historico, int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_COL]){
+    Node *novoNode = criarNode();
+    copiarMatriz(tabuleiroJogo, novoNode -> fotoTabuleiroAtual);
+    novoNode -> numTabuleiro = configTabuleiro;
+
+    if (historico == NULL){
+        historico = novoNode;
+        novoNode -> proximo = NULL;
+    } else {
+        Node *auxiliar = historico;
+
+        while ((auxiliar -> proximo) != NULL){
+            auxiliar = auxiliar -> proximo;
+        }
+
+        auxiliar -> proximo = novoNode;
+        novoNode -> proximo = NULL;
+    }
+
+    return historico;
+}
+
+void mostrarHistorico(Node* historico){
+    Node *auxiliar = historico;
+
+    while (auxiliar != NULL){
+        printarTabuleiro(auxiliar -> numTabuleiro, auxiliar -> fotoTabuleiroAtual);
+        printf("\n");
+        auxiliar = auxiliar -> proximo;
+    }
+}
+
 int main(int argc, char *argv[])
 {
 
     banner();
+
+    Node *historico = NULL;
+
     int jaEscolheuTabuleiro = 0;
     int configTabuleiro = 1;
     int fim = 0;
@@ -765,10 +819,6 @@ int main(int argc, char *argv[])
         {'\0', '\0', '\0', '\0', '\0', '\0', '\0'}};
 
     char tabuleiroJogo[5][TAM_MAX_COL];
-    char historico[10];
-
-    // ./tabuleiro -f meuarquivo.txt >>>>>> argc = 3
-    // ./tabuleiro >>>> argc = 1
 
     if (argc == 1)
     {
@@ -828,13 +878,12 @@ int main(int argc, char *argv[])
             int resultado = interacoesUsuario(len, inputUsuario, configTabuleiro, jaEscolheuTabuleiro);
             if (resultado == 0)
             {
-                // Faz nada
+                continue;
             }
             else if (resultado == 1)
             {
                 configTabuleiro = 1;
                 jaEscolheuTabuleiro = 1;
-                // memset(historico, '\0', sizeof(historico));
                 copiarMatriz(tabuleiro1, tabuleiroJogo);
                 printarTabuleiro(configTabuleiro, tabuleiroJogo);
             }
@@ -842,7 +891,6 @@ int main(int argc, char *argv[])
             {
                 configTabuleiro = 2;
                 jaEscolheuTabuleiro = 1;
-                // memset(historico, '\0', sizeof(historico));
                 copiarMatriz(tabuleiro2, tabuleiroJogo);
                 printarTabuleiro(configTabuleiro, tabuleiroJogo);
             }
@@ -853,20 +901,31 @@ int main(int argc, char *argv[])
                 char tipo = checarTipoPeca(letra, tabuleiroJogo);
                 moverDirecao(inputUsuario[6], tipo, letra, tabuleiroJogo);
                 printarTabuleiro(configTabuleiro, tabuleiroJogo);
+
+                // TO DO: 
+                // 1 - Verificar se movimento foi valido antes de guardar no historico!
+                //     (Pois esta guardando tudo no historico) =D
+                // 2 - Guardar primeira configuracao antes de mover primeira peca
+                // 3 - Resetar historico quando trocar o tabuleiro (perder o progresso)
+                // 4 - Ir beber uma cerveja pois acabou a fase 2 e eh feriado yay
+
+                historico = inserirNodeNoFim(historico, configTabuleiro, tabuleiroJogo); 
             }
             else if (resultado == 4)
             {
-                // Mostra o histórico
+                printf("Historico de movimento\ns");
+                mostrarHistorico(historico);
             }
             else
             {
                 // Listar tabuleiros
                 printf("1\n%s\n", titulo1Nome);
                 printarTabuleiro(1, tabuleiro1);
-                printf("\n\n2\n%s\n", titulo2Nome);
+                printf("\n2\n%s\n", titulo2Nome);
                 printarTabuleiro(2, tabuleiro2);
             }
         }
     }
+    
     return 0;
 }

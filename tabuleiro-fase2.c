@@ -489,7 +489,7 @@ void help2(void)
     printf("                       Se a configuracao for alterada no meio de um jogo, todo o progresso anterior sera perdido.\n\n");
     printf(" m <lin> <col> <dir> : Movimenta a peca que esta na posicao (lin,col) para a direcao dir.\n");
     printf("                       Direcoes: D - Direita | E - Esquerda | B - Baixo | T - Topo\n");
-    printf(" p                   : Imprime o historico de movimentacoes desde a configuracao inicial.\n");
+    printf(" p                   : Imprime o historico de movimentacoes desde a configuracao inicial.\n\n");
 }
 
 int interacoesUsuario(int argc, char argumento[], int configTabuleiro, int jaEscolheuTabuleiro)
@@ -500,7 +500,7 @@ int interacoesUsuario(int argc, char argumento[], int configTabuleiro, int jaEsc
 
     if (argc == 3 || argc > 4)
     {
-        printf("[!]1 Erro no numero de argumentos\n\n");
+        printf("[!]1 Erro nos argumentos\n\n");
         help2();
         return 0;
     }

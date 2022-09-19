@@ -482,6 +482,229 @@ char checarTipoPeca(char letra, char tabuleiroJogo[5][TAM_MAX_COL])
     return 'e';
 }
 
+void encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_COL], int numEspaco) // Node* possiveisJogadas
+{
+    // Node *possiveisJogadas = NULL;
+    char tabuleiroAux[5][TAM_MAX_COL];
+    copiarMatriz(tabuleiroJogo, tabuleiroAux);
+    char tipoPeca = ' ';
+    int movValido;
+
+    for (int i = 0; i < 5; i++)
+    {
+        for (int j = 0; j < 6; j++)
+        {
+            if (tabuleiroJogo[i][j] == ' ')
+            {
+                if (tabuleiroJogo[i][j + 1] == ' ')
+                {
+                    // vazio horizontal ['', '']
+                    if (i > 0)
+                    {
+                        // Checando em cima
+                        tipoPeca = checarTipoPeca(tabuleiroJogo[i - 1][j], tabuleiroJogo);
+                        movValido = moverDirecao('B', tipoPeca, tabuleiroJogo[i - 1][j], tabuleiroAux);
+                        if (movValido)
+                        {
+                            printf("Estive aqui 1\n");
+                            copiarMatriz(tabuleiroJogo, tabuleiroAux);
+                        }
+                        if (tabuleiroJogo[i - 1][j] != tabuleiroJogo[i - 1][j + 1])
+                        {
+                            tipoPeca = checarTipoPeca(tabuleiroJogo[i - 1][j + 1], tabuleiroJogo);
+                            movValido = moverDirecao('B', tipoPeca, tabuleiroJogo[i - 1][j + 1], tabuleiroAux);
+                            if (movValido)
+                            {
+                                printf("Estive aqui 2\n");
+                                copiarMatriz(tabuleiroJogo, tabuleiroAux);
+                            }
+                        }
+                    }
+
+                    if (i < 4)
+                    {
+                        // Checando embaixo
+                        tipoPeca = checarTipoPeca(tabuleiroJogo[i + 1][j], tabuleiroJogo);
+                        movValido = moverDirecao('T', tipoPeca, tabuleiroJogo[i + 1][j], tabuleiroAux);
+                        if (movValido)
+                        {
+                            printf("Estive aqui 3 \n");
+                            copiarMatriz(tabuleiroJogo, tabuleiroAux);
+                        }
+                        if (tabuleiroJogo[i + 1][j] != tabuleiroJogo[i + 1][j + 1])
+                        {
+                            tipoPeca = checarTipoPeca(tabuleiroJogo[i + 1][j + 1], tabuleiroJogo);
+                            movValido = moverDirecao('T', tipoPeca, tabuleiroJogo[i + 1][j + 1], tabuleiroAux);
+                            if (movValido)
+                            {
+                                printf("Estive aqui 4 \n");
+                                copiarMatriz(tabuleiroJogo, tabuleiroAux);
+                            }
+                        }
+                    }
+
+                    if (j > 0)
+                    {
+                        // Checando esquerda
+                        tipoPeca = checarTipoPeca(tabuleiroJogo[i][j - 1], tabuleiroJogo);
+                        movValido = moverDirecao('D', tipoPeca, tabuleiroJogo[i][j - 1], tabuleiroAux);
+                        if (movValido)
+                        {
+                            printf("Estive aqui 5\n");
+                            copiarMatriz(tabuleiroJogo, tabuleiroAux);
+                        }
+                    }
+
+                    int n = (configTabuleiro == 1 ? 3 : 5);
+
+                    if (j < n)
+                    {
+                        // Checando direita
+                        tipoPeca = checarTipoPeca(tabuleiroJogo[i][j + 2], tabuleiroJogo);
+                        movValido = moverDirecao('E', tipoPeca, tabuleiroJogo[i][j + 2], tabuleiroAux);
+                        if (movValido)
+                        {
+                            printf("Estive aqui 6\n");
+                            copiarMatriz(tabuleiroJogo, tabuleiroAux);
+                        }
+                    }
+
+                    return;
+                }
+                else if (tabuleiroJogo[i + 1][j] == ' ')
+                {
+                    if (i > 0)
+                    {
+                        // vazio Vertical ['']
+                        //                ['']
+                        // Checando em cima
+                        tipoPeca = checarTipoPeca(tabuleiroJogo[i - 1][j], tabuleiroJogo);
+                        movValido = moverDirecao('B', tipoPeca, tabuleiroJogo[i - 1][j], tabuleiroAux);
+                        if (movValido)
+                        {
+                            printf("Estive aqui 7\n");
+                            copiarMatriz(tabuleiroJogo, tabuleiroAux);
+                        }
+                    }
+
+                    if (i < 3)
+                    {
+                        // Checando embaixo
+                        tipoPeca = checarTipoPeca(tabuleiroJogo[i + 2][j], tabuleiroJogo);
+                        movValido = moverDirecao('T', tipoPeca, tabuleiroJogo[i + 2][j], tabuleiroAux);
+                        if (movValido)
+                        {
+                            printf("Estive aqui 8\n");
+                            copiarMatriz(tabuleiroJogo, tabuleiroAux);
+                        }
+                    }
+
+                    if (j > 0)
+                    {
+                        // Checando esquerda
+                        tipoPeca = checarTipoPeca(tabuleiroJogo[i][j - 1], tabuleiroJogo);
+                        movValido = moverDirecao('D', tipoPeca, tabuleiroJogo[i][j - 1], tabuleiroAux);
+                        if (movValido)
+                        {
+                            printf("Estive aqui 9\n");
+                            copiarMatriz(tabuleiroJogo, tabuleiroAux);
+                        }
+                        if (tabuleiroJogo[i][j - 1] != tabuleiroJogo[i + 1][j - 1])
+                        {
+                            tipoPeca = checarTipoPeca(tabuleiroJogo[i + 1][j - 1], tabuleiroJogo);
+                            movValido = moverDirecao('D', tipoPeca, tabuleiroJogo[i + 1][j - 1], tabuleiroAux);
+
+                            if (movValido)
+                            {
+                                printf("Estive aqui 10\n");
+                                copiarMatriz(tabuleiroJogo, tabuleiroAux);
+                            }
+                        }
+                    }
+
+                    int n = (configTabuleiro == 1 ? 3 : 5);
+
+                    if (j < n)
+                    {
+                        // Checando direita
+                        tipoPeca = checarTipoPeca(tabuleiroJogo[i][j + 1], tabuleiroJogo);
+                        movValido = moverDirecao('E', tipoPeca, tabuleiroJogo[i][j + 1], tabuleiroAux);
+                        if (movValido)
+                        {
+                            printf("Estive aqui 11\n");
+                            copiarMatriz(tabuleiroJogo, tabuleiroAux);
+                        }
+                        if (tabuleiroJogo[i][j + 1] != tabuleiroJogo[i + 1][j + 1])
+                        {
+                            tipoPeca = checarTipoPeca(tabuleiroJogo[i + 1][j + 1], tabuleiroJogo);
+                            movValido = moverDirecao('E', tipoPeca, tabuleiroJogo[i + 1][j + 1], tabuleiroAux);
+                            if (movValido)
+                            {
+                                printf("Estive aqui 12\n");
+                                copiarMatriz(tabuleiroJogo, tabuleiroAux);
+                            }
+                        }
+                    }
+                    return;
+                }
+                else
+                {
+                    if (i > 0)
+                    {
+                        // Checando em cima
+                        tipoPeca = checarTipoPeca(tabuleiroJogo[i - 1][j], tabuleiroJogo);
+                        movValido = moverDirecao('B', tipoPeca, tabuleiroJogo[i - 1][j], tabuleiroAux);
+                        if (movValido)
+                        {
+                            printf("Estive aqui 13\n");
+                            copiarMatriz(tabuleiroJogo, tabuleiroAux);
+                        }
+                    }
+
+                    if (i < 4)
+                    {
+                        // Checando embaixo
+                        tipoPeca = checarTipoPeca(tabuleiroJogo[i + 1][j], tabuleiroJogo);
+                        movValido = moverDirecao('T', tipoPeca, tabuleiroJogo[i + 1][j], tabuleiroAux);
+                        if (movValido)
+                        {
+                            printf("Estive aqui 14\n");
+                            copiarMatriz(tabuleiroJogo, tabuleiroAux);
+                        }
+                    }
+
+                    if (j > 0)
+                    {
+                        // Checando esquerda
+                        tipoPeca = checarTipoPeca(tabuleiroJogo[i][j - 1], tabuleiroJogo);
+                        movValido = moverDirecao('D', tipoPeca, tabuleiroJogo[i][j - 1], tabuleiroAux);
+                        if (movValido)
+                        {
+                            printf("Estive aqui 15\n");
+                            copiarMatriz(tabuleiroJogo, tabuleiroAux);
+                        }
+                    }
+
+                    int n = (configTabuleiro == 1 ? 3 : 5);
+
+                    if (j < n)
+                    {
+                        // Checando direita
+                        tipoPeca = checarTipoPeca(tabuleiroJogo[i][j + 1], tabuleiroJogo);
+                        movValido = moverDirecao('E', tipoPeca, tabuleiroJogo[i][j + 1], tabuleiroAux);
+                        if (movValido)
+                        {
+                            printf("Estive aqui 16\n");
+                            copiarMatriz(tabuleiroJogo, tabuleiroAux);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return;
+}
+
 void banner(void)
 {
     printf("-----------------\n");
@@ -516,6 +739,19 @@ void help2(void)
     printf(" m <lin> <col> <dir> : Movimenta a peca que esta na posicao (lin,col) para a direcao dir.\n");
     printf("                       Direcoes: D - Direita | E - Esquerda | B - Baixo | T - Topo\n");
     printf(" p                   : Imprime o historico de movimentacoes desde a configuracao inicial.\n\n");
+}
+
+int verificaFim(int configTabuleiro, char tabuleiro[5][TAM_MAX_COL]) {
+    if (configTabuleiro == 1)
+    {
+        if (tabuleiro[4][1] == 'D' && tabuleiro[4][2] == 'D')
+        {
+            return 1;
+        }
+    } else if (configTabuleiro == 2 && tabuleiro[4][5] == 'D') {
+        return 1;
+    }
+    return 0;
 }
 
 int interacoesUsuario(int argc, char argumento[], int configTabuleiro, int jaEscolheuTabuleiro)
@@ -556,23 +792,26 @@ int interacoesUsuario(int argc, char argumento[], int configTabuleiro, int jaEsc
             {
                 if (jaEscolheuTabuleiro)
                 {
-                    if (configTabuleiro == 1){
+                    if (configTabuleiro == 1)
+                    {
                         printf("\nTabuleiro escolhido ja esta sendo utilizado.\n\n");
                         return 0;
-                    } else {
-                    printf("Tem certeza que quer trocar de tabuleiro? Todo o seu progresso sera perdido.\n");
-                    printf("Digite 1 para Sim e qualquer outra tecla para Nao: ");
-                    char temCerteza[MAX_INPUT_USER];
-                    fgets(temCerteza, MAX_INPUT_USER, stdin);
-                    printf("\n");
-                    if (temCerteza[0] == '1')
-                    {
-                        return 1; // troca do C2 para C1
                     }
                     else
                     {
-                        return 0;
-                    }
+                        printf("Tem certeza que quer trocar de tabuleiro? Todo o seu progresso sera perdido.\n");
+                        printf("Digite 1 para Sim e qualquer outra tecla para Nao: ");
+                        char temCerteza[MAX_INPUT_USER];
+                        fgets(temCerteza, MAX_INPUT_USER, stdin);
+                        printf("\n");
+                        if (temCerteza[0] == '1')
+                        {
+                            return 1; // troca do C2 para C1
+                        }
+                        else
+                        {
+                            return 0;
+                        }
                     }
                 }
                 else
@@ -584,23 +823,26 @@ int interacoesUsuario(int argc, char argumento[], int configTabuleiro, int jaEsc
             {
                 if (jaEscolheuTabuleiro)
                 {
-                    if (configTabuleiro == 2){
+                    if (configTabuleiro == 2)
+                    {
                         printf("\nTabuleiro escolhido ja esta sendo utilizado.\n\n");
                         return 0;
-                    } else {
-                    printf("Tem certeza que quer trocar de tabuleiro? Todo o seu progresso sera perdido.\n");
-                    printf("Digite 1 para Sim e qualquer outra tecla para Nao: ");
-                    char temCerteza[MAX_INPUT_USER];
-                    fgets(temCerteza, MAX_INPUT_USER, stdin);
-                    printf("\n");
-                    if (temCerteza[0] == '1')
-                    {
-                        return 2; // troca do C1 para C2
                     }
                     else
                     {
-                        return 0;
-                    }
+                        printf("Tem certeza que quer trocar de tabuleiro? Todo o seu progresso sera perdido.\n");
+                        printf("Digite 1 para Sim e qualquer outra tecla para Nao: ");
+                        char temCerteza[MAX_INPUT_USER];
+                        fgets(temCerteza, MAX_INPUT_USER, stdin);
+                        printf("\n");
+                        if (temCerteza[0] == '1')
+                        {
+                            return 2; // troca do C1 para C2
+                        }
+                        else
+                        {
+                            return 0;
+                        }
                     }
                 }
                 else
@@ -773,46 +1015,55 @@ void abreArquivo(char nomeArquivoTxt[], char tabuleiro1[5][TAM_MAX_COL], char ta
     }
 }
 
-typedef struct node{
+typedef struct node
+{
     char fotoTabuleiroAtual[5][TAM_MAX_COL];
     int numTabuleiro;
     struct node *proximo;
-}Node;
+} Node;
 
-Node* criarNode(){
-    Node *novoNode = (Node*)malloc(sizeof(Node));
+Node *criarNode()
+{
+    Node *novoNode = (Node *)malloc(sizeof(Node));
     return novoNode;
 }
 
-Node* inserirNodeNoFim(Node* historico, int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_COL]){
+Node *inserirNodeNoFim(Node *historico, int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_COL])
+{
     Node *novoNode = criarNode();
-    copiarMatriz(tabuleiroJogo, novoNode -> fotoTabuleiroAtual);
-    novoNode -> numTabuleiro = configTabuleiro;
+    copiarMatriz(tabuleiroJogo, novoNode->fotoTabuleiroAtual);
+    novoNode->numTabuleiro = configTabuleiro;
 
-    if (historico == NULL){
+    if (historico == NULL)
+    {
         historico = novoNode;
-        novoNode -> proximo = NULL;
-    } else {
+        novoNode->proximo = NULL;
+    }
+    else
+    {
         Node *auxiliar = historico;
 
-        while ((auxiliar -> proximo) != NULL){
-            auxiliar = auxiliar -> proximo;
+        while ((auxiliar->proximo) != NULL)
+        {
+            auxiliar = auxiliar->proximo;
         }
 
-        auxiliar -> proximo = novoNode;
-        novoNode -> proximo = NULL;
+        auxiliar->proximo = novoNode;
+        novoNode->proximo = NULL;
     }
 
     return historico;
 }
 
-void mostrarHistorico(Node* historico){
+void mostrarHistorico(Node *historico)
+{
     Node *auxiliar = historico;
 
-    while (auxiliar != NULL){
-        printarTabuleiro(auxiliar -> numTabuleiro, auxiliar -> fotoTabuleiroAtual);
+    while (auxiliar != NULL)
+    {
+        printarTabuleiro(auxiliar->numTabuleiro, auxiliar->fotoTabuleiroAtual);
         printf("\n");
-        auxiliar = auxiliar -> proximo;
+        auxiliar = auxiliar->proximo;
     }
 }
 
@@ -822,6 +1073,7 @@ int main(int argc, char *argv[])
     banner();
 
     Node *historico = NULL;
+    // Node *possiveisJogadas = NULL;
 
     int jaEscolheuTabuleiro = 0;
     int configTabuleiro = 1;
@@ -916,6 +1168,8 @@ int main(int argc, char *argv[])
                 copiarMatriz(tabuleiro1, tabuleiroJogo);
                 printarTabuleiro(configTabuleiro, tabuleiroJogo);
                 historico = inserirNodeNoFim(historico, configTabuleiro, tabuleiroJogo);
+
+                encontrarProxsJogadas(configTabuleiro, tabuleiroJogo, 1);
             }
             else if (resultado == 2)
             {
@@ -926,6 +1180,8 @@ int main(int argc, char *argv[])
                 copiarMatriz(tabuleiro2, tabuleiroJogo);
                 printarTabuleiro(configTabuleiro, tabuleiroJogo);
                 historico = inserirNodeNoFim(historico, configTabuleiro, tabuleiroJogo);
+
+                encontrarProxsJogadas(configTabuleiro, tabuleiroJogo, 1);
             }
             else if (resultado == 3)
             {
@@ -940,6 +1196,14 @@ int main(int argc, char *argv[])
                     historico = inserirNodeNoFim(historico, configTabuleiro, tabuleiroJogo);
                 }
                 printarTabuleiro(configTabuleiro, tabuleiroJogo);
+
+                int fimDeJogo = verificaFim(configTabuleiro, tabuleiroJogo);
+                if (fimDeJogo)
+                {
+                    printf("\nVoce Ganhou!\nTchau, obrigado por ter jogado!");
+                    fim = 1;
+                }
+                
             }
             else if (resultado == 4)
             {
@@ -956,6 +1220,5 @@ int main(int argc, char *argv[])
             }
         }
     }
-    
     return 0;
 }

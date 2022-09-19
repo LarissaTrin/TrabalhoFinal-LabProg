@@ -55,7 +55,6 @@ int moverDireita(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
                 }
                 else if (tipo == 'D')
                 {
-                    printf("\nNao e possivel mover peca\n");
                     return 0;
                 }
 
@@ -69,7 +68,6 @@ int moverDireita(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
                 }
                 else if (tipo == 'B')
                 {
-                    printf("\nNao e possivel mover peca\n");
                     return 0;
                 }
                 if (tipo == 'P' && tabuleiroJogo[i][j + 1] == ' ' && tabuleiroJogo[i + 1][j + 1] == ' ')
@@ -82,7 +80,6 @@ int moverDireita(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
                 }
                 else if (tipo == 'P')
                 {
-                    printf("\nNao e possivel mover peca\n");
                     return 0;
                 }
                 if (tipo == 'Q' && tabuleiroJogo[i][j + 1] == ' ')
@@ -93,7 +90,6 @@ int moverDireita(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
                 }
                 else if (tipo == 'Q')
                 {
-                    printf("\nNao e possivel mover peca\n");
                     return 0;
                 }
                 if (tipo == 'S' && tabuleiroJogo[i][j + 2] == ' ')
@@ -104,7 +100,6 @@ int moverDireita(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
                 }
                 else if (tipo == 'S')
                 {
-                    printf("\nNao e possivel mover peca\n");
                     return 0;
                 }
                 if (tipo == 'C' && tabuleiroJogo[i][j + 1] == ' ' && tabuleiroJogo[i + 1][j + 1] == ' ')
@@ -117,7 +112,6 @@ int moverDireita(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
                 }
                 else
                 {
-                    printf("\nNao e possivel mover peca\n");
                     return 0;
                 }
             }
@@ -145,7 +139,6 @@ int moverEsquerda(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
                 }
                 else if (tipo == 'D')
                 {
-                    printf("\nNao e possivel mover peca\n");
                     return 0;
                 }
 
@@ -159,7 +152,6 @@ int moverEsquerda(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
                 }
                 else if (tipo == 'B')
                 {
-                    printf("\nNao e possivel mover peca\n");
                     return 0;
                 }
                 if (j > 0 && tipo == 'P' && tabuleiroJogo[i][j - 1] == ' ' && tabuleiroJogo[i + 1][j - 1] == ' ')
@@ -172,7 +164,6 @@ int moverEsquerda(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
                 }
                 else if (tipo == 'P')
                 {
-                    printf("\nNao e possivel mover peca\n");
                     return 0;
                 }
                 if (j > 0 && tipo == 'Q' && tabuleiroJogo[i][j - 1] == ' ')
@@ -183,7 +174,6 @@ int moverEsquerda(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
                 }
                 else if (tipo == 'Q')
                 {
-                    printf("\nNao e possivel mover peca\n");
                     return 0;
                 }
                 if (j > 0 && tipo == 'S' && tabuleiroJogo[i][j - 1] == ' ')
@@ -194,7 +184,6 @@ int moverEsquerda(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
                 }
                 else if (tipo == 'S')
                 {
-                    printf("\nNao e possivel mover peca\n");
                     return 0;
                 }
                 if (j > 0 && tipo == 'C' && tabuleiroJogo[i][j - 1] == ' ' && tabuleiroJogo[i + 1][j - 2] == ' ')
@@ -207,7 +196,6 @@ int moverEsquerda(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
                 }
                 else
                 {
-                    printf("\nNao e possivel mover peca\n");
                     return 0;
                 }
             }
@@ -235,7 +223,6 @@ int moverTopo(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
                 }
                 else if (tipo == 'D')
                 {
-                    printf("\nNao e possivel mover peca\n");
                     return 0;
                 }
 
@@ -249,7 +236,6 @@ int moverTopo(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
                 }
                 else if (tipo == 'B')
                 {
-                    printf("\nNao e possivel mover peca\n");
                     return 0;
                 }
                 if (i > 0 && tipo == 'P' && tabuleiroJogo[i - 1][j] == ' ')
@@ -260,7 +246,6 @@ int moverTopo(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
                 }
                 else if (tipo == 'P')
                 {
-                    printf("\nNao e possivel mover peca\n");
                     return 0;
                 }
                 if (i > 0 && tipo == 'Q' && tabuleiroJogo[i - 1][j] == ' ')
@@ -271,7 +256,6 @@ int moverTopo(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
                 }
                 else if (tipo == 'Q')
                 {
-                    printf("\nNao e possivel mover peca\n");
                     return 0;
                 }
                 if (i > 0 && tipo == 'S' && tabuleiroJogo[i - 1][j] == ' ' && tabuleiroJogo[i - 1][j + 1] == ' ')
@@ -284,7 +268,6 @@ int moverTopo(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
                 }
                 else if (tipo == 'S')
                 {
-                    printf("\nNao e possivel mover peca\n");
                     return 0;
                 }
                 if (tipo == 'C' && tabuleiroJogo[i - 1][j] == ' ' && tabuleiroJogo[i][j - 1] == ' ')
@@ -297,7 +280,6 @@ int moverTopo(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
                 }
                 else
                 {
-                    printf("\nNao e possivel mover peca\n");
                     return 0;
                 }
             }
@@ -325,7 +307,6 @@ int moverBaixo(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
                 }
                 else if (tipo == 'D')
                 {
-                    printf("\nNao e possivel mover peca\n");
                     return 0;
                 }
 
@@ -339,7 +320,6 @@ int moverBaixo(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
                 }
                 else if (tipo == 'B')
                 {
-                    printf("\nNao e possivel mover peca\n");
                     return 0;
                 }
                 if (i < 5 && tipo == 'P' && tabuleiroJogo[i + 2][j] == ' ')
@@ -352,13 +332,11 @@ int moverBaixo(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
                     }
                     else
                     {
-                        printf("\nNao e possivel mover peca\n");
                         return 0;
                     }
                 }
                 else if (tipo == 'P')
                 {
-                    printf("\nNao e possivel mover peca\n");
                     return 0;
                 }
                 if (i < 5 && tipo == 'Q' && tabuleiroJogo[i + 1][j] == ' ')
@@ -371,13 +349,11 @@ int moverBaixo(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
                     }
                     else
                     {
-                        printf("\nNao e possivel mover peca\n");
                         return 0;
                     }
                 }
                 else if (tipo == 'Q')
                 {
-                    printf("\nNao e possivel mover peca\n");
                     return 0;
                 }
                 if (i < 5 && tipo == 'S' && tabuleiroJogo[i + 1][j] == ' ' && tabuleiroJogo[i + 1][j + 1] == ' ')
@@ -390,7 +366,6 @@ int moverBaixo(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
                 }
                 else if (tipo == 'S')
                 {
-                    printf("\nNao e possivel mover peca\n");
                     return 0;
                 }
                 if (tipo == 'C' && tabuleiroJogo[i + 2][j] == ' ' && tabuleiroJogo[i + 2][j - 1] == ' ')
@@ -403,7 +378,6 @@ int moverBaixo(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
                 }
                 else
                 {
-                    printf("\nNao e possivel mover peca\n");
                     return 0;
                 }
             }
@@ -482,229 +456,6 @@ char checarTipoPeca(char letra, char tabuleiroJogo[5][TAM_MAX_COL])
     return 'e';
 }
 
-void encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_COL], int numEspaco) // Node* possiveisJogadas
-{
-    // Node *possiveisJogadas = NULL;
-    char tabuleiroAux[5][TAM_MAX_COL];
-    copiarMatriz(tabuleiroJogo, tabuleiroAux);
-    char tipoPeca = ' ';
-    int movValido;
-
-    for (int i = 0; i < 5; i++)
-    {
-        for (int j = 0; j < 6; j++)
-        {
-            if (tabuleiroJogo[i][j] == ' ')
-            {
-                if (tabuleiroJogo[i][j + 1] == ' ')
-                {
-                    // vazio horizontal ['', '']
-                    if (i > 0)
-                    {
-                        // Checando em cima
-                        tipoPeca = checarTipoPeca(tabuleiroJogo[i - 1][j], tabuleiroJogo);
-                        movValido = moverDirecao('B', tipoPeca, tabuleiroJogo[i - 1][j], tabuleiroAux);
-                        if (movValido)
-                        {
-                            printf("Estive aqui 1\n");
-                            copiarMatriz(tabuleiroJogo, tabuleiroAux);
-                        }
-                        if (tabuleiroJogo[i - 1][j] != tabuleiroJogo[i - 1][j + 1])
-                        {
-                            tipoPeca = checarTipoPeca(tabuleiroJogo[i - 1][j + 1], tabuleiroJogo);
-                            movValido = moverDirecao('B', tipoPeca, tabuleiroJogo[i - 1][j + 1], tabuleiroAux);
-                            if (movValido)
-                            {
-                                printf("Estive aqui 2\n");
-                                copiarMatriz(tabuleiroJogo, tabuleiroAux);
-                            }
-                        }
-                    }
-
-                    if (i < 4)
-                    {
-                        // Checando embaixo
-                        tipoPeca = checarTipoPeca(tabuleiroJogo[i + 1][j], tabuleiroJogo);
-                        movValido = moverDirecao('T', tipoPeca, tabuleiroJogo[i + 1][j], tabuleiroAux);
-                        if (movValido)
-                        {
-                            printf("Estive aqui 3 \n");
-                            copiarMatriz(tabuleiroJogo, tabuleiroAux);
-                        }
-                        if (tabuleiroJogo[i + 1][j] != tabuleiroJogo[i + 1][j + 1])
-                        {
-                            tipoPeca = checarTipoPeca(tabuleiroJogo[i + 1][j + 1], tabuleiroJogo);
-                            movValido = moverDirecao('T', tipoPeca, tabuleiroJogo[i + 1][j + 1], tabuleiroAux);
-                            if (movValido)
-                            {
-                                printf("Estive aqui 4 \n");
-                                copiarMatriz(tabuleiroJogo, tabuleiroAux);
-                            }
-                        }
-                    }
-
-                    if (j > 0)
-                    {
-                        // Checando esquerda
-                        tipoPeca = checarTipoPeca(tabuleiroJogo[i][j - 1], tabuleiroJogo);
-                        movValido = moverDirecao('D', tipoPeca, tabuleiroJogo[i][j - 1], tabuleiroAux);
-                        if (movValido)
-                        {
-                            printf("Estive aqui 5\n");
-                            copiarMatriz(tabuleiroJogo, tabuleiroAux);
-                        }
-                    }
-
-                    int n = (configTabuleiro == 1 ? 3 : 5);
-
-                    if (j < n)
-                    {
-                        // Checando direita
-                        tipoPeca = checarTipoPeca(tabuleiroJogo[i][j + 2], tabuleiroJogo);
-                        movValido = moverDirecao('E', tipoPeca, tabuleiroJogo[i][j + 2], tabuleiroAux);
-                        if (movValido)
-                        {
-                            printf("Estive aqui 6\n");
-                            copiarMatriz(tabuleiroJogo, tabuleiroAux);
-                        }
-                    }
-
-                    return;
-                }
-                else if (tabuleiroJogo[i + 1][j] == ' ')
-                {
-                    if (i > 0)
-                    {
-                        // vazio Vertical ['']
-                        //                ['']
-                        // Checando em cima
-                        tipoPeca = checarTipoPeca(tabuleiroJogo[i - 1][j], tabuleiroJogo);
-                        movValido = moverDirecao('B', tipoPeca, tabuleiroJogo[i - 1][j], tabuleiroAux);
-                        if (movValido)
-                        {
-                            printf("Estive aqui 7\n");
-                            copiarMatriz(tabuleiroJogo, tabuleiroAux);
-                        }
-                    }
-
-                    if (i < 3)
-                    {
-                        // Checando embaixo
-                        tipoPeca = checarTipoPeca(tabuleiroJogo[i + 2][j], tabuleiroJogo);
-                        movValido = moverDirecao('T', tipoPeca, tabuleiroJogo[i + 2][j], tabuleiroAux);
-                        if (movValido)
-                        {
-                            printf("Estive aqui 8\n");
-                            copiarMatriz(tabuleiroJogo, tabuleiroAux);
-                        }
-                    }
-
-                    if (j > 0)
-                    {
-                        // Checando esquerda
-                        tipoPeca = checarTipoPeca(tabuleiroJogo[i][j - 1], tabuleiroJogo);
-                        movValido = moverDirecao('D', tipoPeca, tabuleiroJogo[i][j - 1], tabuleiroAux);
-                        if (movValido)
-                        {
-                            printf("Estive aqui 9\n");
-                            copiarMatriz(tabuleiroJogo, tabuleiroAux);
-                        }
-                        if (tabuleiroJogo[i][j - 1] != tabuleiroJogo[i + 1][j - 1])
-                        {
-                            tipoPeca = checarTipoPeca(tabuleiroJogo[i + 1][j - 1], tabuleiroJogo);
-                            movValido = moverDirecao('D', tipoPeca, tabuleiroJogo[i + 1][j - 1], tabuleiroAux);
-
-                            if (movValido)
-                            {
-                                printf("Estive aqui 10\n");
-                                copiarMatriz(tabuleiroJogo, tabuleiroAux);
-                            }
-                        }
-                    }
-
-                    int n = (configTabuleiro == 1 ? 3 : 5);
-
-                    if (j < n)
-                    {
-                        // Checando direita
-                        tipoPeca = checarTipoPeca(tabuleiroJogo[i][j + 1], tabuleiroJogo);
-                        movValido = moverDirecao('E', tipoPeca, tabuleiroJogo[i][j + 1], tabuleiroAux);
-                        if (movValido)
-                        {
-                            printf("Estive aqui 11\n");
-                            copiarMatriz(tabuleiroJogo, tabuleiroAux);
-                        }
-                        if (tabuleiroJogo[i][j + 1] != tabuleiroJogo[i + 1][j + 1])
-                        {
-                            tipoPeca = checarTipoPeca(tabuleiroJogo[i + 1][j + 1], tabuleiroJogo);
-                            movValido = moverDirecao('E', tipoPeca, tabuleiroJogo[i + 1][j + 1], tabuleiroAux);
-                            if (movValido)
-                            {
-                                printf("Estive aqui 12\n");
-                                copiarMatriz(tabuleiroJogo, tabuleiroAux);
-                            }
-                        }
-                    }
-                    return;
-                }
-                else
-                {
-                    if (i > 0)
-                    {
-                        // Checando em cima
-                        tipoPeca = checarTipoPeca(tabuleiroJogo[i - 1][j], tabuleiroJogo);
-                        movValido = moverDirecao('B', tipoPeca, tabuleiroJogo[i - 1][j], tabuleiroAux);
-                        if (movValido)
-                        {
-                            printf("Estive aqui 13\n");
-                            copiarMatriz(tabuleiroJogo, tabuleiroAux);
-                        }
-                    }
-
-                    if (i < 4)
-                    {
-                        // Checando embaixo
-                        tipoPeca = checarTipoPeca(tabuleiroJogo[i + 1][j], tabuleiroJogo);
-                        movValido = moverDirecao('T', tipoPeca, tabuleiroJogo[i + 1][j], tabuleiroAux);
-                        if (movValido)
-                        {
-                            printf("Estive aqui 14\n");
-                            copiarMatriz(tabuleiroJogo, tabuleiroAux);
-                        }
-                    }
-
-                    if (j > 0)
-                    {
-                        // Checando esquerda
-                        tipoPeca = checarTipoPeca(tabuleiroJogo[i][j - 1], tabuleiroJogo);
-                        movValido = moverDirecao('D', tipoPeca, tabuleiroJogo[i][j - 1], tabuleiroAux);
-                        if (movValido)
-                        {
-                            printf("Estive aqui 15\n");
-                            copiarMatriz(tabuleiroJogo, tabuleiroAux);
-                        }
-                    }
-
-                    int n = (configTabuleiro == 1 ? 3 : 5);
-
-                    if (j < n)
-                    {
-                        // Checando direita
-                        tipoPeca = checarTipoPeca(tabuleiroJogo[i][j + 1], tabuleiroJogo);
-                        movValido = moverDirecao('E', tipoPeca, tabuleiroJogo[i][j + 1], tabuleiroAux);
-                        if (movValido)
-                        {
-                            printf("Estive aqui 16\n");
-                            copiarMatriz(tabuleiroJogo, tabuleiroAux);
-                        }
-                    }
-                }
-            }
-        }
-    }
-    return;
-}
-
 void banner(void)
 {
     printf("-----------------\n");
@@ -754,7 +505,7 @@ int verificaFim(int configTabuleiro, char tabuleiro[5][TAM_MAX_COL]) {
     return 0;
 }
 
-int interacoesUsuario(int argc, char argumento[], int configTabuleiro, int jaEscolheuTabuleiro)
+int interacoesUsuario(int argc, char argumento[], int configTabuleiro, int jaEscolheuTabuleiro, char comandoAtivo, int numSugestao)
 {
     int i = 0;
     int j = 0;
@@ -857,9 +608,18 @@ int interacoesUsuario(int argc, char argumento[], int configTabuleiro, int jaEsc
                 return 0;
             }
         }
+        else if (argumento[2] == 's' && comandoAtivo == 's') {
+            if ((argumento[0] - '0') >= 1 && (argumento[0] - '0') <= numSugestao)
+            {
+                return 6;
+            }
+            printf("[!]4 Erro: Argumento invalido\n\n");
+            help2();
+            return 0;
+        }
         else
         {
-            printf("[!]4 Erro: Argumento invalido\n\n");
+            printf("[!]5 Erro: Argumento invalido\n\n");
             help2();
             return 0;
         }
@@ -871,7 +631,7 @@ int interacoesUsuario(int argc, char argumento[], int configTabuleiro, int jaEsc
         {
             if (jaEscolheuTabuleiro == 0)
             {
-                printf("[!]5 Erro: Tabuleiro nao escolhido\n\n");
+                printf("[!]6 Erro: Tabuleiro nao escolhido\n\n");
                 help2();
                 return 0;
             }
@@ -880,7 +640,7 @@ int interacoesUsuario(int argc, char argumento[], int configTabuleiro, int jaEsc
 
             if (direcao != 'D' && direcao != 'E' && direcao != 'T' && direcao != 'B')
             {
-                printf("[!]6 Erro: Direção inválida\n\n");
+                printf("[!]7 Erro: Direção inválida\n\n");
                 help2();
                 return 0;
             }
@@ -1014,7 +774,6 @@ void abreArquivo(char nomeArquivoTxt[], char tabuleiro1[5][TAM_MAX_COL], char ta
         fclose(arqTxtTabuleiros);
     }
 }
-
 typedef struct node
 {
     char fotoTabuleiroAtual[5][TAM_MAX_COL];
@@ -1055,30 +814,297 @@ Node *inserirNodeNoFim(Node *historico, int configTabuleiro, char tabuleiroJogo[
     return historico;
 }
 
-void mostrarHistorico(Node *historico)
+void mostrarHistoricoOuSugestao(Node *historico, int isSugestao)
 {
     Node *auxiliar = historico;
+    int i = 1;
+    
+    if (isSugestao)
+    {
+        printf("\nSugestoes\n");
+    } else {
+        printf("\nHistorico\n");
+    }
 
     while (auxiliar != NULL)
     {
+        if (isSugestao)
+        {
+            printf("%d Sugestao\n", i);
+        }
         printarTabuleiro(auxiliar->numTabuleiro, auxiliar->fotoTabuleiroAtual);
         printf("\n");
         auxiliar = auxiliar->proximo;
+        ++i;
     }
+}
+
+int contSugestoes(Node *sugestoes)
+{
+    Node *auxiliar = sugestoes;
+    int i = 0;
+
+    while (auxiliar != NULL)
+    {
+        auxiliar = auxiliar->proximo;
+        ++i;
+    }
+    return i;
+}
+
+Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_COL], Node *sugestoes) // Node* possiveisJogadas
+{
+    Node *possiveisJogadas = sugestoes;
+    char tabuleiroAux[5][TAM_MAX_COL];
+    copiarMatriz(tabuleiroJogo, tabuleiroAux);
+    char tipoPeca = ' ';
+    int movValido;
+
+    for (int i = 0; i < 5; i++)
+    {
+        for (int j = 0; j < 6; j++)
+        {
+            if (tabuleiroJogo[i][j] == ' ')
+            {
+                if (tabuleiroJogo[i][j + 1] == ' ')
+                {
+                    // vazio horizontal ['', '']
+                    if (i > 0)
+                    {
+                        // Checando em cima
+                        tipoPeca = checarTipoPeca(tabuleiroJogo[i - 1][j], tabuleiroJogo);
+                        movValido = moverDirecao('B', tipoPeca, tabuleiroJogo[i - 1][j], tabuleiroAux);
+                        if (movValido)
+                        {
+                            // printf("Estive aqui 1\n");
+                            possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
+                            copiarMatriz(tabuleiroJogo, tabuleiroAux);
+                        }
+                        if (tabuleiroJogo[i - 1][j] != tabuleiroJogo[i - 1][j + 1])
+                        {
+                            tipoPeca = checarTipoPeca(tabuleiroJogo[i - 1][j + 1], tabuleiroJogo);
+                            movValido = moverDirecao('B', tipoPeca, tabuleiroJogo[i - 1][j + 1], tabuleiroAux);
+                            if (movValido)
+                            {
+                                // printf("Estive aqui 2\n");
+                                possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
+                                copiarMatriz(tabuleiroJogo, tabuleiroAux);
+                            }
+                        }
+                    }
+
+                    if (i < 4)
+                    {
+                        // Checando embaixo
+                        tipoPeca = checarTipoPeca(tabuleiroJogo[i + 1][j], tabuleiroJogo);
+                        movValido = moverDirecao('T', tipoPeca, tabuleiroJogo[i + 1][j], tabuleiroAux);
+                        if (movValido)
+                        {
+                            // printf("Estive aqui 3 \n");
+                            possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
+                            copiarMatriz(tabuleiroJogo, tabuleiroAux);
+                        }
+                        if (tabuleiroJogo[i + 1][j] != tabuleiroJogo[i + 1][j + 1])
+                        {
+                            tipoPeca = checarTipoPeca(tabuleiroJogo[i + 1][j + 1], tabuleiroJogo);
+                            movValido = moverDirecao('T', tipoPeca, tabuleiroJogo[i + 1][j + 1], tabuleiroAux);
+                            if (movValido)
+                            {
+                                // printf("Estive aqui 4 \n");
+                                possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
+                                copiarMatriz(tabuleiroJogo, tabuleiroAux);
+                            }
+                        }
+                    }
+
+                    if (j > 0)
+                    {
+                        // Checando esquerda
+                        tipoPeca = checarTipoPeca(tabuleiroJogo[i][j - 1], tabuleiroJogo);
+                        movValido = moverDirecao('D', tipoPeca, tabuleiroJogo[i][j - 1], tabuleiroAux);
+                        if (movValido)
+                        {
+                            // printf("Estive aqui 5\n");
+                            possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
+                            copiarMatriz(tabuleiroJogo, tabuleiroAux);
+                        }
+                    }
+
+                    int n = (configTabuleiro == 1 ? 3 : 5);
+
+                    if (j < n)
+                    {
+                        // Checando direita
+                        tipoPeca = checarTipoPeca(tabuleiroJogo[i][j + 2], tabuleiroJogo);
+                        movValido = moverDirecao('E', tipoPeca, tabuleiroJogo[i][j + 2], tabuleiroAux);
+                        if (movValido)
+                        {
+                            // printf("Estive aqui 6\n");
+                            possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
+                            copiarMatriz(tabuleiroJogo, tabuleiroAux);
+                        }
+                    }
+
+                        return possiveisJogadas;
+                }
+                else if (tabuleiroJogo[i + 1][j] == ' ')
+                {
+                    if (i > 0)
+                    {
+                        // vazio Vertical ['']
+                        //                ['']
+                        // Checando em cima
+                        tipoPeca = checarTipoPeca(tabuleiroJogo[i - 1][j], tabuleiroJogo);
+                        movValido = moverDirecao('B', tipoPeca, tabuleiroJogo[i - 1][j], tabuleiroAux);
+                        if (movValido)
+                        {
+                            // printf("Estive aqui 7\n");
+                            possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
+                            copiarMatriz(tabuleiroJogo, tabuleiroAux);
+                        }
+                    }
+
+                    if (i < 3)
+                    {
+                        // Checando embaixo
+                        tipoPeca = checarTipoPeca(tabuleiroJogo[i + 2][j], tabuleiroJogo);
+                        movValido = moverDirecao('T', tipoPeca, tabuleiroJogo[i + 2][j], tabuleiroAux);
+                        if (movValido)
+                        {
+                            // printf("Estive aqui 8\n");
+                            possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
+                            copiarMatriz(tabuleiroJogo, tabuleiroAux);
+                        }
+                    }
+
+                    if (j > 0)
+                    {
+                        // Checando esquerda
+                        tipoPeca = checarTipoPeca(tabuleiroJogo[i][j - 1], tabuleiroJogo);
+                        movValido = moverDirecao('D', tipoPeca, tabuleiroJogo[i][j - 1], tabuleiroAux);
+                        if (movValido)
+                        {
+                            // printf("Estive aqui 9\n");
+                            possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
+                            copiarMatriz(tabuleiroJogo, tabuleiroAux);
+                        }
+                        if (tabuleiroJogo[i][j - 1] != tabuleiroJogo[i + 1][j - 1])
+                        {
+                            tipoPeca = checarTipoPeca(tabuleiroJogo[i + 1][j - 1], tabuleiroJogo);
+                            movValido = moverDirecao('D', tipoPeca, tabuleiroJogo[i + 1][j - 1], tabuleiroAux);
+
+                            if (movValido)
+                            {
+                                // printf("Estive aqui 10\n");
+                                possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
+                                copiarMatriz(tabuleiroJogo, tabuleiroAux);
+                            }
+                        }
+                    }
+
+                    int n = (configTabuleiro == 1 ? 3 : 5);
+
+                    if (j < n)
+                    {
+                        // Checando direita
+                        tipoPeca = checarTipoPeca(tabuleiroJogo[i][j + 1], tabuleiroJogo);
+                        movValido = moverDirecao('E', tipoPeca, tabuleiroJogo[i][j + 1], tabuleiroAux);
+                        if (movValido)
+                        {
+                            // printf("Estive aqui 11\n");
+                            possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
+                            copiarMatriz(tabuleiroJogo, tabuleiroAux);
+                        }
+                        if (tabuleiroJogo[i][j + 1] != tabuleiroJogo[i + 1][j + 1])
+                        {
+                            tipoPeca = checarTipoPeca(tabuleiroJogo[i + 1][j + 1], tabuleiroJogo);
+                            movValido = moverDirecao('E', tipoPeca, tabuleiroJogo[i + 1][j + 1], tabuleiroAux);
+                            if (movValido)
+                            {
+                                // printf("Estive aqui 12\n");
+                                possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
+                                copiarMatriz(tabuleiroJogo, tabuleiroAux);
+                            }
+                        }
+                    }
+                        return possiveisJogadas;
+                }
+                else
+                {
+                    if (i > 0)
+                    {
+                        // Checando em cima
+                        tipoPeca = checarTipoPeca(tabuleiroJogo[i - 1][j], tabuleiroJogo);
+                        movValido = moverDirecao('B', tipoPeca, tabuleiroJogo[i - 1][j], tabuleiroAux);
+                        if (movValido)
+                        {
+                            // printf("Estive aqui 13\n");
+                            possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
+                            copiarMatriz(tabuleiroJogo, tabuleiroAux);
+                        }
+                    }
+
+                    if (i < 4)
+                    {
+                        // Checando embaixo
+                        tipoPeca = checarTipoPeca(tabuleiroJogo[i + 1][j], tabuleiroJogo);
+                        movValido = moverDirecao('T', tipoPeca, tabuleiroJogo[i + 1][j], tabuleiroAux);
+                        if (movValido)
+                        {
+                            // printf("Estive aqui 14\n");
+                            possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
+                            copiarMatriz(tabuleiroJogo, tabuleiroAux);
+                        }
+                    }
+
+                    if (j > 0)
+                    {
+                        // Checando esquerda
+                        tipoPeca = checarTipoPeca(tabuleiroJogo[i][j - 1], tabuleiroJogo);
+                        movValido = moverDirecao('D', tipoPeca, tabuleiroJogo[i][j - 1], tabuleiroAux);
+                        if (movValido)
+                        {
+                            // printf("Estive aqui 15\n");
+                            possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
+                            copiarMatriz(tabuleiroJogo, tabuleiroAux);
+                        }
+                    }
+
+                    int n = (configTabuleiro == 1 ? 3 : 5);
+
+                    if (j < n)
+                    {
+                        // Checando direita
+                        tipoPeca = checarTipoPeca(tabuleiroJogo[i][j + 1], tabuleiroJogo);
+                        movValido = moverDirecao('E', tipoPeca, tabuleiroJogo[i][j + 1], tabuleiroAux);
+                        if (movValido)
+                        {
+                            // printf("Estive aqui 16\n");
+                            possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
+                            copiarMatriz(tabuleiroJogo, tabuleiroAux);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return possiveisJogadas;
 }
 
 int main(int argc, char *argv[])
 {
-
     banner();
 
     Node *historico = NULL;
+    Node *sugestoes = NULL;
     // Node *possiveisJogadas = NULL;
 
     int jaEscolheuTabuleiro = 0;
     int configTabuleiro = 1;
     int fim = 0;
     int contMov = 0;
+    int numSugestao = 0;
+    char comandoAtivo = ' ';
 
     char titulo1Nome[14];
     char titulo2Nome[15];
@@ -1143,9 +1169,29 @@ int main(int argc, char *argv[])
                 printf("\nTchau, obrigado por ter jogado!");
                 fim = 1;
             }
-        }
-        else
-        {
+        } else if (inputUsuario[0] == 's') {
+            if (comandoAtivo == 's')
+            {
+                printf("\nComando de sugestao ja ativo, deseja desativar?\nDigite 1 para Sim e qualquer outra tecla para Nao: ");
+                char desativar[MAX_INPUT_USER];
+                fgets(desativar, MAX_INPUT_USER, stdin);
+                printf("\n");
+                if (desativar[0] == '1')
+                {
+                    printf("\nComando de sugestao desativado!\n");
+                    comandoAtivo = ' ';
+                }
+            } else {
+                printf("\nComando de sugestao ativo!\nDigite: 'n s', onde n e o numero da sugestao\n");
+                comandoAtivo = 's';
+                sugestoes = encontrarProxsJogadas(configTabuleiro, tabuleiroJogo, sugestoes);
+                mostrarHistoricoOuSugestao(sugestoes, 1);
+                numSugestao = contSugestoes(sugestoes);
+            }
+        } else if (inputUsuario[0] == 'R') {
+            comandoAtivo = 'R';
+            fim = 1;
+        } else {
             int len = 0;
             for (int i = 0; i != MAX_INPUT_USER; i++)
             {
@@ -1154,7 +1200,7 @@ int main(int argc, char *argv[])
                     ++len;
                 }
             }
-            int resultado = interacoesUsuario(len, inputUsuario, configTabuleiro, jaEscolheuTabuleiro);
+            int resultado = interacoesUsuario(len, inputUsuario, configTabuleiro, jaEscolheuTabuleiro, comandoAtivo, numSugestao);
             if (resultado == 0)
             {
                 continue;
@@ -1169,7 +1215,7 @@ int main(int argc, char *argv[])
                 printarTabuleiro(configTabuleiro, tabuleiroJogo);
                 historico = inserirNodeNoFim(historico, configTabuleiro, tabuleiroJogo);
 
-                encontrarProxsJogadas(configTabuleiro, tabuleiroJogo, 1);
+                // encontrarProxsJogadas(configTabuleiro, tabuleiroJogo, 1);
             }
             else if (resultado == 2)
             {
@@ -1181,7 +1227,7 @@ int main(int argc, char *argv[])
                 printarTabuleiro(configTabuleiro, tabuleiroJogo);
                 historico = inserirNodeNoFim(historico, configTabuleiro, tabuleiroJogo);
 
-                encontrarProxsJogadas(configTabuleiro, tabuleiroJogo, 1);
+                // encontrarProxsJogadas(configTabuleiro, tabuleiroJogo, 1);
             }
             else if (resultado == 3)
             {
@@ -1189,28 +1235,30 @@ int main(int argc, char *argv[])
                 char letra = encontrarLetra(inputUsuario[2], inputUsuario[4], tabuleiroJogo);
                 char tipo = checarTipoPeca(letra, tabuleiroJogo);
                 int movCerto = moverDirecao(inputUsuario[6], tipo, letra, tabuleiroJogo);
+                int fimDeJogo = 0;
 
                 if (movCerto == 1)
                 {
                     printf("\nMovimento %d\n", ++contMov);
                     historico = inserirNodeNoFim(historico, configTabuleiro, tabuleiroJogo);
+                    fimDeJogo = verificaFim(configTabuleiro, tabuleiroJogo);
+                } else {
+                    printf("\nNao e possivel mover peca\n");
                 }
                 printarTabuleiro(configTabuleiro, tabuleiroJogo);
 
-                int fimDeJogo = verificaFim(configTabuleiro, tabuleiroJogo);
                 if (fimDeJogo)
                 {
                     printf("\nVoce Ganhou!\nTchau, obrigado por ter jogado!");
                     fim = 1;
                 }
-                
             }
             else if (resultado == 4)
             {
                 printf("\nHistorico de movimentos\n\n");
-                mostrarHistorico(historico);
+                mostrarHistoricoOuSugestao(historico, 0);
             }
-            else
+            else if (resultado == 5)
             {
                 // Listar tabuleiros
                 printf("1\n%s\n", titulo1Nome);
@@ -1218,7 +1266,42 @@ int main(int argc, char *argv[])
                 printf("\n2\n%s\n", titulo2Nome);
                 printarTabuleiro(2, tabuleiro2);
             }
+            else {
+                printf("ESCOLHA FEITA\n");
+                int fimDeJogo = 0;
+                int sugestaoEscolhida = inputUsuario[0] - '0';
+                int i = 1;
+
+                while (sugestoes != NULL && i != 0)
+                {
+                    if (i == sugestaoEscolhida)
+                    {
+                        copiarMatriz(sugestoes->fotoTabuleiroAtual, tabuleiroJogo);
+                        i = 0;
+                    }
+                    sugestoes = sugestoes->proximo;
+                    ++i;
+                }
+                historico = inserirNodeNoFim(historico, configTabuleiro, tabuleiroJogo);
+                fimDeJogo = verificaFim(configTabuleiro, tabuleiroJogo);
+                printarTabuleiro(configTabuleiro, tabuleiroJogo);
+
+                if (fimDeJogo)
+                {
+                    printf("\nVoce Ganhou!\nTchau, obrigado por ter jogado!");
+                    fim = 1;
+                } else {
+                    sugestoes = encontrarProxsJogadas(configTabuleiro, tabuleiroJogo, sugestoes);
+                    mostrarHistoricoOuSugestao(sugestoes, 1);
+                    numSugestao = contSugestoes(sugestoes);
+                }
+            }
         }
     }
+    
+    if (comandoAtivo == 'R') {
+        printf("\nAtiva robo");
+    }
+    printf("\nEncerra o programa");
     return 0;
 }

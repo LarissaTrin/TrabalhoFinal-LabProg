@@ -525,8 +525,15 @@ int interacoesUsuario(int argc, char argumento[], int configTabuleiro, int jaEsc
         }
         else if (argumento[0] == 'p')
         {
-
             return 4; // mostrar o historico
+        } else if (comandoAtivo == 's') {
+            if ((argumento[0] - '0') >= 1 && (argumento[0] - '0') <= numSugestao)
+            {
+                return 6; // escolha da sugestao
+            }
+            printf("[!]4 Erro: Argumento invalido\n\n");
+            help2();
+            return 0;
         }
         else
         {
@@ -607,15 +614,6 @@ int interacoesUsuario(int argc, char argumento[], int configTabuleiro, int jaEsc
                 help2();
                 return 0;
             }
-        }
-        else if (argumento[2] == 's' && comandoAtivo == 's') {
-            if ((argumento[0] - '0') >= 1 && (argumento[0] - '0') <= numSugestao)
-            {
-                return 6;
-            }
-            printf("[!]4 Erro: Argumento invalido\n\n");
-            help2();
-            return 0;
         }
         else
         {
@@ -1182,7 +1180,7 @@ int main(int argc, char *argv[])
                     comandoAtivo = ' ';
                 }
             } else {
-                printf("\nComando de sugestao ativo!\nDigite: 'n s', onde n e o numero da sugestao\n");
+                printf("\nComando de sugestao ativo!\nDigite: 'n', onde n e o numero da sugestao\n");
                 comandoAtivo = 's';
                 sugestoes = encontrarProxsJogadas(configTabuleiro, tabuleiroJogo, sugestoes);
                 mostrarHistoricoOuSugestao(sugestoes, 1);

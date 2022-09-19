@@ -741,6 +741,19 @@ void help2(void)
     printf(" p                   : Imprime o historico de movimentacoes desde a configuracao inicial.\n\n");
 }
 
+int verificaFim(int configTabuleiro, char tabuleiro[5][TAM_MAX_COL]) {
+    if (configTabuleiro == 1)
+    {
+        if (tabuleiro[4][1] == 'D' && tabuleiro[4][2] == 'D')
+        {
+            return 1;
+        }
+    } else if (configTabuleiro == 2 && tabuleiro[4][5] == 'D') {
+        return 1;
+    }
+    return 0;
+}
+
 int interacoesUsuario(int argc, char argumento[], int configTabuleiro, int jaEscolheuTabuleiro)
 {
     int i = 0;
@@ -1183,6 +1196,14 @@ int main(int argc, char *argv[])
                     historico = inserirNodeNoFim(historico, configTabuleiro, tabuleiroJogo);
                 }
                 printarTabuleiro(configTabuleiro, tabuleiroJogo);
+
+                int fimDeJogo = verificaFim(configTabuleiro, tabuleiroJogo);
+                if (fimDeJogo)
+                {
+                    printf("\nVoce Ganhou!\nTchau, obrigado por ter jogado!");
+                    fim = 1;
+                }
+                
             }
             else if (resultado == 4)
             {

@@ -1275,7 +1275,6 @@ int main(int argc, char *argv[])
                     if (i == sugestaoEscolhida)
                     {
                         copiarMatriz(sugestoes->fotoTabuleiroAtual, tabuleiroJogo);
-                        i = 0;
                     }
                     sugestoes = sugestoes->proximo;
                     ++i;

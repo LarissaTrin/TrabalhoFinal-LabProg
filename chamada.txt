@@ -1,5 +1,10 @@
 gcc -Wall tabuleiro.c -o t && ./t
 
+Testar robo
+gcc -Wall arvoreRobo.c -o r
+time ./r > lerResultados.txt
+head -n50 lerResultados.txt (inicio do arquivo)
+tailr -n50 lerResultados (final do arquivo)
 
 CASO DE EMERGENCIA
  git pull origin master --allow-unrelated-histories

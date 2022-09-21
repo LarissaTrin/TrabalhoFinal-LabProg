@@ -78,17 +78,15 @@ NodeTree *inserirFilhoTree(NodeTree *arvore, int numTab, int sugest[8])
     return arvore;
 }
 
-int testFim(int sugestaoTest[8])
+int testFim(int sugestaoTest[8], char test, int testFim)
 {
     int fim = 1;
-    for (int i = 0; i < 8; i++)
-    {
-        sugestaoTest[i] = sugestaoTest[i] * 10;
-        if (sugestaoTest[i] > 10)
-        {
-            fim = 0;
-        }
-    }
+    // for (int i = 0; i < 8; i++)
+    // {
+    //     sugestaoTest[i] = sugestaoTest[i] * 10;
+    // }
+    if (testFim == 3) return 0;
+    
     return fim;
 }
 
@@ -104,6 +102,32 @@ void imprimir(NodeTree *raiz) {
     // printf("\n");    
 }
 
+
+int recursividade(NodeTree *arvore, int sugestaoTest[8], int cont) {
+    int fim = 0;
+    if (cont == 0)
+    {
+        return 1;
+    }
+
+    NodeTree *aux = arvore;
+    aux = inserirFilhoTree(aux, 1, sugestaoTest);
+
+    int sugestaoTestinho[8] = {0,0,0,0,0,0,0,0};
+    
+    for (int i = 0; i < 8; i++)
+    {
+        sugestaoTestinho[i] = sugestaoTest[i] * 10;
+    }
+
+    for (int i = 0; i < 8; i++)
+    {
+        fim = recursividade(aux->filhos[i], sugestaoTestinho, cont - 1);
+    }
+    
+    return 0;
+}
+
 int main()
 {
 
@@ -117,15 +141,8 @@ int main()
     printf("TEST: %d\n", arvore->fotoTabuleiroAtual);
     NodeTree *aux = arvore;
     int i = 0;
-    while (i < 5)
-    {
-        aux = inserirFilhoTree(aux, 1, sugestao);
-        aux = aux->filhos[0];
-        fim = testFim(sugestao);
-        ++i;
-    }
-    // printf("OI TO AQUI: %d", arvore->fotoTabuleiroAtual);
-    // printf("OI TO AQUI: %d", arvore->pai);
+
+    int x = recursividade(aux, sugestao, 3);
     imprimir(arvore);
     return 0;
 }

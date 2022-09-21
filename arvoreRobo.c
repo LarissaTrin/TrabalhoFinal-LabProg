@@ -455,6 +455,7 @@ char checarTipoPeca(char letra, char tabuleiroJogo[5][TAM_MAX_COL])
     printf("INTERNAL ERROR: TIPO INVALIDO");
     return 'e';
 }
+
 typedef struct node
 {
     char fotoTabuleiroAtual[5][TAM_MAX_COL];
@@ -468,23 +469,23 @@ Node *criarNode()
     return novoNode;
 }
 
-Node *inserirNodeNoFim(Node *historico, int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_COL])
-{ // insere novo node no fim do histórico
+Node *inserirNodeNoFim(Node *listaEncadeada, int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_COL])
+{ // insere novo node no fim da lista encadeada (historico e lista de sugestoes)
 
-    printf("INSERIR NODE NO FIM ");
+    printf("INSERIR NODE NO FIM DE LISTA ENCADEADA");
 
     Node *novoNode = criarNode();
     copiarMatriz(tabuleiroJogo, novoNode->fotoTabuleiroAtual);
     novoNode->numTabuleiro = configTabuleiro;
 
-    if (historico == NULL)
+    if (listaEncadeada == NULL)
     {
-        historico = novoNode;
+        listaEncadeada = novoNode;
         novoNode->proximo = NULL;
     }
     else
     {
-        Node *auxiliar = historico;
+        Node *auxiliar = listaEncadeada;
 
         while ((auxiliar->proximo) != NULL)
         {
@@ -495,198 +496,157 @@ Node *inserirNodeNoFim(Node *historico, int configTabuleiro, char tabuleiroJogo[
         novoNode->proximo = NULL;
     }
 
-    return historico;
+    return listaEncadeada;
 }
 
 typedef struct nodeTree
 {
     char fotoTabuleiroAtual[5][TAM_MAX_COL];
     int numTabuleiro;
-    struct nodeTree *f1, *f2, *f3, *f4, *f5, *f6, *f7, *f8, *pai;
+    struct nodeTree *filhos[8];
+    struct nodeTree *pai;
+    int quantChaves;
 } NodeTree;
 
-
-NodeTree *criarNodeTree()
+NodeTree *inserirRaizTree(NodeTree *noAtual, char tabuleiro[5][TAM_MAX_COL], int numTab, NodeTree *ptPai)
 {
-    printf("\nCRIAR NODE TREE\n");
-    NodeTree *novoNode = (NodeTree *)malloc(sizeof(NodeTree));
+    // printf("\nInserir raiz\n");
+    NodeTree *novoNode = malloc(sizeof(NodeTree));
+    if (noAtual == NULL)
+    {
+        // é verdadeira penas a primeira vez para criar a raiz primaria
+        copiarMatriz(tabuleiro, novoNode->fotoTabuleiroAtual);
+        novoNode->numTabuleiro = numTab;
+        novoNode->pai = ptPai;
+        novoNode->filhos[0] = NULL;
+        novoNode->filhos[1] = NULL;
+        novoNode->filhos[2] = NULL;
+        novoNode->filhos[3] = NULL;
+        novoNode->filhos[4] = NULL;
+        novoNode->filhos[5] = NULL;
+        novoNode->filhos[6] = NULL;
+        novoNode->filhos[7] = NULL;
+    }
+    // printf("Foto tab atual do novo nodeTree criado: \n");
+    // printarTabuleiro(novoNode->numTabuleiro, novoNode->fotoTabuleiroAtual);
     return novoNode;
 }
 
-NodeTree *inserirNodeTreeFilho(NodeTree *arvore, int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_COL], Node *sugestao)
+NodeTree *inserirFilhoTree(NodeTree *noAtual, int numTab, Node *sugest[8])
 {
-    NodeTree *novoNode = criarNodeTree();
-    printf("\nInserirNodeTreeFilho\n");
-    copiarMatriz(tabuleiroJogo, novoNode->fotoTabuleiroAtual);
-    novoNode->numTabuleiro = configTabuleiro;
-    int i = 1;
-
-    if (arvore == NULL)
+    //printf("\ninserirFilhoTree:\n");
+    //printarTabuleiro(1, sugest[0]->fotoTabuleiroAtual);
+    int i = 0;
+    while (i < 8 && sugest[i] != NULL) //precisa de todos esses ifs? [!]
     {
-        arvore = novoNode;
-        novoNode->pai = NULL;
-        novoNode->f1 = criarNodeTree();
-        novoNode->f2 = criarNodeTree();
-        novoNode->f3 = criarNodeTree();
-        novoNode->f4 = criarNodeTree();
-        novoNode->f5 = criarNodeTree();
-        novoNode->f6 = criarNodeTree();
-        novoNode->f7 = criarNodeTree();
-        novoNode->f8 = criarNodeTree();
-
-        while (sugestao->fotoTabuleiroAtual != NULL)
+        if (i == 0)
         {
-            printf("\ni = %d", i);
-            printf("\nIFS DO INSERIR NODE TREE FILHO\n");
-            if (i == 1)
-            {
-                copiarMatriz(sugestao->fotoTabuleiroAtual, novoNode->f1->fotoTabuleiroAtual);
-                novoNode->f1->pai = novoNode;
-                novoNode->f1->numTabuleiro = configTabuleiro;
-            }
-            else if (i == 2)
-            {
-                copiarMatriz(sugestao->fotoTabuleiroAtual, novoNode->f2->fotoTabuleiroAtual);
-                novoNode->f2->pai = novoNode;
-                novoNode->f2->numTabuleiro = configTabuleiro;
-            }
-            else if (i == 3)
-            {
-                copiarMatriz(sugestao->fotoTabuleiroAtual, novoNode->f3->fotoTabuleiroAtual);
-                novoNode->f3->pai = novoNode;
-                novoNode->f3->numTabuleiro = configTabuleiro;
-            }
-            else if (i == 4)
-            {
-                copiarMatriz(sugestao->fotoTabuleiroAtual, novoNode->f4->fotoTabuleiroAtual);
-                novoNode->f4->pai = novoNode;
-                novoNode->f4->numTabuleiro = configTabuleiro;
-            }
-            else if (i == 5)
-            {
-                copiarMatriz(sugestao->fotoTabuleiroAtual, novoNode->f5->fotoTabuleiroAtual);
-                novoNode->f5->pai = novoNode;
-                novoNode->f5->numTabuleiro = configTabuleiro;
-            }
-            else if (i == 6)
-            {
-                copiarMatriz(sugestao->fotoTabuleiroAtual, novoNode->f6->fotoTabuleiroAtual);
-                novoNode->f6->pai = novoNode;
-                novoNode->f6->numTabuleiro = configTabuleiro;
-            }
-            else if (i == 7)
-            {
-                copiarMatriz(sugestao->fotoTabuleiroAtual, novoNode->f7->fotoTabuleiroAtual);
-                novoNode->f7->pai = novoNode;
-                novoNode->f7->numTabuleiro = configTabuleiro;
-            }
-            else if (i == 8)
-            {
-                copiarMatriz(sugestao->fotoTabuleiroAtual, novoNode->f8->fotoTabuleiroAtual);
-                novoNode->f8->pai = novoNode;
-                novoNode->f8->numTabuleiro = configTabuleiro;
-            }
-
-            sugestao = sugestao->proximo;
-            ++i;
+            noAtual->filhos[i] = inserirRaizTree(noAtual->filhos[i], sugest[i]->fotoTabuleiroAtual, numTab, noAtual);
         }
-    }
-    else
-    {
-        novoNode->f1 = criarNodeTree();
-        novoNode->f2 = criarNodeTree();
-        novoNode->f3 = criarNodeTree();
-        novoNode->f4 = criarNodeTree();
-        novoNode->f5 = criarNodeTree();
-        novoNode->f6 = criarNodeTree();
-        novoNode->f7 = criarNodeTree();
-        novoNode->f8 = criarNodeTree();
-
-        printf("\nELSE DO INSERIR NODE TREE FILHO\n");
-        while (sugestao->fotoTabuleiroAtual != NULL)
+        if (i == 1)
         {
-            printf("\n %d", i);
-            if (i == 1)
-            {
-                copiarMatriz(sugestao->fotoTabuleiroAtual, novoNode->f1->fotoTabuleiroAtual);
-                printf("AAAAAAAAAAAAAAAAAAAAbbbbbbbb1, novoNode->f1->fotoTabuleiroAtual");
-                printarTabuleiro(1, novoNode->f1->fotoTabuleiroAtual);
-                novoNode->f1->pai = novoNode;
-                novoNode->f1->numTabuleiro = configTabuleiro;
-            }
-            else if (i == 2)
-            {
-                copiarMatriz(sugestao->fotoTabuleiroAtual, novoNode->f2->fotoTabuleiroAtual);
-                novoNode->f2->pai = novoNode;
-                novoNode->f2->numTabuleiro = configTabuleiro;
-            }
-            else if (i == 3)
-            {
-                copiarMatriz(sugestao->fotoTabuleiroAtual, novoNode->f3->fotoTabuleiroAtual);
-                novoNode->f3->pai = novoNode;
-                novoNode->f3->numTabuleiro = configTabuleiro;
-            }
-            else if (i == 4)
-            {
-                copiarMatriz(sugestao->fotoTabuleiroAtual, novoNode->f4->fotoTabuleiroAtual);
-                novoNode->f4->pai = novoNode;
-                novoNode->f4->numTabuleiro = configTabuleiro;
-            }
-            else if (i == 5)
-            {
-                copiarMatriz(sugestao->fotoTabuleiroAtual, novoNode->f5->fotoTabuleiroAtual);
-                novoNode->f5->pai = novoNode;
-                novoNode->f5->numTabuleiro = configTabuleiro;
-            }
-            else if (i == 6)
-            {
-                copiarMatriz(sugestao->fotoTabuleiroAtual, novoNode->f6->fotoTabuleiroAtual);
-                novoNode->f6->pai = novoNode;
-                novoNode->f6->numTabuleiro = configTabuleiro;
-            }
-            else if (i == 7)
-            {
-                copiarMatriz(sugestao->fotoTabuleiroAtual, novoNode->f7->fotoTabuleiroAtual);
-                novoNode->f7->pai = novoNode;
-                novoNode->f7->numTabuleiro = configTabuleiro;
-            }
-            else if (i == 8)
-            {
-                copiarMatriz(sugestao->fotoTabuleiroAtual, novoNode->f8->fotoTabuleiroAtual);
-                novoNode->f8->pai = novoNode;
-                novoNode->f8->numTabuleiro = configTabuleiro;
-            }
-
-            sugestao = sugestao->proximo;
-            ++i;
+            noAtual->filhos[i] = inserirRaizTree(noAtual->filhos[i], sugest[i]->fotoTabuleiroAtual, numTab, noAtual);
         }
+        if (i == 2)
+        {
+            noAtual->filhos[i] = inserirRaizTree(noAtual->filhos[i], sugest[i]->fotoTabuleiroAtual, numTab, noAtual);
+        }
+        if (i == 3)
+        {
+            noAtual->filhos[i] = inserirRaizTree(noAtual->filhos[i], sugest[i]->fotoTabuleiroAtual, numTab, noAtual);
+        }
+        if (i == 4)
+        {
+            noAtual->filhos[i] = inserirRaizTree(noAtual->filhos[i], sugest[i]->fotoTabuleiroAtual, numTab, noAtual);
+        }
+        if (i == 5)
+        {
+            noAtual->filhos[i] = inserirRaizTree(noAtual->filhos[i], sugest[i]->fotoTabuleiroAtual, numTab, noAtual);
+        }
+        if (i == 6)
+        {
+            noAtual->filhos[i] = inserirRaizTree(noAtual->filhos[i], sugest[i]->fotoTabuleiroAtual, numTab, noAtual);
+        }
+        if (i == 7)
+        {
+            noAtual->filhos[i] = inserirRaizTree(noAtual->filhos[i], sugest[i]->fotoTabuleiroAtual, numTab, noAtual);
+        }
+        ++i;
     }
-
-    return arvore;
+    return noAtual;
 }
 
-int checaPaisIguais(NodeTree *no, char sugestao[5][TAM_MAX_COL])
+int testFim(int sugestaoTest[8], char test, int testFim)
 {
-    printf("\nCHECAPAPAIS\n");
+    int fim = 1;
+    // for (int i = 0; i < 8; i++)
+    // {
+    //     sugestaoTest[i] = sugestaoTest[i] * 10;
+    // }
+    if (testFim == 3) return 0;
+    
+    return fim;
+}
+
+void imprimir(NodeTree *raiz) {
+    if (raiz->filhos[0] == NULL){
+        printf("\nAcabou os filhos.\n");
+        return;
+    } else {
+        printf("PAI:\n");
+        printarTabuleiro(1, raiz->fotoTabuleiroAtual);
+        printf("FILHOS DO NO ACIMA:\n");
+        for (int i = 0; i < 8; i++)
+        {
+            printarTabuleiro(1, raiz->filhos[i]->fotoTabuleiroAtual);
+        }
+        raiz = raiz->filhos[0];
+        imprimir(raiz);
+    }
+    
+}
+
+
+int recursividade(NodeTree *noAtual, Node* vetorSugestoes[8], int cont) {
+    int fim = 0;
+    if (cont == 0 && fim == 0)
+    {
+        //imprimeSolucao(noAtual);
+        return 1;
+    }
+
+    NodeTree *aux = noAtual;
+    aux = inserirFilhoTree(aux, 1, vetorSugestoes);
+
+    for (int i = 0; i < 8; i++)
+    {
+        fim = recursividade(aux->filhos[i], vetorSugestoes, cont - 1);
+    }
+    
+    return 0;
+}
+
+int checaPaisIguais(NodeTree *no, char candidatoSugestao[5][TAM_MAX_COL])
+{
     NodeTree *auxiliar = no;
     return 0;
     while ((auxiliar->pai) != NULL)
     {
-        if (sugestao == auxiliar->fotoTabuleiroAtual)
+        if (candidatoSugestao == auxiliar->fotoTabuleiroAtual)
         {
-            // ignore
+            // Candidato ja existe na arvore, cancela ele
             return 1;
         }
         auxiliar = auxiliar->pai;
     }
-    return 0;
+    return 0; // Tudo certo com o candidato, nao existe nenhum pai igual
 }
 
-Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_COL], Node *sugestoes, NodeTree *arvore) // Node* possiveisJogadas
+Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_COL], Node *sugestoes, NodeTree *noAtual) // Node* possiveisJogadas
 {
     printf("\nEncontra proxs jogadas\n");
     Node *possiveisJogadas = sugestoes;
-    NodeTree *auxiliarArvore = arvore;
+    NodeTree *auxiliarNoAtual = noAtual;
     char tabuleiroAux[5][TAM_MAX_COL];
     copiarMatriz(tabuleiroJogo, tabuleiroAux);
     char tipoPeca = ' ';
@@ -710,7 +670,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                         if (movValido)
                         {
                             // printf("Estive aqui 1\n");
-                            matrizRepetida = checaPaisIguais(auxiliarArvore, tabuleiroAux);
+                            matrizRepetida = checaPaisIguais(auxiliarNoAtual, tabuleiroAux);
                             if (!matrizRepetida)
                             {
                                 possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
@@ -724,7 +684,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                             if (movValido)
                             {
                                 // printf("Estive aqui 2\n");
-                                matrizRepetida = checaPaisIguais(auxiliarArvore, tabuleiroAux);
+                                matrizRepetida = checaPaisIguais(auxiliarNoAtual, tabuleiroAux);
                                 if (!matrizRepetida)
                                 {
                                     possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
@@ -742,7 +702,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                         if (movValido)
                         {
                             // printf("Estive aqui 3 \n");
-                            matrizRepetida = checaPaisIguais(auxiliarArvore, tabuleiroAux);
+                            matrizRepetida = checaPaisIguais(auxiliarNoAtual, tabuleiroAux);
                             if (!matrizRepetida)
                             {
                                 possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
@@ -756,7 +716,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                             if (movValido)
                             {
                                 // printf("Estive aqui 4 \n");
-                                matrizRepetida = checaPaisIguais(auxiliarArvore, tabuleiroAux);
+                                matrizRepetida = checaPaisIguais(auxiliarNoAtual, tabuleiroAux);
                                 if (!matrizRepetida)
                                 {
                                     possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
@@ -774,7 +734,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                         if (movValido)
                         {
                             // printf("Estive aqui 5\n");
-                            matrizRepetida = checaPaisIguais(auxiliarArvore, tabuleiroAux);
+                            matrizRepetida = checaPaisIguais(auxiliarNoAtual, tabuleiroAux);
                             if (!matrizRepetida)
                             {
                                 possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
@@ -793,7 +753,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                         if (movValido)
                         {
                             // printf("Estive aqui 6\n");
-                            matrizRepetida = checaPaisIguais(auxiliarArvore, tabuleiroAux);
+                            matrizRepetida = checaPaisIguais(auxiliarNoAtual, tabuleiroAux);
                             if (!matrizRepetida)
                             {
                                 possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
@@ -816,7 +776,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                         if (movValido)
                         {
                             // printf("Estive aqui 7\n");
-                            matrizRepetida = checaPaisIguais(auxiliarArvore, tabuleiroAux);
+                            matrizRepetida = checaPaisIguais(auxiliarNoAtual, tabuleiroAux);
                             if (!matrizRepetida)
                             {
                                 possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
@@ -833,7 +793,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                         if (movValido)
                         {
                             // printf("Estive aqui 8\n");
-                            matrizRepetida = checaPaisIguais(auxiliarArvore, tabuleiroAux);
+                            matrizRepetida = checaPaisIguais(auxiliarNoAtual, tabuleiroAux);
                             if (!matrizRepetida)
                             {
                                 possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
@@ -851,7 +811,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                         if (movValido)
                         {
                             // printf("Estive aqui 9\n");
-                            matrizRepetida = checaPaisIguais(auxiliarArvore, tabuleiroAux);
+                            matrizRepetida = checaPaisIguais(auxiliarNoAtual, tabuleiroAux);
                             if (!matrizRepetida)
                             {
                                 possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
@@ -866,7 +826,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                             if (movValido)
                             {
                                 // printf("Estive aqui 10\n");
-                                matrizRepetida = checaPaisIguais(auxiliarArvore, tabuleiroAux);
+                                matrizRepetida = checaPaisIguais(auxiliarNoAtual, tabuleiroAux);
                                 if (!matrizRepetida)
                                 {
                                     possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
@@ -886,7 +846,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                         if (movValido)
                         {
                             // printf("Estive aqui 11\n");
-                            matrizRepetida = checaPaisIguais(auxiliarArvore, tabuleiroAux);
+                            matrizRepetida = checaPaisIguais(auxiliarNoAtual, tabuleiroAux);
                             if (!matrizRepetida)
                             {
                                 possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
@@ -900,7 +860,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                             if (movValido)
                             {
                                 // printf("Estive aqui 12\n");
-                                matrizRepetida = checaPaisIguais(auxiliarArvore, tabuleiroAux);
+                                matrizRepetida = checaPaisIguais(auxiliarNoAtual, tabuleiroAux);
                                 if (!matrizRepetida)
                                 {
                                     possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
@@ -921,7 +881,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                         if (movValido)
                         {
                             // printf("Estive aqui 13\n");
-                            matrizRepetida = checaPaisIguais(auxiliarArvore, tabuleiroAux);
+                            matrizRepetida = checaPaisIguais(auxiliarNoAtual, tabuleiroAux);
                             if (!matrizRepetida)
                             {
                                 possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
@@ -938,7 +898,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                         if (movValido)
                         {
                             // printf("Estive aqui 14\n");
-                            matrizRepetida = checaPaisIguais(auxiliarArvore, tabuleiroAux);
+                            matrizRepetida = checaPaisIguais(auxiliarNoAtual, tabuleiroAux);
                             if (!matrizRepetida)
                             {
                                 possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
@@ -955,7 +915,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                         if (movValido)
                         {
                             // printf("Estive aqui 15\n");
-                            matrizRepetida = checaPaisIguais(auxiliarArvore, tabuleiroAux);
+                            matrizRepetida = checaPaisIguais(auxiliarNoAtual, tabuleiroAux);
                             if (!matrizRepetida)
                             {
                                 possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
@@ -974,7 +934,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                         if (movValido)
                         {
                             // printf("Estive aqui 16\n");
-                            matrizRepetida = checaPaisIguais(auxiliarArvore, tabuleiroAux);
+                            matrizRepetida = checaPaisIguais(auxiliarNoAtual, tabuleiroAux);
                             if (!matrizRepetida)
                             {
                                 possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
@@ -991,8 +951,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
 
 int verificaFim(int configTabuleiro, char tabuleiro[5][TAM_MAX_COL])
 {
-    printf("\nVERIFICA FIM????\n");
-    printarTabuleiro(1, tabuleiro);
+    //printarTabuleiro(1, tabuleiro);
     if (configTabuleiro == 1)
     {
         if (tabuleiro[4][1] == 'D' && tabuleiro[4][2] == 'D')
@@ -1007,12 +966,14 @@ int verificaFim(int configTabuleiro, char tabuleiro[5][TAM_MAX_COL])
     return 0;
 }
 
-void imprimeTudin(NodeTree *no)
+void imprimeSolucao(NodeTree *no)
 {
+    printf("\n[!] A solucao foi encontrada!\nApresentando passos para o resultado...\n\n");
     NodeTree *auxiliar = no;
-    while ((auxiliar->pai) != NULL) // enquanto existirem pais para serem imprimidos, imprimir
+    while ((auxiliar->pai) != NULL) // enquanto existirem pais na arvere, imprimir cada um
     {
         printarTabuleiro(auxiliar->numTabuleiro, auxiliar->fotoTabuleiroAtual);
+        printf("\n");
         auxiliar = auxiliar->pai;
     }
 
@@ -1026,106 +987,6 @@ void imprimeTudin(NodeTree *no)
     //Para imprimir na ordem inversa sera necessario fazer uma nova lista encadeada (historicoResolucao).
 }
 
-int recursividade(NodeTree *arvore, char tabuleiroJogo[5][TAM_MAX_COL])
-{
-    int fim = verificaFim(1, tabuleiroJogo);
-
-    if (fim)
-    {
-        imprimeTudin(arvore);
-        return 1;
-    }
-
-    NodeTree *aux = criarNodeTree();
-    aux = arvore;
-    Node *sugestoes = NULL;
-
-    printf("\nRECURSIVIDADE\n");
-
-    sugestoes = encontrarProxsJogadas(1, tabuleiroJogo, sugestoes, arvore); // pega as sugestoes
-
-    // copiarMatriz(sugestoes->fotoTabuleiroAtual, tabuleiroJogo);
-    // chamar a arvore
-    aux = inserirNodeTreeFilho(aux, 1, tabuleiroJogo, sugestoes);
-    // chamar a rec
-    printf("\n1, aux->f1->fotoTabuleiroAtual\n");
-    printarTabuleiro(1, aux->f1->fotoTabuleiroAtual);
-    fim = recursividade(aux->f1, aux->f1->fotoTabuleiroAtual);
-    if (fim)
-    {
-        imprimeTudin(aux);
-        return 1;
-    }
-    else
-    {
-        fim = recursividade(aux->f2, aux->f2->fotoTabuleiroAtual);
-        if (fim)
-        {
-            imprimeTudin(aux);
-            return 1;
-        }
-        else
-        {
-            fim = recursividade(aux->f3, aux->f3->fotoTabuleiroAtual);
-            if (fim)
-            {
-                imprimeTudin(aux);
-                return 1;
-            }
-            else
-            {
-                fim = recursividade(aux->f4, aux->f4->fotoTabuleiroAtual);
-                if (fim)
-                {
-                    imprimeTudin(aux);
-                    return 1;
-                }
-                else
-                {
-                    fim = recursividade(aux->f5, aux->f5->fotoTabuleiroAtual);
-                    if (fim)
-                    {
-                        imprimeTudin(aux);
-                        return 1;
-                    }
-                    else
-                    {
-                        fim = recursividade(aux->f6, aux->f6->fotoTabuleiroAtual);
-                        if (fim)
-                        {
-                            imprimeTudin(aux);
-                            return 1;
-                        }
-                        else
-                        {
-                            fim = recursividade(aux->f7, aux->f7->fotoTabuleiroAtual);
-                            if (fim)
-                            {
-                                imprimeTudin(aux);
-                                return 1;
-                            }
-                            else
-                            {
-                                fim = recursividade(aux->f8, aux->f8->fotoTabuleiroAtual);
-                                if (fim)
-                                {
-                                    imprimeTudin(aux);
-                                    return 1;
-                                }
-                                else
-                                {
-                                    return 0;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    return 0;
-}
-
 int main()
 {
     char tabuleiro1[5][TAM_MAX_COL] = {
@@ -1135,9 +996,105 @@ int main()
     {'c', 'g', 'h', 'e', '\0', '\0', '\0'},
     {'f', ' ', ' ', 'i', '\0', '\0', '\0'}};
 
-    NodeTree* arvore = NULL;
+    Node* sugestoes[8];
 
-    recursividade(arvore, tabuleiro1);
+    sugestoes[0] = criarNode();
+    sugestoes[1] = criarNode();
+    sugestoes[2] = criarNode();
+    sugestoes[3] = criarNode();
+    sugestoes[4] = criarNode();
+    sugestoes[5] = criarNode();
+    sugestoes[6] = criarNode();
+    sugestoes[7] = criarNode();
+
+    char filho1[5][TAM_MAX_COL] = {
+    {'1', '1', '1', '1', '\0', '\0', '\0'},
+    {'1', '1', '1', '1', '\0', '\0', '\0'},
+    {'1', '1', '1', '1', '\0', '\0', '\0'},
+    {'1', '1', '1', '1', '\0', '\0', '\0'},
+    {'1', ' ', ' ', '1', '\0', '\0', '\0'}};
+
+    char filho2[5][TAM_MAX_COL] = {
+    {'2', '2', '2', '2', '\0', '\0', '\0'},
+    {'2', '2', '2', '2', '\0', '\0', '\0'},
+    {'2', '2', '2', '2', '\0', '\0', '\0'},
+    {'2', '2', '2', '2', '\0', '\0', '\0'},
+    {'2', ' ', ' ', '2', '\0', '\0', '\0'}};
+
+    char filho3[5][TAM_MAX_COL] = {
+    {'3', '3', '3', '3', '\0', '\0', '\0'},
+    {'3', '3', '3', '3', '\0', '\0', '\0'},
+    {'3', '3', '3', '3', '\0', '\0', '\0'},
+    {'3', '3', '3', '3', '\0', '\0', '\0'},
+    {'3', ' ', ' ', '3', '\0', '\0', '\0'}};
+
+    char filho4[5][TAM_MAX_COL] = {
+    {'4', '4', '4', '4', '\0', '\0', '\0'},
+    {'4', '4', '4', '4', '\0', '\0', '\0'},
+    {'4', '4', '4', '4', '\0', '\0', '\0'},
+    {'4', '4', '4', '4', '\0', '\0', '\0'},
+    {'4', ' ', ' ', '4', '\0', '\0', '\0'}};
+
+    char filho5[5][TAM_MAX_COL] = {
+    {'5', '5', '5', '5', '\0', '\0', '\0'},
+    {'5', '5', '5', '5', '\0', '\0', '\0'},
+    {'5', '5', '5', '5', '\0', '\0', '\0'},
+    {'5', '5', '5', '5', '\0', '\0', '\0'},
+    {'5', ' ', ' ', '5', '\0', '\0', '\0'}};
+
+    char filho6[5][TAM_MAX_COL] = {
+    {'6', '6', '6', '6', '\0', '\0', '\0'},
+    {'6', '6', '6', '6', '\0', '\0', '\0'},
+    {'6', '6', '6', '6', '\0', '\0', '\0'},
+    {'6', '6', '6', '6', '\0', '\0', '\0'},
+    {'6', ' ', ' ', '6', '\0', '\0', '\0'}};
+
+    char filho7[5][TAM_MAX_COL] = {
+    {'7', '7', '7', '7', '\0', '\0', '\0'},
+    {'7', '7', '7', '7', '\0', '\0', '\0'},
+    {'7', '7', '7', '7', '\0', '\0', '\0'},
+    {'7', '7', '7', '7', '\0', '\0', '\0'},
+    {'7', ' ', ' ', '7', '\0', '\0', '\0'}};
+
+    char filho8[5][TAM_MAX_COL] = {
+    {'8', '8', '8', '8', '\0', '\0', '\0'},
+    {'8', '8', '8', '8', '\0', '\0', '\0'},
+    {'8', '8', '8', '8', '\0', '\0', '\0'},
+    {'8', '8', '8', '8', '\0', '\0', '\0'},
+    {'8', ' ', ' ', '8', '\0', '\0', '\0'}};
+
+    sugestoes[0]->numTabuleiro = 1;
+    sugestoes[1]->numTabuleiro = 1;
+    sugestoes[2]->numTabuleiro = 1;
+    sugestoes[3]->numTabuleiro = 1;
+    sugestoes[4]->numTabuleiro = 1;
+    sugestoes[5]->numTabuleiro = 1;
+    sugestoes[6]->numTabuleiro = 1;
+    sugestoes[7]->numTabuleiro = 1;
+
+    copiarMatriz(filho1, sugestoes[0]->fotoTabuleiroAtual);
+    copiarMatriz(filho2, sugestoes[1]->fotoTabuleiroAtual);
+    copiarMatriz(filho3, sugestoes[2]->fotoTabuleiroAtual);
+    copiarMatriz(filho4, sugestoes[3]->fotoTabuleiroAtual);
+    copiarMatriz(filho5, sugestoes[4]->fotoTabuleiroAtual);
+    copiarMatriz(filho6, sugestoes[5]->fotoTabuleiroAtual);
+    copiarMatriz(filho7, sugestoes[6]->fotoTabuleiroAtual);
+    copiarMatriz(filho8, sugestoes[7]->fotoTabuleiroAtual);
+
+    NodeTree *noAtual = NULL;
+
+    noAtual = inserirRaizTree(noAtual, tabuleiro1, 1, NULL);
+    
+    //printf("\nFoto Tabuleiro Atual do Nozinho Raiz: \n");
+    //printarTabuleiro(1, noAtual->fotoTabuleiroAtual);
+    
+    NodeTree *aux = noAtual;
+
+    int niveis = 3;
+    //printf("\nVamos desenhar %d niveis:\n", niveis+1);
+    recursividade(aux, sugestoes, niveis);
+
+    imprimir(noAtual);
 
     return 0;
 }

@@ -143,6 +143,28 @@ int main()
     int i = 0;
 
     int x = recursividade(aux, sugestao, 3);
-    imprimir(arvore);
+
+    // NodeTree *colega = arvore;
+
+    // colega = colega->filhos[4];
+    // printf("colega = colega->filhos[4]: %d\n",colega->fotoTabuleiroAtual);
+    // printf("colega->pai: %d\n",colega->pai->fotoTabuleiroAtual);
+    // colega = colega->filhos[5];
+    // printf("colega = colega->filhos[5]: %d\n",colega->fotoTabuleiroAtual);
+    // printf("colega->pai: %d\n",colega->pai->fotoTabuleiroAtual);
+
+    // printf("\n\nVOLTA\n");
+    // colega = colega->pai;
+    // printf("colega = colega->pai: %d\n",colega->fotoTabuleiroAtual);
+    // colega = colega->pai;
+    // printf("colega = colega->pai: %d\n",colega->fotoTabuleiroAtual);
+
+    // printf("\n\nIDA NOVA\n");
+    // colega = colega->filhos[3];
+    // printf("colega = colega->filhos[3]: %d\n",colega->fotoTabuleiroAtual);
+    // printf("colega->pai: %d\n",colega->pai->fotoTabuleiroAtual);
+
+
+    // imprimir(arvore);
     return 0;
 }

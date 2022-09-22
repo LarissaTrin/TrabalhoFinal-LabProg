@@ -577,12 +577,14 @@ void imprimirSolucao(NodeTree *raiz)
     }
 }
 
-void imprimeTudin(NodeTree *no)
+void imprimeSolucao(NodeTree *no)
 {
+    printf("\n[!] A solucao foi encontrada!\nApresentando passos para o resultado...\n\n");
     NodeTree *auxiliar = no;
-    while ((auxiliar->pai) != NULL) // enquanto existirem pais para serem imprimidos, imprimir
+    while ((auxiliar->pai) != NULL) // enquanto existirem pais na arvere, imprimir cada um
     {
         printarTabuleiro(auxiliar->numTabuleiro, auxiliar->fotoTabuleiroAtual);
+        printf("\n");
         auxiliar = auxiliar->pai;
     }
 
@@ -946,75 +948,13 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
     return possiveisJogadas;
 }
 
-int recursividade(NodeTree *noAtual, Node *vetorSugestoes[8])
-{
-
-    int fim = verificaFim(1, noAtual->fotoTabuleiroAtual);
-
-    if (fim == 1)
-    {
-        printf("\nACHEI A RESPOSTA AMIGOS\n");
-        imprimeTudin(noAtual);
-        return 1;
-    }
-
-    NodeTree *aux = noAtual;
-
-    aux = inserirFilhoTree(aux, 1, vetorSugestoes);
-
-    for (int i = 0; i < 8; i++)
-    {
-        if (aux->filhos[i] == NULL)
-        {
-            return 0;
-        }
-
-        // printf("\nFuncao: recursividade\n");
-        // printf("Analisando o filho numero # %d\n", i);
-        // printarTabuleiro(1, aux->filhos[i]->fotoTabuleiroAtual);
-        // printf("Acima encontra-se o fim do filho numero # %d\n", i);
-
-        Node *sugestoes = NULL;
-        sugestoes = encontrarProxsJogadas(1, aux->filhos[i]->fotoTabuleiroAtual, sugestoes, aux);
-
-        Node *vetorSugestoes[8];
-        vetorSugestoes[0] = NULL;
-        vetorSugestoes[1] = NULL;
-        vetorSugestoes[2] = NULL;
-        vetorSugestoes[3] = NULL;
-        vetorSugestoes[4] = NULL;
-        vetorSugestoes[5] = NULL;
-        vetorSugestoes[6] = NULL;
-        vetorSugestoes[7] = NULL;
-
-        Node *auxiliar = sugestoes;
-        int r = 0;
-        // printf("Sugestoes a partir dele:\n-----------\n");
-        while (auxiliar != NULL)
-        {
-            vetorSugestoes[r] = criarNode();
-            copiarMatriz(auxiliar->fotoTabuleiroAtual, vetorSugestoes[r]->fotoTabuleiroAtual);
-            // printarTabuleiro(1, vetorSugestoes[r]->fotoTabuleiroAtual);
-            vetorSugestoes[r]->numTabuleiro = auxiliar->numTabuleiro;
-            auxiliar = auxiliar->proximo;
-            ++r;
-        }
-
-        fim = recursividade(aux->filhos[i], vetorSugestoes);
-        if (fim == 1)
-            return fim;
-    }
-
-    return 0;
-}
-
 int recNova(NodeTree *noAtual, Node *sugestoes)
 {
     int fim = verificaFim(noAtual->numTabuleiro, noAtual->fotoTabuleiroAtual);
     if (fim == 1)
     {
         printf("\nACHEI A RESPOSTA AMIGOS\n");
-        imprimeTudin(noAtual);
+        imprimeSolucao(noAtual);
         return 1;
     }
 
@@ -1047,27 +987,6 @@ int recNova(NodeTree *noAtual, Node *sugestoes)
     // printarTabuleiro(aux->numTabuleiro, aux->filhos[i]->fotoTabuleiroAtual);
     // printf("Acima encontra-se o fim do filho numero # %d\n", i);
     return 0;
-}
-
-void imprimeSolucao(NodeTree *no)
-{
-    printf("\n[!] A solucao foi encontrada!\nApresentando passos para o resultado...\n\n");
-    NodeTree *auxiliar = no;
-    while ((auxiliar->pai) != NULL) // enquanto existirem pais na arvere, imprimir cada um
-    {
-        printarTabuleiro(auxiliar->numTabuleiro, auxiliar->fotoTabuleiroAtual);
-        printf("\n");
-        auxiliar = auxiliar->pai;
-    }
-
-    if ((auxiliar->pai) == NULL) // imprimir o ultimo no, o tabuleiro original
-    {
-        printarTabuleiro(auxiliar->numTabuleiro, auxiliar->fotoTabuleiroAtual);
-    }
-
-    // Vai imprimir de tras pra frente: a jogada final (donzela na porta) sera a primeira a ser impressa e ficara no topo.
-    // Tabuleiro original sera o ultimo a ser impresso
-    // Para imprimir na ordem inversa sera necessario fazer uma nova lista encadeada (historicoResolucao).
 }
 
 int main()

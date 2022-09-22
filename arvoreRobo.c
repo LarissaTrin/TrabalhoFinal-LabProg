@@ -1152,27 +1152,6 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
     return possiveisJogadas;
 }
 
-void imprimeSolucao(NodeTree *no)
-{
-    printf("\n[!] A solucao foi encontrada!\nApresentando passos para o resultado...\n\n");
-    NodeTree *auxiliar = no;
-    while ((auxiliar->pai) != NULL) // enquanto existirem pais na arvere, imprimir cada um
-    {
-        printarTabuleiro(auxiliar->numTabuleiro, auxiliar->fotoTabuleiroAtual);
-        printf("\n");
-        auxiliar = auxiliar->pai;
-    }
-
-    if ((auxiliar->pai) == NULL) // imprimir o ultimo no, o tabuleiro original
-    {
-        printarTabuleiro(auxiliar->numTabuleiro, auxiliar->fotoTabuleiroAtual);
-    }
-
-    // Vai imprimir de tras pra frente: a jogada final (donzela na porta) sera a primeira a ser impressa e ficara no topo.
-    // Tabuleiro original sera o ultimo a ser impresso
-    // Para imprimir na ordem inversa sera necessario fazer uma nova lista encadeada (historicoResolucao).
-}
-
 int recNova(NodeTree *noAtual, Node *sugestoes, Node *q1, Node *q2, Node *q3, Node *q4)
 {
     int fim = verificaFim(noAtual->numTabuleiro, noAtual->fotoTabuleiroAtual);
@@ -1214,6 +1193,26 @@ int recNova(NodeTree *noAtual, Node *sugestoes, Node *q1, Node *q2, Node *q3, No
     return 0;
 }
 
+void imprimeSolucao(NodeTree *no)
+{
+    printf("\n[!] A solucao foi encontrada!\nApresentando passos para o resultado...\n\n");
+    NodeTree *auxiliar = no;
+    while ((auxiliar->pai) != NULL) // enquanto existirem pais na arvere, imprimir cada um
+    {
+        printarTabuleiro(auxiliar->numTabuleiro, auxiliar->fotoTabuleiroAtual);
+        printf("\n");
+        auxiliar = auxiliar->pai;
+    }
+
+    if ((auxiliar->pai) == NULL) // imprimir o ultimo no, o tabuleiro original
+    {
+        printarTabuleiro(auxiliar->numTabuleiro, auxiliar->fotoTabuleiroAtual);
+    }
+
+    // Vai imprimir de tras pra frente: a jogada final (donzela na porta) sera a primeira a ser impressa e ficara no topo.
+    // Tabuleiro original sera o ultimo a ser impresso
+    // Para imprimir na ordem inversa sera necessario fazer uma nova lista encadeada (historicoResolucao).
+}
 
 int main()
 {
@@ -1231,10 +1230,7 @@ int main()
         {'h', 'h', 'i', 'j', 'k', 'l', '\0'},
         {'h', 'i', 'i', 'm', 'k', 'l', '\0'}};
 
-    Node *q1 = NULL;
-    Node *q2 = NULL;
-    Node *q3 = NULL;
-    Node *q4 = NULL;
+    Node *q1, *q2, *q3, *q4;
 
     int numTab = 2;
     NodeTree *noAtual = NULL;

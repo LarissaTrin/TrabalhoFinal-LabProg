@@ -455,7 +455,6 @@ char checarTipoPeca(char letra, char tabuleiroJogo[5][TAM_MAX_COL])
     printf("INTERNAL ERROR: TIPO INVALIDO\n");
     return 'e';
 }
-
 typedef struct node
 {
     char fotoTabuleiroAtual[5][TAM_MAX_COL];
@@ -557,6 +556,46 @@ int verificaFim(int configTabuleiro, char tabuleiro[5][TAM_MAX_COL])
     return 0;
 }
 
+void imprimirSolucao(NodeTree *raiz)
+{
+    if (raiz->filhos[0] == NULL)
+    {
+        printf("\nAcabou os filhos.\n");
+        return;
+    }
+    else
+    {
+        printf("PAI:\n");
+        printarTabuleiro(1, raiz->fotoTabuleiroAtual);
+        printf("FILHOS DO NO ACIMA:\n");
+        for (int i = 0; i < 8; i++)
+        {
+            printarTabuleiro(1, raiz->filhos[i]->fotoTabuleiroAtual);
+        }
+        raiz = raiz->filhos[0];
+        imprimirSolucao(raiz);
+    }
+}
+
+void imprimeTudin(NodeTree *no)
+{
+    NodeTree *auxiliar = no;
+    while ((auxiliar->pai) != NULL) // enquanto existirem pais para serem imprimidos, imprimir
+    {
+        printarTabuleiro(auxiliar->numTabuleiro, auxiliar->fotoTabuleiroAtual);
+        auxiliar = auxiliar->pai;
+    }
+
+    if ((auxiliar->pai) == NULL) // imprimir o ultimo no, o tabuleiro original
+    {
+        printarTabuleiro(auxiliar->numTabuleiro, auxiliar->fotoTabuleiroAtual);
+    }
+
+    // Vai imprimir de tras pra frente: a jogada final (donzela na porta) sera a primeira a ser impressa e ficara no topo.
+    // Tabuleiro original sera o ultimo a ser impresso
+    // Para imprimir na ordem inversa sera necessario fazer uma nova lista encadeada (historicoResolucao).
+}
+
 int compararTabuleiros(int num, char tabuleiro1[5][TAM_MAX_COL], char tabuleiro2[5][TAM_MAX_COL])
 {
     for (int i = 0; i < 5; i++)
@@ -599,170 +638,7 @@ int checaPaisIguais(NodeTree *no, char candidatoSugestao[5][TAM_MAX_COL])
     return 0; // Tudo certo com o candidato, nao existe nenhum pai igual
 }
 
-int checarQuadrante(int numQuadrante, Node *q1, Node *q2, Node *q3, Node *q4, char tabuleiro[5][TAM_MAX_COL], int configTab)
-{
-
-    int matrizRepetida;
-
-    if (numQuadrante == 1)
-    {
-
-        Node *auxiliar = q1;
-        int i = 1;
-
-        while (auxiliar != NULL)
-        {
-            matrizRepetida = compararTabuleiros(auxiliar->numTabuleiro, auxiliar->fotoTabuleiroAtual, tabuleiro);
-            if (matrizRepetida)
-            {
-                return 1;
-            }
-            auxiliar = auxiliar->proximo;
-            ++i;
-        }
-        inserirNodeNoFim(q1, configTab, tabuleiro);
-    }
-
-    if (numQuadrante == 2)
-    {
-
-        Node *auxiliar = q2;
-        int i = 1;
-
-        while (auxiliar != NULL)
-        {
-            matrizRepetida = compararTabuleiros(auxiliar->numTabuleiro, auxiliar->fotoTabuleiroAtual, tabuleiro);
-            if (matrizRepetida)
-            {
-                return 1;
-            }
-            auxiliar = auxiliar->proximo;
-            ++i;
-        }
-        inserirNodeNoFim(q2, configTab, tabuleiro);
-    }
-
-    if (numQuadrante == 3)
-    {
-
-        Node *auxiliar = q3;
-        int i = 1;
-
-        while (auxiliar != NULL)
-        {
-            matrizRepetida = compararTabuleiros(auxiliar->numTabuleiro, auxiliar->fotoTabuleiroAtual, tabuleiro);
-            if (matrizRepetida)
-            {
-                return 1;
-            }
-            auxiliar = auxiliar->proximo;
-            ++i;
-        }
-        inserirNodeNoFim(q3, configTab, tabuleiro);
-    }
-
-    if (numQuadrante == 4)
-    {
-
-        Node *auxiliar = q4;
-        int i = 1;
-
-        while (auxiliar != NULL)
-        {
-            matrizRepetida = compararTabuleiros(auxiliar->numTabuleiro, auxiliar->fotoTabuleiroAtual, tabuleiro);
-            if (matrizRepetida)
-            {
-                return 1;
-            }
-            auxiliar = auxiliar->proximo;
-            ++i;
-        }
-        inserirNodeNoFim(q4, configTab, tabuleiro);
-    }
-
-    return 0;
-}
-
-int defineQuadrante(char tabuleiro[5][TAM_MAX_COL], int configTab)
-{
-
-    if (configTab == 1)
-    {
-
-        // Checar Quadrante 1;
-
-        if (tabuleiro[0][0] == 'D' || tabuleiro[1][0] == 'D' || tabuleiro[1][1] == 'D' || tabuleiro[0][1] == 'D')
-        {
-            // printf("\nEstou no Q1!\n");
-            return 1;
-        }
-
-        // Checar Quadrante 2;
-
-        if (tabuleiro[0][2] == 'D' || tabuleiro[0][3] == 'D' || tabuleiro[1][2] == 'D' || tabuleiro[1][3] == 'D')
-        {
-            // printf("\nEstou no Q2!\n");
-            return 2;
-        }
-
-        // Checar Quadrante 3;
-
-        if (tabuleiro[2][0] == 'D' || tabuleiro[2][1] == 'D' || tabuleiro[3][0] == 'D' || tabuleiro[3][1] == 'D' || tabuleiro[4][0] == 'D' || tabuleiro[4][1] == 'D')
-        {
-            // printf("\nEstou no Q3!\n");
-            return 3;
-        }
-
-        // Checar Quadrante 4;
-
-        if (tabuleiro[2][2] == 'D' || tabuleiro[2][3] == 'D' || tabuleiro[3][2] == 'D' || tabuleiro[3][3] == 'D' || tabuleiro[4][2] == 'D' || tabuleiro[4][3] == 'D')
-        {
-            // printf("\nEstou no Q4!\n");
-            return 4;
-        }
-    }
-
-    if (configTab == 2)
-    {
-
-        // Checar Quadrante 1;
-
-        if (tabuleiro[0][0] == 'D' || tabuleiro[0][1] == 'D' || tabuleiro[0][2] == 'D' || tabuleiro[1][0] == 'D' || tabuleiro[1][1] == 'D' || tabuleiro[1][2] == 'D')
-        {
-            // printf("\nEstou no Q1!\n");
-            return 1;
-        }
-
-        // Checar Quadrante 2;
-
-        if (tabuleiro[0][3] == 'D' || tabuleiro[0][4] == 'D' || tabuleiro[0][5] == 'D' || tabuleiro[1][3] == 'D' || tabuleiro[1][4] == 'D' || tabuleiro[1][5] == 'D')
-        {
-            // printf("\nEstou no Q2!\n");
-            return 2;
-        }
-
-        // Checar Quadrante 3;
-
-        if (tabuleiro[2][0] == 'D' || tabuleiro[2][1] == 'D' || tabuleiro[2][2] == 'D' || tabuleiro[3][0] == 'D' || tabuleiro[3][1] == 'D' || tabuleiro[3][2] == 'D' || tabuleiro[4][0] == 'D' || tabuleiro[4][1] == 'D' || tabuleiro[4][2] == 'D')
-        {
-            // printf("\nEstou no Q3!\n");
-            return 3;
-        }
-
-        // Checar Quadrante 4;
-
-        if (tabuleiro[2][3] == 'D' || tabuleiro[2][4] == 'D' || tabuleiro[2][5] == 'D' || tabuleiro[3][3] == 'D' || tabuleiro[3][4] == 'D' || tabuleiro[3][5] == 'D' || tabuleiro[4][3] == 'D' || tabuleiro[4][4] == 'D' || tabuleiro[4][5] == 'D')
-        {
-            // printf("\nEstou no Q4!\n");
-            return 4;
-        }
-    }
-
-    printf("INTERNAL ERROR: CONFIG TAB INVALIDA\n");
-    return 0;
-}
-
-Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_COL], Node *sugestoes, NodeTree *noAtual, Node *q1, Node *q2, Node *q3, Node *q4)
+Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_COL], Node *sugestoes, NodeTree *noAtual) // Node* possiveisJogadas
 {
     // printf("\nfuncao: encontrarProxsJogadas\n");
 
@@ -774,7 +650,6 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
     char tipoPeca = ' ';
     int movValido;
     int matrizRepetida;
-    int quadrante;
 
     for (int i = 0; i < 5; i++)
     {
@@ -796,12 +671,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                             matrizRepetida = checaPaisIguais(auxiliarNoAtual, tabuleiroAux);
                             if (!matrizRepetida)
                             {
-                                quadrante = defineQuadrante(tabuleiroAux, configTabuleiro);
-                                matrizRepetida = checarQuadrante(quadrante, q1, q2, q3, q4, tabuleiroAux, configTabuleiro);
-                                if (!matrizRepetida)
-                                {
-                                    possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
-                                }
+                                possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
                             }
                             copiarMatriz(tabuleiroJogo, tabuleiroAux);
                         }
@@ -815,12 +685,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                                 matrizRepetida = checaPaisIguais(auxiliarNoAtual, tabuleiroAux);
                                 if (!matrizRepetida)
                                 {
-                                    quadrante = defineQuadrante(tabuleiroAux, configTabuleiro);
-                                    matrizRepetida = checarQuadrante(quadrante, q1, q2, q3, q4, tabuleiroAux, configTabuleiro);
-                                    if (!matrizRepetida)
-                                    {
-                                        possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
-                                    }
+                                    possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
                                 }
                                 copiarMatriz(tabuleiroJogo, tabuleiroAux);
                             }
@@ -838,12 +703,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                             matrizRepetida = checaPaisIguais(auxiliarNoAtual, tabuleiroAux);
                             if (!matrizRepetida)
                             {
-                                quadrante = defineQuadrante(tabuleiroAux, configTabuleiro);
-                                matrizRepetida = checarQuadrante(quadrante, q1, q2, q3, q4, tabuleiroAux, configTabuleiro);
-                                if (!matrizRepetida)
-                                {
-                                    possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
-                                }
+                                possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
                             }
                             copiarMatriz(tabuleiroJogo, tabuleiroAux);
                         }
@@ -857,12 +717,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                                 matrizRepetida = checaPaisIguais(auxiliarNoAtual, tabuleiroAux);
                                 if (!matrizRepetida)
                                 {
-                                    quadrante = defineQuadrante(tabuleiroAux, configTabuleiro);
-                                    matrizRepetida = checarQuadrante(quadrante, q1, q2, q3, q4, tabuleiroAux, configTabuleiro);
-                                    if (!matrizRepetida)
-                                    {
-                                        possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
-                                    }
+                                    possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
                                 }
                                 copiarMatriz(tabuleiroJogo, tabuleiroAux);
                             }
@@ -880,13 +735,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                             matrizRepetida = checaPaisIguais(auxiliarNoAtual, tabuleiroAux);
                             if (!matrizRepetida)
                             {
-
-                                quadrante = defineQuadrante(tabuleiroAux, configTabuleiro);
-                                matrizRepetida = checarQuadrante(quadrante, q1, q2, q3, q4, tabuleiroAux, configTabuleiro);
-                                if (!matrizRepetida)
-                                {
-                                    possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
-                                }
+                                possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
                             }
                             copiarMatriz(tabuleiroJogo, tabuleiroAux);
                         }
@@ -904,12 +753,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                             matrizRepetida = checaPaisIguais(auxiliarNoAtual, tabuleiroAux);
                             if (!matrizRepetida)
                             {
-                                quadrante = defineQuadrante(tabuleiroAux, configTabuleiro);
-                                matrizRepetida = checarQuadrante(quadrante, q1, q2, q3, q4, tabuleiroAux, configTabuleiro);
-                                if (!matrizRepetida)
-                                {
-                                    possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
-                                }
+                                possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
                             }
                             copiarMatriz(tabuleiroJogo, tabuleiroAux);
                         }
@@ -932,12 +776,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                             matrizRepetida = checaPaisIguais(auxiliarNoAtual, tabuleiroAux);
                             if (!matrizRepetida)
                             {
-                                quadrante = defineQuadrante(tabuleiroAux, configTabuleiro);
-                                matrizRepetida = checarQuadrante(quadrante, q1, q2, q3, q4, tabuleiroAux, configTabuleiro);
-                                if (!matrizRepetida)
-                                {
-                                    possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
-                                }
+                                possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
                             }
                             copiarMatriz(tabuleiroJogo, tabuleiroAux);
                         }
@@ -954,12 +793,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                             matrizRepetida = checaPaisIguais(auxiliarNoAtual, tabuleiroAux);
                             if (!matrizRepetida)
                             {
-                                quadrante = defineQuadrante(tabuleiroAux, configTabuleiro);
-                                matrizRepetida = checarQuadrante(quadrante, q1, q2, q3, q4, tabuleiroAux, configTabuleiro);
-                                if (!matrizRepetida)
-                                {
-                                    possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
-                                }
+                                possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
                             }
                             possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
                             copiarMatriz(tabuleiroJogo, tabuleiroAux);
@@ -977,12 +811,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                             matrizRepetida = checaPaisIguais(auxiliarNoAtual, tabuleiroAux);
                             if (!matrizRepetida)
                             {
-                                quadrante = defineQuadrante(tabuleiroAux, configTabuleiro);
-                                matrizRepetida = checarQuadrante(quadrante, q1, q2, q3, q4, tabuleiroAux, configTabuleiro);
-                                if (!matrizRepetida)
-                                {
-                                    possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
-                                }
+                                possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
                             }
                             copiarMatriz(tabuleiroJogo, tabuleiroAux);
                         }
@@ -997,12 +826,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                                 matrizRepetida = checaPaisIguais(auxiliarNoAtual, tabuleiroAux);
                                 if (!matrizRepetida)
                                 {
-                                    quadrante = defineQuadrante(tabuleiroAux, configTabuleiro);
-                                    matrizRepetida = checarQuadrante(quadrante, q1, q2, q3, q4, tabuleiroAux, configTabuleiro);
-                                    if (!matrizRepetida)
-                                    {
-                                        possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
-                                    }
+                                    possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
                                 }
                                 copiarMatriz(tabuleiroJogo, tabuleiroAux);
                             }
@@ -1022,12 +846,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                             matrizRepetida = checaPaisIguais(auxiliarNoAtual, tabuleiroAux);
                             if (!matrizRepetida)
                             {
-                                quadrante = defineQuadrante(tabuleiroAux, configTabuleiro);
-                                matrizRepetida = checarQuadrante(quadrante, q1, q2, q3, q4, tabuleiroAux, configTabuleiro);
-                                if (!matrizRepetida)
-                                {
-                                    possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
-                                }
+                                possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
                             }
                             copiarMatriz(tabuleiroJogo, tabuleiroAux);
                         }
@@ -1041,12 +860,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                                 matrizRepetida = checaPaisIguais(auxiliarNoAtual, tabuleiroAux);
                                 if (!matrizRepetida)
                                 {
-                                    quadrante = defineQuadrante(tabuleiroAux, configTabuleiro);
-                                    matrizRepetida = checarQuadrante(quadrante, q1, q2, q3, q4, tabuleiroAux, configTabuleiro);
-                                    if (!matrizRepetida)
-                                    {
-                                        possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
-                                    }
+                                    possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
                                 }
                                 copiarMatriz(tabuleiroJogo, tabuleiroAux);
                             }
@@ -1067,12 +881,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                             matrizRepetida = checaPaisIguais(auxiliarNoAtual, tabuleiroAux);
                             if (!matrizRepetida)
                             {
-                                quadrante = defineQuadrante(tabuleiroAux, configTabuleiro);
-                                matrizRepetida = checarQuadrante(quadrante, q1, q2, q3, q4, tabuleiroAux, configTabuleiro);
-                                if (!matrizRepetida)
-                                {
-                                    possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
-                                }
+                                possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
                             }
                             copiarMatriz(tabuleiroJogo, tabuleiroAux);
                         }
@@ -1089,12 +898,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                             matrizRepetida = checaPaisIguais(auxiliarNoAtual, tabuleiroAux);
                             if (!matrizRepetida)
                             {
-                                quadrante = defineQuadrante(tabuleiroAux, configTabuleiro);
-                                matrizRepetida = checarQuadrante(quadrante, q1, q2, q3, q4, tabuleiroAux, configTabuleiro);
-                                if (!matrizRepetida)
-                                {
-                                    possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
-                                }
+                                possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
                             }
                             copiarMatriz(tabuleiroJogo, tabuleiroAux);
                         }
@@ -1111,12 +915,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                             matrizRepetida = checaPaisIguais(auxiliarNoAtual, tabuleiroAux);
                             if (!matrizRepetida)
                             {
-                                quadrante = defineQuadrante(tabuleiroAux, configTabuleiro);
-                                matrizRepetida = checarQuadrante(quadrante, q1, q2, q3, q4, tabuleiroAux, configTabuleiro);
-                                if (!matrizRepetida)
-                                {
-                                    possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
-                                }
+                                possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
                             }
                             copiarMatriz(tabuleiroJogo, tabuleiroAux);
                         }
@@ -1135,12 +934,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                             matrizRepetida = checaPaisIguais(auxiliarNoAtual, tabuleiroAux);
                             if (!matrizRepetida)
                             {
-                                quadrante = defineQuadrante(tabuleiroAux, configTabuleiro);
-                                matrizRepetida = checarQuadrante(quadrante, q1, q2, q3, q4, tabuleiroAux, configTabuleiro);
-                                if (!matrizRepetida)
-                                {
-                                    possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
-                                }
+                                possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
                             }
                             copiarMatriz(tabuleiroJogo, tabuleiroAux);
                         }
@@ -1152,13 +946,75 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
     return possiveisJogadas;
 }
 
-int recNova(NodeTree *noAtual, Node *sugestoes, Node *q1, Node *q2, Node *q3, Node *q4)
+int recursividade(NodeTree *noAtual, Node *vetorSugestoes[8])
+{
+
+    int fim = verificaFim(1, noAtual->fotoTabuleiroAtual);
+
+    if (fim == 1)
+    {
+        printf("\nACHEI A RESPOSTA AMIGOS\n");
+        imprimeTudin(noAtual);
+        return 1;
+    }
+
+    NodeTree *aux = noAtual;
+
+    aux = inserirFilhoTree(aux, 1, vetorSugestoes);
+
+    for (int i = 0; i < 8; i++)
+    {
+        if (aux->filhos[i] == NULL)
+        {
+            return 0;
+        }
+
+        // printf("\nFuncao: recursividade\n");
+        // printf("Analisando o filho numero # %d\n", i);
+        // printarTabuleiro(1, aux->filhos[i]->fotoTabuleiroAtual);
+        // printf("Acima encontra-se o fim do filho numero # %d\n", i);
+
+        Node *sugestoes = NULL;
+        sugestoes = encontrarProxsJogadas(1, aux->filhos[i]->fotoTabuleiroAtual, sugestoes, aux);
+
+        Node *vetorSugestoes[8];
+        vetorSugestoes[0] = NULL;
+        vetorSugestoes[1] = NULL;
+        vetorSugestoes[2] = NULL;
+        vetorSugestoes[3] = NULL;
+        vetorSugestoes[4] = NULL;
+        vetorSugestoes[5] = NULL;
+        vetorSugestoes[6] = NULL;
+        vetorSugestoes[7] = NULL;
+
+        Node *auxiliar = sugestoes;
+        int r = 0;
+        // printf("Sugestoes a partir dele:\n-----------\n");
+        while (auxiliar != NULL)
+        {
+            vetorSugestoes[r] = criarNode();
+            copiarMatriz(auxiliar->fotoTabuleiroAtual, vetorSugestoes[r]->fotoTabuleiroAtual);
+            // printarTabuleiro(1, vetorSugestoes[r]->fotoTabuleiroAtual);
+            vetorSugestoes[r]->numTabuleiro = auxiliar->numTabuleiro;
+            auxiliar = auxiliar->proximo;
+            ++r;
+        }
+
+        fim = recursividade(aux->filhos[i], vetorSugestoes);
+        if (fim == 1)
+            return fim;
+    }
+
+    return 0;
+}
+
+int recNova(NodeTree *noAtual, Node *sugestoes)
 {
     int fim = verificaFim(noAtual->numTabuleiro, noAtual->fotoTabuleiroAtual);
     if (fim == 1)
     {
         printf("\nACHEI A RESPOSTA AMIGOS\n");
-        imprimeSolucao(noAtual);
+        imprimeTudin(noAtual);
         return 1;
     }
 
@@ -1171,14 +1027,14 @@ int recNova(NodeTree *noAtual, Node *sugestoes, Node *q1, Node *q2, Node *q3, No
         aux->filhos[i] = inserirRaizTree(aux->filhos[i], sugestoes->fotoTabuleiroAtual, aux->numTabuleiro, noAtual);
 
         Node *novaSugestao = NULL;
-        novaSugestao = encontrarProxsJogadas(aux->numTabuleiro, aux->filhos[i]->fotoTabuleiroAtual, novaSugestao, aux, q1, q2, q3, q4);
+        novaSugestao = encontrarProxsJogadas(aux->numTabuleiro, aux->filhos[i]->fotoTabuleiroAtual, novaSugestao, aux);
 
         // printf("\nFuncao: recursividade\n");
         // printf("Analisando o filho numero # %d\n", i);
         // printarTabuleiro(aux->numTabuleiro, aux->filhos[i]->fotoTabuleiroAtual);
         // printf("Acima encontra-se o fim do filho numero # %d\n", i);
 
-        fim = recNova(aux->filhos[i], novaSugestao, q1, q2, q3, q4);
+        fim = recNova(aux->filhos[i], novaSugestao);
         if (fim == 1)
             return fim;
 
@@ -1230,8 +1086,7 @@ int main()
         {'h', 'h', 'i', 'j', 'k', 'l', '\0'},
         {'h', 'i', 'i', 'm', 'k', 'l', '\0'}};
 
-    Node *q1, *q2, *q3, *q4;
-
+    
     int numTab = 2;
     NodeTree *noAtual = NULL;
     noAtual = inserirRaizTree(noAtual, tabuleiro2, numTab, NULL);
@@ -1239,11 +1094,11 @@ int main()
     NodeTree *aux = noAtual;
 
     Node *sugestoes = NULL;
-    sugestoes = encontrarProxsJogadas(numTab, aux->fotoTabuleiroAtual, sugestoes, aux, q1, q2, q3, q4);
+    sugestoes = encontrarProxsJogadas(numTab, aux->fotoTabuleiroAtual, sugestoes, aux);
 
     // int niveis = 5;
 
-    int final = recNova(aux, sugestoes, q1, q2, q3, q4);
+    int final = recNova(aux, sugestoes);
 
     // imprimir(noAtual);
     printf("\nACHEI: %d", final);

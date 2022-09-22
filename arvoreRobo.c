@@ -975,9 +975,12 @@ int recNova(NodeTree *noAtual, Node *sugestoes)
         // printf("Acima encontra-se o fim do filho numero # %d\n", i);
 
         fim = recNova(aux->filhos[i], novaSugestao);
-        if (fim == 1)
-            return fim;
+        if (fim == 1) return fim;
 
+        printf("fim == 0           i = %d         aux->filhos[%d]->tab:", i, i);
+        printarTabuleiro(aux->numTabuleiro, aux->filhos[i]->fotoTabuleiroAtual);
+        free(aux->filhos[i]);
+        aux->filhos[i] = NULL;
         sugestoes = sugestoes->proximo;
         ++i;
     }
@@ -999,11 +1002,11 @@ int main()
         {'f', ' ', ' ', 'i', '\0', '\0', '\0'}};
 
     char tabuleiro2[5][TAM_MAX_COL] = {
-        {'D', 'D', ' ', 'a', 'a', 'b', '\0'},
-        {'D', 'D', ' ', 'a', 'c', 'd', '\0'},
-        {'e', 'e', 'f', 'g', 'd', 'd', '\0'},
-        {'h', 'h', 'i', 'j', 'k', 'l', '\0'},
-        {'h', 'i', 'i', 'm', 'k', 'l', '\0'}};
+        {'z', 'x', 'm', 'a', 'a', 'b', '\0'},
+        {'z', 'x', 'm', 'a', 'c', 'u', '\0'},
+        {'e', 'e', 'D', 'D', 'd', 'w', '\0'},
+        {'h', 'h', 'D', 'D', ' ', 'p', '\0'},
+        {'h', 'i', 'v', 'm', ' ', 'l', '\0'}};
 
     
     int numTab = 2;

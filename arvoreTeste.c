@@ -925,14 +925,14 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
     return possiveisJogadas;
 }
 
-int recNova(NodeTree *noAtual, Node *sugestoes)
+NodeTree *recNova(NodeTree *noAtual, Node *sugestoes)
 {
     int fim = verificaFim(noAtual->numTabuleiro, noAtual->fotoTabuleiroAtual);
     if (fim == 1)
     {
         printf("\nACHEI A RESPOSTA AMIGOS\n");
         imprimeSolucao(noAtual);
-        return fim;
+        return noAtual;
     }
 
     NodeTree *aux = noAtual;
@@ -954,10 +954,9 @@ int recNova(NodeTree *noAtual, Node *sugestoes)
         // printf("fim == 0           i = %d         aux->filhos[%d]->tab:\n", i, i);
         // printarTabuleiro(aux->numTabuleiro, aux->filhos[i]->fotoTabuleiroAtual);
 
-        fim = recNova(aux->filhos[i], novaSugestao);
+        aux->filhos[i] = recNova(aux->filhos[i], novaSugestao);
 
-        if (aux->filhos[i] != NULL) 
-            return fim;
+        if (aux->filhos[i] != NULL) return aux->filhos[i];
 
         // printf("To aqui - NULL\n");
         
@@ -975,7 +974,7 @@ int recNova(NodeTree *noAtual, Node *sugestoes)
     // printf("Acima encontra-se o fim do filho numero # %d\n", i);
     free(noAtual);
     // printf("memoria desalocada\n");
-    return 0;
+    return NULL;
 }
 
 int main()
@@ -1007,9 +1006,12 @@ int main()
 
     // int niveis = 5;
 
-    int fim = recNova(aux, sugestoes);
+    aux = recNova(aux, sugestoes);
 
     // imprimir(noAtual);
-    printf("\nACHEI %d", fim);
+    if (aux != NULL)
+    {
+        printf("\nACHEI");
+    }
     return 0;
 }

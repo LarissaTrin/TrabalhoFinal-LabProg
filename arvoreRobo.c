@@ -505,10 +505,10 @@ typedef struct nodeTree
     struct nodeTree *filhos[8];
     struct nodeTree *pai;
     struct nodeTree *irmao;
-    int quantChaves;
+    int quantNivel;
 } NodeTree;
 
-NodeTree *inserirRaizTree(NodeTree *noAtual, char tabuleiro[5][TAM_MAX_COL], int numTab, NodeTree *ptPai)
+NodeTree *inserirRaizTree(NodeTree *noAtual, char tabuleiro[5][TAM_MAX_COL], int numTab, NodeTree *ptPai, int nivel)
 {
     // printf("\nInserir raiz\n");
     NodeTree *novoNode = (NodeTree *)malloc(sizeof(NodeTree));
@@ -517,6 +517,7 @@ NodeTree *inserirRaizTree(NodeTree *noAtual, char tabuleiro[5][TAM_MAX_COL], int
         // é verdadeira penas a primeira vez para criar a raiz primaria
         copiarMatriz(tabuleiro, novoNode->fotoTabuleiroAtual);
         novoNode->numTabuleiro = numTab;
+        novoNode->quantNivel = nivel;
         novoNode->pai = ptPai;
         novoNode->filhos[0] = NULL;
         novoNode->filhos[1] = NULL;
@@ -535,13 +536,13 @@ NodeTree *inserirFilhoTree(NodeTree *noAtual, int numTab, Node *sugest[8])
     int i = 0;
     while (i < 8 && sugest[i] != NULL)
     {
-        noAtual->filhos[i] = inserirRaizTree(noAtual->filhos[i], sugest[i]->fotoTabuleiroAtual, numTab, noAtual);
+        noAtual->filhos[i] = inserirRaizTree(noAtual->filhos[i], sugest[i]->fotoTabuleiroAtual, numTab, noAtual, 1);
         ++i;
     }
     return noAtual;
 }
 
-int verificaFim(int configTabuleiro, char tabuleiro[5][TAM_MAX_COL])
+int verificaFim(int configTabuleiro, char tabuleiro[5][TAM_MAX_COL], int nivel)
 {
     if (configTabuleiro == 1)
     {
@@ -558,6 +559,7 @@ int verificaFim(int configTabuleiro, char tabuleiro[5][TAM_MAX_COL])
             return 1;
         }
 
+        printf("\nNivel: %d\n", nivel);
         printarTabuleiro(2, tabuleiro);
 
         if (tabuleiro[2][3] == 'D' && tabuleiro[3][3]){
@@ -985,9 +987,9 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
     return possiveisJogadas;
 }
 
-int recNova(NodeTree *noAtual, Node *sugestoes)
+int recNova(NodeTree *noAtual, Node *sugestoes, int nivel)
 {
-    int fim = verificaFim(noAtual->numTabuleiro, noAtual->fotoTabuleiroAtual);
+    int fim = verificaFim(noAtual->numTabuleiro, noAtual->fotoTabuleiroAtual, noAtual->quantNivel);
     if (fim == 1)
     {
         printf("\nACHEI A RESPOSTA AMIGOS\n");
@@ -1004,7 +1006,7 @@ int recNova(NodeTree *noAtual, Node *sugestoes)
 
     while (i < 8 && sugestoes != NULL)
     {
-        noAtual->filhos[i] = inserirRaizTree(noAtual->filhos[i], sugestoes->fotoTabuleiroAtual, noAtual->numTabuleiro, noAtual);
+        noAtual->filhos[i] = inserirRaizTree(noAtual->filhos[i], sugestoes->fotoTabuleiroAtual, noAtual->numTabuleiro, noAtual, nivel);
         
         //printf("Quem é meu Pai: \n");
         //printarTabuleiro(noAtual->numTabuleiro, noAtual->fotoTabuleiroAtual);
@@ -1015,7 +1017,7 @@ int recNova(NodeTree *noAtual, Node *sugestoes)
         Node *novaSugestao = NULL;
         novaSugestao = encontrarProxsJogadas(noAtual->numTabuleiro, noAtual->filhos[i]->fotoTabuleiroAtual, novaSugestao, noAtual);
 
-        fim = recNova(noAtual->filhos[i], novaSugestao);
+        fim = recNova(noAtual->filhos[i], novaSugestao, nivel+1);
         if (fim == 1)
             return fim;
 
@@ -1046,9 +1048,9 @@ int main()
         {'h', 'i', 'i', 'm', 'k', 'l', '\0'}};
 
     
-    int numTab = 1;
+    int numTab = 2;
     NodeTree *noAtual = NULL;
-    noAtual = inserirRaizTree(noAtual, tabuleiro1, numTab, NULL);
+    noAtual = inserirRaizTree(noAtual, tabuleiro2, numTab, NULL, 0);
 
     //NodeTree *aux = noAtual;
 
@@ -1057,7 +1059,7 @@ int main()
 
     // int niveis = 5;
 
-    int final = recNova(noAtual, sugestoes);
+    int final = recNova(noAtual, sugestoes, 1);
 
     // imprimir(noAtual);
     printf("\nACHEI: %d", final);

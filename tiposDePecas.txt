@@ -1,6 +1,35 @@
-D - tipo donzela - D
-L cabeça para baixo - tipo barraca - B
-i em pé - tipo poste - P
-quadrado unico - tipo quadrado - Q
-i deitado - tipo saco de dormir - S
-L invertido - tipo cadeira - C
+TIPOS DE PECAS - D, B, P, Q, S, C
+
+D - Tipo donzela
+* * * *
+* D D *
+* D D *
+* * * *
+
+B - Tipo barraca
+* * * *
+* a a *
+* a   *
+* * * *
+
+P - Tipo poste
+* * *
+* i *
+* i *
+* * *
+
+Q - Tipo quadrado
+* * *
+* m *
+* * *
+
+S - Tipo saco de dormir
+* * * *
+* e e *
+* * * *
+
+C - Tipo cadeira
+* * * *
+*   d *
+* d d  *
+* * * *

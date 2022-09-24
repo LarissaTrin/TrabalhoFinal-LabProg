@@ -1,5 +1,7 @@
 *.exe
+.vscode
 t
+r
 t2
 tabGen
 teste

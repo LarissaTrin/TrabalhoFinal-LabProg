@@ -504,6 +504,7 @@ typedef struct nodeTree
     int numTabuleiro;
     struct nodeTree *filhos[8];
     struct nodeTree *pai;
+    struct nodeTree *irmao;
     int quantChaves;
 } NodeTree;
 
@@ -548,12 +549,44 @@ int verificaFim(int configTabuleiro, char tabuleiro[5][TAM_MAX_COL])
         {
             return 1;
         }
+
+        printarTabuleiro(1, tabuleiro);
     }
-    else if (configTabuleiro == 2 && tabuleiro[4][5] == 'D')
+    else if (configTabuleiro == 2)
     {
-        return 1;
+        if (tabuleiro[4][5] == 'D'){
+            return 1;
+        }
+
+        printarTabuleiro(2, tabuleiro);
+
+        if (tabuleiro[2][3] == 'D' && tabuleiro[3][3]){
+            printf("D [2][3]&[3][3]\n");
+        }
+
+        if (tabuleiro[0][5] == 'D'){
+            printf("D [0][5]\n");
+        }
+
+        if (tabuleiro[4][0] == 'D'){
+            printf("D [4][0]\n");
+        }
+
     }
     return 0;
+
+    // if (configTabuleiro == 1)
+    // {
+    //     if (tabuleiro[4][1] == 'D' && tabuleiro[4][2] == 'D')
+    //     {
+    //         return 1;
+    //     }
+    // }
+    // else if (configTabuleiro == 2 && tabuleiro[4][5] == 'D')
+    // {
+    //     return 1;
+    // }
+    // return 0;
 }
 
 void imprimirSolucao(NodeTree *raiz)
@@ -667,6 +700,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                         // Checando em cima
                         tipoPeca = checarTipoPeca(tabuleiroJogo[i - 1][j], tabuleiroJogo);
                         movValido = moverDirecao('B', tipoPeca, tabuleiroJogo[i - 1][j], tabuleiroAux);
+                        //if (tipoPeca == 'D' && movValido == 1) printf("Movi D Baixo\n");
                         if (movValido)
                         {
                             // printf("Estive 1\n");
@@ -699,6 +733,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                         // Checando embaixo
                         tipoPeca = checarTipoPeca(tabuleiroJogo[i + 1][j], tabuleiroJogo);
                         movValido = moverDirecao('T', tipoPeca, tabuleiroJogo[i + 1][j], tabuleiroAux);
+                        //if (tipoPeca == 'D' && movValido == 1) printf("Movi D Topo\n");
                         if (movValido)
                         {
                             // printf("Estive 3 \n");
@@ -807,6 +842,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                         // Checando esquerda
                         tipoPeca = checarTipoPeca(tabuleiroJogo[i][j - 1], tabuleiroJogo);
                         movValido = moverDirecao('D', tipoPeca, tabuleiroJogo[i][j - 1], tabuleiroAux);
+                        //if (tipoPeca == 'D' && movValido == 1) printf("Movi D Dir\n");
                         if (movValido)
                         {
                             // printf("Estive 9\n");
@@ -842,6 +878,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                         // Checando direita
                         tipoPeca = checarTipoPeca(tabuleiroJogo[i][j + 1], tabuleiroJogo);
                         movValido = moverDirecao('E', tipoPeca, tabuleiroJogo[i][j + 1], tabuleiroAux);
+                        //if (tipoPeca == 'D' && movValido == 1) printf("Movi D Esq\n");
                         if (movValido)
                         {
                             // printf("Estive 11\n");
@@ -958,23 +995,27 @@ int recNova(NodeTree *noAtual, Node *sugestoes)
         return 1;
     }
 
-    NodeTree *aux = noAtual;
+    //NodeTree *aux = noAtual;
     // aux = inserirFilhoTree(aux, 1, sugestoes);
+
+    //printf("Paizão: \n");
+    //printarTabuleiro(noAtual->numTabuleiro, noAtual->fotoTabuleiroAtual);
     int i = 0;
 
     while (i < 8 && sugestoes != NULL)
     {
-        aux->filhos[i] = inserirRaizTree(aux->filhos[i], sugestoes->fotoTabuleiroAtual, aux->numTabuleiro, noAtual);
+        noAtual->filhos[i] = inserirRaizTree(noAtual->filhos[i], sugestoes->fotoTabuleiroAtual, noAtual->numTabuleiro, noAtual);
+        
+        //printf("Quem é meu Pai: \n");
+        //printarTabuleiro(noAtual->numTabuleiro, noAtual->fotoTabuleiroAtual);
+        //printf("Analisando o filho numero #%d\n", i);
+        //printarTabuleiro(noAtual->filhos[i]->numTabuleiro, noAtual->filhos[i]->fotoTabuleiroAtual);
+        //printf("---------\n");
 
         Node *novaSugestao = NULL;
-        novaSugestao = encontrarProxsJogadas(aux->numTabuleiro, aux->filhos[i]->fotoTabuleiroAtual, novaSugestao, aux);
+        novaSugestao = encontrarProxsJogadas(noAtual->numTabuleiro, noAtual->filhos[i]->fotoTabuleiroAtual, novaSugestao, noAtual);
 
-        // printf("\nFuncao: recursividade\n");
-        // printf("Analisando o filho numero # %d\n", i);
-        // printarTabuleiro(aux->numTabuleiro, aux->filhos[i]->fotoTabuleiroAtual);
-        // printf("Acima encontra-se o fim do filho numero # %d\n", i);
-
-        fim = recNova(aux->filhos[i], novaSugestao);
+        fim = recNova(noAtual->filhos[i], novaSugestao);
         if (fim == 1)
             return fim;
 
@@ -982,10 +1023,9 @@ int recNova(NodeTree *noAtual, Node *sugestoes)
         ++i;
     }
 
-    // printf("\nFuncao: recursividade\n");
-    // printf("Analisando o filho numero # %d\n", i);
-    // printarTabuleiro(aux->numTabuleiro, aux->filhos[i]->fotoTabuleiroAtual);
-    // printf("Acima encontra-se o fim do filho numero # %d\n", i);
+    //free(noAtual);
+    //printf("matei o no\n");
+
     return 0;
 }
 
@@ -1006,18 +1046,18 @@ int main()
         {'h', 'i', 'i', 'm', 'k', 'l', '\0'}};
 
     
-    int numTab = 2;
+    int numTab = 1;
     NodeTree *noAtual = NULL;
-    noAtual = inserirRaizTree(noAtual, tabuleiro2, numTab, NULL);
+    noAtual = inserirRaizTree(noAtual, tabuleiro1, numTab, NULL);
 
-    NodeTree *aux = noAtual;
+    //NodeTree *aux = noAtual;
 
     Node *sugestoes = NULL;
-    sugestoes = encontrarProxsJogadas(numTab, aux->fotoTabuleiroAtual, sugestoes, aux);
+    sugestoes = encontrarProxsJogadas(numTab, noAtual->fotoTabuleiroAtual, sugestoes, noAtual);
 
     // int niveis = 5;
 
-    int final = recNova(aux, sugestoes);
+    int final = recNova(noAtual, sugestoes);
 
     // imprimir(noAtual);
     printf("\nACHEI: %d", final);

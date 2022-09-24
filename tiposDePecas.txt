@@ -1,6 +1,0 @@
-D - tipo donzela - D
-L cabeça para baixo - tipo barraca - B
-i em pé - tipo poste - P
-quadrado unico - tipo quadrado - Q
-i deitado - tipo saco de dormir - S
-L invertido - tipo cadeira - C

@@ -523,7 +523,6 @@ Node *inserirNodeNoFim(Node *listaEncadeada, int configTabuleiro, char tabuleiro
 }
 
 Node *listaRepetidosGlobal = NULL;
-
 typedef struct nodeTree
 {
     char fotoTabuleiroAtual[5][TAM_MAX_COL];
@@ -674,10 +673,10 @@ int checaRepetidosGlobais(char tabuleiro[5][7], int configTabuleiro)
 {
     generalizarPecasNaHoraDeSalvar(tabuleiro);
 
+
     if (listaRepetidosGlobal == NULL)
     {
-        listaRepetidosGlobal = criarNode();
-        inserirNodeNoFim(listaRepetidosGlobal, configTabuleiro, tabuleiroPecasGenericas);
+        listaRepetidosGlobal = inserirNodeNoFim(listaRepetidosGlobal, configTabuleiro, tabuleiroPecasGenericas);
         return 0;
     }
 
@@ -687,7 +686,7 @@ int checaRepetidosGlobais(char tabuleiro[5][7], int configTabuleiro)
     {
         if (compararTabuleiros(auxiliar->numTabuleiro, auxiliar->fotoTabuleiroAtual, tabuleiroPecasGenericas) == 1)
         {
-            //mostrarListaEncadeada(listaRepetidosGlobal);
+            // mostrarListaEncadeada(listaRepetidosGlobal);
             return 1;
         }
         auxiliar = auxiliar->proximo;
@@ -732,16 +731,18 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                         {
                             // printf("Estive 1\n");
                             matrizRepetida = checaPaisIguais(noAtual, tabuleiroAux);
+                            // printf("Estive matrizRepetida: %d\n", matrizRepetida);
                             if (!matrizRepetida)
                             {
                                 matrizRepetidaGlobal = checaRepetidosGlobais(tabuleiroAux, configTabuleiro);
-                                //printf("matrizrepetidaglobal? %d\n", matrizRepetidaGlobal);
+                                // printf("matrizrepetidaglobal? %d\n", matrizRepetidaGlobal);
                                 if (!matrizRepetidaGlobal)
                                 {
                                     possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
                                 }
                             }
                             copiarMatriz(tabuleiroJogo, tabuleiroAux);
+                            // printf("erro n foi aqi\n");
                         }
                         if (tabuleiroJogo[i - 1][j] != tabuleiroJogo[i - 1][j + 1])
                         {
@@ -1094,6 +1095,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
 
 int recNova(NodeTree *noAtual, Node *sugestoes, int nivel)
 {
+    // printf("To aqui nivel: %d\n",nivel);
     int fim = verificaFim(noAtual->numTabuleiro, noAtual->fotoTabuleiroAtual, noAtual->quantNivel);
     if (fim == 1)
     {
@@ -1141,6 +1143,7 @@ int main()
         {'h', 'i', 'i', 'm', 'k', 'l', '\0'}};
 
     NodeTree *noAtual = NULL;
+    // printf("\noi");
 
     // Alterar aqui para testar as duas solucoes
     int numTab = 1;

@@ -458,7 +458,7 @@ char checarTipoPeca(char letra, char tabuleiroJogo[5][TAM_MAX_COL])
     return 'e';
 }
 
-void generalizarPecasNaHoraDeSalvar(char tabuleiro[5][7]){
+void generalizarPecasNaHoraDeSalvar(char tabuleiro[5][TAM_MAX_COL]){
 
     char tabuleiroBranco[5][TAM_MAX_COL] = {
     {'\0', '\0', '\0', '\0', '\0', '\0', '\0'},
@@ -530,7 +530,6 @@ typedef struct nodeTree
     int numTabuleiro;
     struct nodeTree *filhos[8];
     struct nodeTree *pai;
-    struct nodeTree *irmao;
     int quantNivel;
 } NodeTree;
 
@@ -555,17 +554,6 @@ NodeTree *inserirRaizTree(NodeTree *noAtual, char tabuleiro[5][TAM_MAX_COL], int
         novoNode->filhos[7] = NULL;
     }
     return novoNode;
-}
-
-NodeTree *inserirFilhoTree(NodeTree *noAtual, int numTab, Node *sugest[8])
-{
-    int i = 0;
-    while (i < 8 && sugest[i] != NULL)
-    {
-        noAtual->filhos[i] = inserirRaizTree(noAtual->filhos[i], sugest[i]->fotoTabuleiroAtual, numTab, noAtual, 1);
-        ++i;
-    }
-    return noAtual;
 }
 
 int verificaFim(int configTabuleiro, char tabuleiro[5][TAM_MAX_COL], int nivel)
@@ -602,27 +590,6 @@ int verificaFim(int configTabuleiro, char tabuleiro[5][TAM_MAX_COL], int nivel)
     //     return 1;
     // }
     // return 0;
-}
-
-void imprimirSolucao(NodeTree *raiz)
-{
-    if (raiz->filhos[0] == NULL)
-    {
-        printf("\nAcabou os filhos.\n");
-        return;
-    }
-    else
-    {
-        printf("PAI:\n");
-        printarTabuleiro(1, raiz->fotoTabuleiroAtual);
-        printf("FILHOS DO NO ACIMA:\n");
-        for (int i = 0; i < 8; i++)
-        {
-            printarTabuleiro(1, raiz->filhos[i]->fotoTabuleiroAtual);
-        }
-        raiz = raiz->filhos[0];
-        imprimirSolucao(raiz);
-    }
 }
 
 void imprimeSolucao(NodeTree *no)
@@ -1175,13 +1142,13 @@ int main()
 
     NodeTree *noAtual = NULL;
 
-    // Alterar aqui para testar as duas solucoes!
+    // Alterar aqui para testar as duas solucoes
     int numTab = 1;
     noAtual = inserirRaizTree(noAtual, tabuleiro1, numTab, NULL, 0);
     //
 
-    // Tabuleiro 1 leva em média 3 segundos
-    // Tabuleiro 2 leva em média 10 minutos
+    // Tabuleiro 1 leva em media 2.5 segundos
+    // Tabuleiro 2 leva em media 4 minutos
 
     Node *sugestoes = NULL;
     sugestoes = encontrarProxsJogadas(numTab, noAtual->fotoTabuleiroAtual, sugestoes, noAtual);

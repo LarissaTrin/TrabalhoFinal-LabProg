@@ -593,23 +593,14 @@ int verificaFim(int configTabuleiro, char tabuleiro[5][TAM_MAX_COL], int nivel)
 
 void imprimeSolucao(NodeTree *no)
 {
-    printf("\n[!] A solucao foi encontrada!\nApresentando passos para o resultado...\n\n");
     NodeTree *auxiliar = no;
-    while ((auxiliar->pai) != NULL) // enquanto existirem pais na arvere, imprimir cada um
+    if (auxiliar != NULL)
     {
+        imprimeSolucao(auxiliar->pai);
         printarTabuleiro(auxiliar->numTabuleiro, auxiliar->fotoTabuleiroAtual);
         printf("\n");
-        auxiliar = auxiliar->pai;
     }
-
-    if ((auxiliar->pai) == NULL) // imprimir o ultimo no, o tabuleiro original
-    {
-        printarTabuleiro(auxiliar->numTabuleiro, auxiliar->fotoTabuleiroAtual);
-    }
-
-    // Vai imprimir de tras pra frente: a jogada final (donzela na porta) sera a primeira a ser impressa e ficara no topo.
-    // Tabuleiro original sera o ultimo a ser impresso
-    // Para imprimir na ordem inversa sera necessario fazer uma nova lista encadeada (historicoResolucao).
+    return;
 }
 
 int compararTabuleiros(int num, char tabuleiro1[5][TAM_MAX_COL], char tabuleiro2[5][TAM_MAX_COL])
@@ -1099,7 +1090,7 @@ int recNova(NodeTree *noAtual, Node *sugestoes, int nivel)
     int fim = verificaFim(noAtual->numTabuleiro, noAtual->fotoTabuleiroAtual, noAtual->quantNivel);
     if (fim == 1)
     {
-        printf("\nACHEI A RESPOSTA, AMIGOS\n");
+        printf("\n[!] A solucao foi encontrada!\nApresentando passos para o resultado...\n\n");
         imprimeSolucao(noAtual);
         return 1;
     }
@@ -1143,11 +1134,10 @@ int main()
         {'h', 'i', 'i', 'm', 'k', 'l', '\0'}};
 
     NodeTree *noAtual = NULL;
-    // printf("\noi");
 
     // Alterar aqui para testar as duas solucoes
-    int numTab = 1;
-    noAtual = inserirRaizTree(noAtual, tabuleiro1, numTab, NULL, 0);
+    int numTab = 2;
+    noAtual = inserirRaizTree(noAtual, tabuleiro2, numTab, NULL, 0);
     //
 
     // Tabuleiro 1 leva em media 2.5 segundos

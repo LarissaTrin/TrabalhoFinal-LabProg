@@ -458,14 +458,15 @@ char checarTipoPeca(char letra, char tabuleiroJogo[5][TAM_MAX_COL])
     return 'e';
 }
 
-void generalizarPecasNaHoraDeSalvar(char tabuleiro[5][TAM_MAX_COL]){
+void generalizarPecasNaHoraDeSalvar(char tabuleiro[5][TAM_MAX_COL])
+{
 
     char tabuleiroBranco[5][TAM_MAX_COL] = {
-    {'\0', '\0', '\0', '\0', '\0', '\0', '\0'},
-    {'\0', '\0', '\0', '\0', '\0', '\0', '\0'},
-    {'\0', '\0', '\0', '\0', '\0', '\0', '\0'},
-    {'\0', '\0', '\0', '\0', '\0', '\0', '\0'},
-    {'\0', '\0', '\0', '\0', '\0', '\0', '\0'}};
+        {'\0', '\0', '\0', '\0', '\0', '\0', '\0'},
+        {'\0', '\0', '\0', '\0', '\0', '\0', '\0'},
+        {'\0', '\0', '\0', '\0', '\0', '\0', '\0'},
+        {'\0', '\0', '\0', '\0', '\0', '\0', '\0'},
+        {'\0', '\0', '\0', '\0', '\0', '\0', '\0'}};
     copiarMatriz(tabuleiroBranco, tabuleiroPecasGenericas);
     copiarMatriz(tabuleiro, tabuleiroPecasGenericas);
     char tipoPeca = ' ';
@@ -474,7 +475,8 @@ void generalizarPecasNaHoraDeSalvar(char tabuleiro[5][TAM_MAX_COL]){
     {
         for (int j = 0; j < 6; j++)
         {
-            if (tabuleiro[i][j] == '\0' || tabuleiro[i][j] == ' ') continue;
+            if (tabuleiro[i][j] == '\0' || tabuleiro[i][j] == ' ')
+                continue;
             tipoPeca = checarTipoPeca(tabuleiro[i][j], tabuleiro);
             tabuleiroPecasGenericas[i][j] = tipoPeca;
         }
@@ -563,8 +565,8 @@ int verificaFim(int configTabuleiro, char tabuleiro[5][TAM_MAX_COL], int nivel)
         {
             return 1;
         }
-        //printf("\nNivel: %d\n", nivel);
-        //printarTabuleiro(1, tabuleiro);
+        // printf("\nNivel: %d\n", nivel);
+        // printarTabuleiro(1, tabuleiro);
     }
     else if (configTabuleiro == 2)
     {
@@ -572,8 +574,8 @@ int verificaFim(int configTabuleiro, char tabuleiro[5][TAM_MAX_COL], int nivel)
         {
             return 1;
         }
-        //printf("\nNivel: %d\n", nivel);
-        //printarTabuleiro(2, tabuleiro);
+        // printf("\nNivel: %d\n", nivel);
+        // printarTabuleiro(2, tabuleiro);
     }
     return 0;
 
@@ -646,9 +648,8 @@ int checaPaisIguais(NodeTree *no, char candidatoSugestao[5][TAM_MAX_COL])
 void mostrarListaEncadeada(Node *lista)
 {
     Node *auxiliar = lista;
-    
+
     printf("\nImprimindo lista encadeada:\n");
-    
 
     while (auxiliar != NULL)
     {
@@ -663,7 +664,6 @@ void mostrarListaEncadeada(Node *lista)
 int checaRepetidosGlobais(char tabuleiro[5][7], int configTabuleiro)
 {
     generalizarPecasNaHoraDeSalvar(tabuleiro);
-
 
     if (listaRepetidosGlobal == NULL)
     {
@@ -693,43 +693,38 @@ int checaRepetidosGlobais(char tabuleiro[5][7], int configTabuleiro)
     return 0;
 }
 
-Node *filtroSugestoes(Node *sugestoes, char tabuleiroJogo[5][TAM_MAX_COL]) {
+Node *filtroPrioridade(Node *sugestoes, char tabuleiroJogo[5][TAM_MAX_COL])
+{
     Node *aux = sugestoes;
     Node *ordemNova = NULL;
-    int donzelaMove = 0;
-    int m = 1;
+    int posicaoDaDonzela = 1;
     int n = (aux->numTabuleiro == 1 ? 3 : 4);
-    // printf("TO AQUI\n");
 
-    for (int i = 0; i < 5; i++) //checa se a donzela consegue mover
+    for (int i = 0; i < 5; i++) // checa se a donzela consegue mover
     {
         for (int j = 0; j < 6; j++)
         {
-            if (tabuleiroJogo[i][j] == 'D') 
+            if (tabuleiroJogo[i][j] == 'D')
             {
-                // printf("ACHEI donzela\n");
-                if ((j > 0 && tabuleiroJogo[i][j-1]==' ' && tabuleiroJogo[i+1][j-1]==' ') || 
-                (j < n && tabuleiroJogo[i][j+2]==' ' && tabuleiroJogo[i+1][j+2]==' ') || 
-                (i < 3 && tabuleiroJogo[i+2][j]==' ' && tabuleiroJogo[i+2][j+1]==' ') ||
-                (i >0 && tabuleiroJogo[i-1][j]==' ' && tabuleiroJogo[i-1][j+1]==' '))
+                if ((j > 0 && tabuleiroJogo[i][j - 1] == ' ' && tabuleiroJogo[i + 1][j - 1] == ' ') ||
+                    (j < n && tabuleiroJogo[i][j + 2] == ' ' && tabuleiroJogo[i + 1][j + 2] == ' ') ||
+                    (i < 3 && tabuleiroJogo[i + 2][j] == ' ' && tabuleiroJogo[i + 2][j + 1] == ' ') ||
+                    (i > 0 && tabuleiroJogo[i - 1][j] == ' ' && tabuleiroJogo[i - 1][j + 1] == ' '))
                 {
-                    // printf("CONSIGO MOVER\n");
-                    donzelaMove = 1;
                     while (aux != NULL) // se ela move colocar a sugestão dela como 1 da lista dentro do ordemNova
                     {
-                        // printf("TO PROCURANDO A PUTA\n");
-                        if ((j > 0 && aux->fotoTabuleiroAtual[i][j-1]=='D' && aux->fotoTabuleiroAtual[i+1][j-1]=='D') || 
-                        (j < n && aux->fotoTabuleiroAtual[i][j+2]=='D' && aux->fotoTabuleiroAtual[i+1][j+2]=='D') || 
-                        (i < 3 && aux->fotoTabuleiroAtual[i+2][j]=='D' && aux->fotoTabuleiroAtual[i+2][j+1]=='D') ||
-                        (i >0 && aux->fotoTabuleiroAtual[i-1][j]=='D' && aux->fotoTabuleiroAtual[i-1][j+1]=='D'))
+                        if ((j > 0 && aux->fotoTabuleiroAtual[i][j - 1] == 'D' && aux->fotoTabuleiroAtual[i + 1][j - 1] == 'D') ||
+                            (j < n && aux->fotoTabuleiroAtual[i][j + 2] == 'D' && aux->fotoTabuleiroAtual[i + 1][j + 2] == 'D') ||
+                            (i < 3 && aux->fotoTabuleiroAtual[i + 2][j] == 'D' && aux->fotoTabuleiroAtual[i + 2][j + 1] == 'D') ||
+                            (i > 0 && aux->fotoTabuleiroAtual[i - 1][j] == 'D' && aux->fotoTabuleiroAtual[i - 1][j + 1] == 'D'))
                         {
-                            if (m > 1)
+                            if (posicaoDaDonzela > 1)
                             {
-                                ordemNova = inserirNodeNoFim(ordemNova, aux->numTabuleiro,  aux->fotoTabuleiroAtual);
+                                ordemNova = inserirNodeNoFim(ordemNova, aux->numTabuleiro, aux->fotoTabuleiroAtual);
                             }
                             break;
                         }
-                        ++m;
+                        ++posicaoDaDonzela;
                         aux = aux->proximo;
                     }
                 }
@@ -739,22 +734,45 @@ Node *filtroSugestoes(Node *sugestoes, char tabuleiroJogo[5][TAM_MAX_COL]) {
 
     if (ordemNova != NULL) // se ela move colocar coloca as outras sugestoes atras dele
     {
-        int p = 1;
+        int posicaoDaLista = 1;
         aux = sugestoes;
         while (aux != NULL)
         {
-            if (p != m)
+            if (posicaoDaLista != posicaoDaDonzela)
             {
-                inserirNodeNoFim(ordemNova, aux->numTabuleiro,  aux->fotoTabuleiroAtual);
+                inserirNodeNoFim(ordemNova, aux->numTabuleiro, aux->fotoTabuleiroAtual);
             }
-            ++p;
+            ++posicaoDaLista;
             aux = aux->proximo;
         }
-
         return ordemNova;
     }
+    return sugestoes;
+}
 
-    return sugestoes;    
+Node *filtroRepetido(Node *sugestoes, NodeTree *noAtual) // usado somente para o robo
+{
+    Node *filtro = NULL;
+    int matrizRepetidaGlobal = 0;
+    int matrizRepetida = 0;
+
+    while (sugestoes != NULL)
+    {
+        matrizRepetida = checaPaisIguais(noAtual, sugestoes->fotoTabuleiroAtual);
+        if (!matrizRepetida)
+        {
+            matrizRepetidaGlobal = checaRepetidosGlobais(sugestoes->fotoTabuleiroAtual, sugestoes->numTabuleiro);
+            if (!matrizRepetidaGlobal)
+            {
+                filtro = inserirNodeNoFim(filtro, sugestoes->numTabuleiro, sugestoes->fotoTabuleiroAtual);
+            }
+        }
+        matrizRepetida = 0;
+        matrizRepetidaGlobal = 0;
+        sugestoes = sugestoes->proximo;
+    }
+
+    return filtro;
 }
 
 Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_COL], Node *sugestoes, NodeTree *noAtual)
@@ -764,8 +782,6 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
     copiarMatriz(tabuleiroJogo, tabuleiroAux);
     char tipoPeca = ' ';
     int movValido;
-    int matrizRepetida;
-    int matrizRepetidaGlobal;
 
     for (int i = 0; i < 5; i++)
     {
@@ -784,20 +800,8 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                         // if (tipoPeca == 'D' && movValido == 1) printf("Movi D Baixo\n");
                         if (movValido)
                         {
-                            // printf("Estive 1\n");
-                            matrizRepetida = checaPaisIguais(noAtual, tabuleiroAux);
-                            // printf("Estive matrizRepetida: %d\n", matrizRepetida);
-                            if (!matrizRepetida)
-                            {
-                                matrizRepetidaGlobal = checaRepetidosGlobais(tabuleiroAux, configTabuleiro);
-                                // printf("matrizrepetidaglobal? %d\n", matrizRepetidaGlobal);
-                                if (!matrizRepetidaGlobal)
-                                {
-                                    possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
-                                }
-                            }
+                            possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
                             copiarMatriz(tabuleiroJogo, tabuleiroAux);
-                            // printf("erro n foi aqi\n");
                         }
                         if (tabuleiroJogo[i - 1][j] != tabuleiroJogo[i - 1][j + 1])
                         {
@@ -805,17 +809,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                             movValido = moverDirecao('B', tipoPeca, tabuleiroJogo[i - 1][j + 1], tabuleiroAux);
                             if (movValido)
                             {
-                                // printf("Estive 2\n");
-                                matrizRepetida = checaPaisIguais(noAtual, tabuleiroAux);
-                                if (!matrizRepetida)
-                                {
-                                    matrizRepetidaGlobal = checaRepetidosGlobais(tabuleiroAux, configTabuleiro);
-                                    //printf("matrizrepetidaglobal? %d\n", matrizRepetidaGlobal);
-                                    if (!matrizRepetidaGlobal)
-                                    {
-                                        possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
-                                    }
-                                }
+                                possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
                                 copiarMatriz(tabuleiroJogo, tabuleiroAux);
                             }
                         }
@@ -829,17 +823,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                         // if (tipoPeca == 'D' && movValido == 1) printf("Movi D Topo\n");
                         if (movValido)
                         {
-                            // printf("Estive 3 \n");
-                            matrizRepetida = checaPaisIguais(noAtual, tabuleiroAux);
-                            if (!matrizRepetida)
-                            {
-                                matrizRepetidaGlobal = checaRepetidosGlobais(tabuleiroAux, configTabuleiro);
-                                //printf("matrizrepetidaglobal? %d\n", matrizRepetidaGlobal);
-                                if (!matrizRepetidaGlobal)
-                                {
-                                    possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
-                                }
-                            }
+                            possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
                             copiarMatriz(tabuleiroJogo, tabuleiroAux);
                         }
                         if (tabuleiroJogo[i + 1][j] != tabuleiroJogo[i + 1][j + 1])
@@ -848,17 +832,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                             movValido = moverDirecao('T', tipoPeca, tabuleiroJogo[i + 1][j + 1], tabuleiroAux);
                             if (movValido)
                             {
-                                // printf("Estive 4 \n");
-                                matrizRepetida = checaPaisIguais(noAtual, tabuleiroAux);
-                                if (!matrizRepetida)
-                                {
-                                    matrizRepetidaGlobal = checaRepetidosGlobais(tabuleiroAux, configTabuleiro);
-                                    //printf("matrizrepetidaglobal? %d\n", matrizRepetidaGlobal);
-                                    if (!matrizRepetidaGlobal)
-                                    {
-                                        possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
-                                    }
-                                }
+                                possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
                                 copiarMatriz(tabuleiroJogo, tabuleiroAux);
                             }
                         }
@@ -871,17 +845,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                         movValido = moverDirecao('D', tipoPeca, tabuleiroJogo[i][j - 1], tabuleiroAux);
                         if (movValido)
                         {
-                            // printf("Estive 5\n");
-                            matrizRepetida = checaPaisIguais(noAtual, tabuleiroAux);
-                            if (!matrizRepetida)
-                            {
-                                matrizRepetidaGlobal = checaRepetidosGlobais(tabuleiroAux, configTabuleiro);
-                                //printf("matrizrepetidaglobal? %d\n", matrizRepetidaGlobal);
-                                if (!matrizRepetidaGlobal)
-                                {
-                                    possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
-                                }
-                            }
+                            possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
                             copiarMatriz(tabuleiroJogo, tabuleiroAux);
                         }
                     }
@@ -894,17 +858,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                         movValido = moverDirecao('E', tipoPeca, tabuleiroJogo[i][j + 2], tabuleiroAux);
                         if (movValido)
                         {
-                            // printf("Estive 6\n");
-                            matrizRepetida = checaPaisIguais(noAtual, tabuleiroAux);
-                            if (!matrizRepetida)
-                            {
-                                matrizRepetidaGlobal = checaRepetidosGlobais(tabuleiroAux, configTabuleiro);
-                                //printf("matrizrepetidaglobal? %d\n", matrizRepetidaGlobal);
-                                if (!matrizRepetidaGlobal)
-                                {
-                                    possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
-                                }
-                            }
+                            possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
                             copiarMatriz(tabuleiroJogo, tabuleiroAux);
                         }
                     }
@@ -922,17 +876,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                         movValido = moverDirecao('B', tipoPeca, tabuleiroJogo[i - 1][j], tabuleiroAux);
                         if (movValido)
                         {
-                            // printf("Estive 7\n");
-                            matrizRepetida = checaPaisIguais(noAtual, tabuleiroAux);
-                            if (!matrizRepetida)
-                            {
-                                matrizRepetidaGlobal = checaRepetidosGlobais(tabuleiroAux, configTabuleiro);
-                                //printf("matrizrepetidaglobal? %d\n", matrizRepetidaGlobal);
-                                if (!matrizRepetidaGlobal)
-                                {
-                                    possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
-                                }
-                            }
+                            possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
                             copiarMatriz(tabuleiroJogo, tabuleiroAux);
                         }
                     }
@@ -944,17 +888,6 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                         movValido = moverDirecao('T', tipoPeca, tabuleiroJogo[i + 2][j], tabuleiroAux);
                         if (movValido)
                         {
-                            // printf("Estive 8\n");
-                            matrizRepetida = checaPaisIguais(noAtual, tabuleiroAux);
-                            if (!matrizRepetida)
-                            {
-                                matrizRepetidaGlobal = checaRepetidosGlobais(tabuleiroAux, configTabuleiro);
-                                //printf("matrizrepetidaglobal? %d\n", matrizRepetidaGlobal);
-                                if (!matrizRepetidaGlobal)
-                                {
-                                    possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
-                                }
-                            }
                             possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
                             copiarMatriz(tabuleiroJogo, tabuleiroAux);
                         }
@@ -968,17 +901,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                         // if (tipoPeca == 'D' && movValido == 1) printf("Movi D Dir\n");
                         if (movValido)
                         {
-                            // printf("Estive 9\n");
-                            matrizRepetida = checaPaisIguais(noAtual, tabuleiroAux);
-                            if (!matrizRepetida)
-                            {
-                                matrizRepetidaGlobal = checaRepetidosGlobais(tabuleiroAux, configTabuleiro);
-                                //printf("matrizrepetidaglobal? %d\n", matrizRepetidaGlobal);
-                                if (!matrizRepetidaGlobal)
-                                {
-                                    possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
-                                }
-                            }
+                            possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
                             copiarMatriz(tabuleiroJogo, tabuleiroAux);
                         }
                         if (tabuleiroJogo[i][j - 1] != tabuleiroJogo[i + 1][j - 1])
@@ -988,17 +911,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
 
                             if (movValido)
                             {
-                                // printf("Estive 10\n");
-                                matrizRepetida = checaPaisIguais(noAtual, tabuleiroAux);
-                                if (!matrizRepetida)
-                                {
-                                    matrizRepetidaGlobal = checaRepetidosGlobais(tabuleiroAux, configTabuleiro);
-                                    //printf("matrizrepetidaglobal? %d\n", matrizRepetidaGlobal);
-                                    if (!matrizRepetidaGlobal)
-                                    {
-                                        possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
-                                    }
-                                }
+                                possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
                                 copiarMatriz(tabuleiroJogo, tabuleiroAux);
                             }
                         }
@@ -1014,17 +927,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                         // if (tipoPeca == 'D' && movValido == 1) printf("Movi D Esq\n");
                         if (movValido)
                         {
-                            // printf("Estive 11\n");
-                            matrizRepetida = checaPaisIguais(noAtual, tabuleiroAux);
-                            if (!matrizRepetida)
-                            {
-                                matrizRepetidaGlobal = checaRepetidosGlobais(tabuleiroAux, configTabuleiro);
-                                //printf("matrizrepetidaglobal? %d\n", matrizRepetidaGlobal);
-                                if (!matrizRepetidaGlobal)
-                                {
-                                    possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
-                                }
-                            }
+                            possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
                             copiarMatriz(tabuleiroJogo, tabuleiroAux);
                         }
                         if (tabuleiroJogo[i][j + 1] != tabuleiroJogo[i + 1][j + 1])
@@ -1033,17 +936,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                             movValido = moverDirecao('E', tipoPeca, tabuleiroJogo[i + 1][j + 1], tabuleiroAux);
                             if (movValido)
                             {
-                                // printf("Estive 12\n");
-                                matrizRepetida = checaPaisIguais(noAtual, tabuleiroAux);
-                                if (!matrizRepetida)
-                                {
-                                    matrizRepetidaGlobal = checaRepetidosGlobais(tabuleiroAux, configTabuleiro);
-                                    //printf("matrizrepetidaglobal? %d\n", matrizRepetidaGlobal);
-                                    if (!matrizRepetidaGlobal)
-                                    {
-                                        possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
-                                    }
-                                }
+                                possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
                                 copiarMatriz(tabuleiroJogo, tabuleiroAux);
                             }
                         }
@@ -1059,17 +952,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                         movValido = moverDirecao('B', tipoPeca, tabuleiroJogo[i - 1][j], tabuleiroAux);
                         if (movValido)
                         {
-                            // printf("Estive 13\n");
-                            matrizRepetida = checaPaisIguais(noAtual, tabuleiroAux);
-                            if (!matrizRepetida)
-                            {
-                                matrizRepetidaGlobal = checaRepetidosGlobais(tabuleiroAux, configTabuleiro);
-                                //printf("matrizrepetidaglobal? %d\n", matrizRepetidaGlobal);
-                                if (!matrizRepetidaGlobal)
-                                {
-                                    possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
-                                }
-                            }
+                            possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
                             copiarMatriz(tabuleiroJogo, tabuleiroAux);
                         }
                     }
@@ -1081,17 +964,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                         movValido = moverDirecao('T', tipoPeca, tabuleiroJogo[i + 1][j], tabuleiroAux);
                         if (movValido)
                         {
-                            // printf("Estive 14\n");
-                            matrizRepetida = checaPaisIguais(noAtual, tabuleiroAux);
-                            if (!matrizRepetida)
-                            {
-                                matrizRepetidaGlobal = checaRepetidosGlobais(tabuleiroAux, configTabuleiro);
-                                //printf("matrizrepetidaglobal? %d\n", matrizRepetidaGlobal);
-                                if (!matrizRepetidaGlobal)
-                                {
-                                    possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
-                                }
-                            }
+                            possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
                             copiarMatriz(tabuleiroJogo, tabuleiroAux);
                         }
                     }
@@ -1103,17 +976,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                         movValido = moverDirecao('D', tipoPeca, tabuleiroJogo[i][j - 1], tabuleiroAux);
                         if (movValido)
                         {
-                            // printf("Estive 15\n");
-                            matrizRepetida = checaPaisIguais(noAtual, tabuleiroAux);
-                            if (!matrizRepetida)
-                            {
-                                matrizRepetidaGlobal = checaRepetidosGlobais(tabuleiroAux, configTabuleiro);
-                                //printf("matrizrepetidaglobal? %d\n", matrizRepetidaGlobal);
-                                if (!matrizRepetidaGlobal)
-                                {
-                                    possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
-                                }
-                            }
+                            possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
                             copiarMatriz(tabuleiroJogo, tabuleiroAux);
                         }
                     }
@@ -1127,17 +990,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                         movValido = moverDirecao('E', tipoPeca, tabuleiroJogo[i][j + 1], tabuleiroAux);
                         if (movValido)
                         {
-                            // printf("Estive 16\n");
-                            matrizRepetida = checaPaisIguais(noAtual, tabuleiroAux);
-                            if (!matrizRepetida)
-                            {
-                                matrizRepetidaGlobal = checaRepetidosGlobais(tabuleiroAux, configTabuleiro);
-                                //printf("matrizrepetidaglobal? %d\n", matrizRepetidaGlobal);
-                                if (!matrizRepetidaGlobal)
-                                {
-                                    possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
-                                }
-                            }
+                            possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
                             copiarMatriz(tabuleiroJogo, tabuleiroAux);
                         }
                     }
@@ -1150,7 +1003,6 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
 
 int recNova(NodeTree *noAtual, Node *sugestoes, int nivel)
 {
-    // printf("NIVEL: %d\n", nivel);
     // printf("To aqui nivel: %d\n",nivel);
     int fim = verificaFim(noAtual->numTabuleiro, noAtual->fotoTabuleiroAtual, noAtual->quantNivel);
     if (fim == 1)
@@ -1168,16 +1020,11 @@ int recNova(NodeTree *noAtual, Node *sugestoes, int nivel)
 
         Node *novaSugestao = NULL;
         novaSugestao = encontrarProxsJogadas(noAtual->numTabuleiro, noAtual->filhos[i]->fotoTabuleiroAtual, novaSugestao, noAtual);
-
-        // printf("Sgestoes Antiga:\n");
-        // mostrarListaEncadeada(novaSugestao);
+        novaSugestao = filtroRepetido(novaSugestao, noAtual->filhos[i]);
 
         if (novaSugestao != NULL)
         {
-            novaSugestao = filtroSugestoes(novaSugestao, noAtual->filhos[i]->fotoTabuleiroAtual);
-
-            // printf("Sgestoes NOVO:\n");
-            // mostrarListaEncadeada(novaSugestao);
+            novaSugestao = filtroPrioridade(novaSugestao, noAtual->filhos[i]->fotoTabuleiroAtual);
         }
 
         fim = recNova(noAtual->filhos[i], novaSugestao, nivel + 1);
@@ -1222,13 +1069,7 @@ int main()
     Node *sugestoes = NULL;
     sugestoes = encontrarProxsJogadas(numTab, noAtual->fotoTabuleiroAtual, sugestoes, noAtual);
 
-    // printf("Sgestoes Antiga:\n");
-    // mostrarListaEncadeada(sugestoes);
-
-    sugestoes = filtroSugestoes(sugestoes, noAtual->fotoTabuleiroAtual);
-
-    // printf("Sgestoes NOVO:\n");
-    // mostrarListaEncadeada(sugestoes);
+    sugestoes = filtroPrioridade(sugestoes, noAtual->fotoTabuleiroAtual);
 
     int final = recNova(noAtual, sugestoes, 1);
 

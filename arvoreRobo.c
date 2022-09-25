@@ -693,6 +693,63 @@ int checaRepetidosGlobais(char tabuleiro[5][7], int configTabuleiro)
     return 0;
 }
 
+Node *filtroSugestoes(Node *sugestoes, char tabuleiroJogo[5][TAM_MAX_COL]) {
+    Node *aux = sugestoes;
+    Node *ordemNova = NULL;
+    int donzelaMove = 0;
+    int m = 1;
+    int n = (aux->numTabuleiro == 1 ? 3 : 4);
+
+    for (int i = 0; i < 5; i++) //checa se a donzela consegue mover
+    {
+        for (int j = 0; j < 6; j++)
+        {
+            if (tabuleiroJogo[i][j] == 'D') 
+            {
+                if ((j > 0 && tabuleiroJogo[i][j-1]==' ' && tabuleiroJogo[i+1][j-1]==' ') || 
+                (j < n && tabuleiroJogo[i][j+2]==' ' && tabuleiroJogo[i+1][j+2]==' ') || 
+                (i < 3 && tabuleiroJogo[i+2][j]==' ' && tabuleiroJogo[i+2][j+1]==' ') ||
+                (i >0 && tabuleiroJogo[i-1][j]==' ' && tabuleiroJogo[i-1][j+1]==' '))
+                {
+                    donzelaMove = 1;
+                    while (aux != NULL) // se ela move colocar a sugestão dela como 1 da lista dentro do ordemNova
+                    {
+                        if ((j > 0 && aux->fotoTabuleiroAtual[i][j-1]=='D' && aux->fotoTabuleiroAtual[i+1][j-1]=='D') || 
+                        (j < n && aux->fotoTabuleiroAtual[i][j+2]=='D' && aux->fotoTabuleiroAtual[i+1][j+2]=='D') || 
+                        (i < 3 && aux->fotoTabuleiroAtual[i+2][j]=='D' && aux->fotoTabuleiroAtual[i+2][j+1]=='D') ||
+                        (i >0 && aux->fotoTabuleiroAtual[i-1][j]=='D' && aux->fotoTabuleiroAtual[i-1][j+1]=='D'))
+                        {
+                            ordemNova = inserirNodeNoFim(ordemNova, aux->numTabuleiro,  aux->fotoTabuleiroAtual);
+                            break;
+                        }
+                        ++m;
+                        aux = aux->proximo;
+                    }
+                }
+            }
+        }
+    }
+
+    if (ordemNova != NULL) // se ela move colocar coloca as outras sugestoes atras dele
+    {
+        int p = 1;
+        aux = sugestoes;
+        while (aux != NULL)
+        {
+            if (p != m)
+            {
+                inserirNodeNoFim(ordemNova, aux->numTabuleiro,  aux->fotoTabuleiroAtual);
+            }
+            ++p;
+            aux = aux->proximo;
+        }
+
+        return ordemNova;
+    }
+
+    return sugestoes;    
+}
+
 Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_COL], Node *sugestoes, NodeTree *noAtual)
 {
     Node *possiveisJogadas = sugestoes;
@@ -1104,6 +1161,14 @@ int recNova(NodeTree *noAtual, Node *sugestoes, int nivel)
         Node *novaSugestao = NULL;
         novaSugestao = encontrarProxsJogadas(noAtual->numTabuleiro, noAtual->filhos[i]->fotoTabuleiroAtual, novaSugestao, noAtual);
 
+        printf("Sgestoes Antiga:\n");
+        mostrarListaEncadeada(novaSugestao);
+
+        novaSugestao = filtroSugestoes(novaSugestao, noAtual->filhos[i]->fotoTabuleiroAtual);
+
+        printf("Sgestoes NOVO:\n");
+        mostrarListaEncadeada(novaSugestao);
+
         fim = recNova(noAtual->filhos[i], novaSugestao, nivel + 1);
         if (fim == 1)
             return fim;
@@ -1136,8 +1201,8 @@ int main()
     NodeTree *noAtual = NULL;
 
     // Alterar aqui para testar as duas solucoes
-    int numTab = 2;
-    noAtual = inserirRaizTree(noAtual, tabuleiro2, numTab, NULL, 0);
+    int numTab = 1;
+    noAtual = inserirRaizTree(noAtual, tabuleiro1, numTab, NULL, 0);
     //
 
     // Tabuleiro 1 leva em media 2.5 segundos

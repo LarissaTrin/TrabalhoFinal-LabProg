@@ -44,7 +44,7 @@ int moverDireita(char tipo, char letra, char tabuleiroJogo[TAM_MAX_LIN][TAM_MAX_
 {
     for (int i = 0; i < TAM_MAX_LIN; i++)
     {
-        for (int j = 0; j < TAM_MAX_COL-1; j++)
+        for (int j = 0; j < TAM_MAX_COL - 1; j++)
         {
             if (tabuleiroJogo[i][j] == letra)
             {
@@ -128,7 +128,7 @@ int moverEsquerda(char tipo, char letra, char tabuleiroJogo[TAM_MAX_LIN][TAM_MAX
 {
     for (int i = 0; i < TAM_MAX_LIN; i++)
     {
-        for (int j = 0; j < TAM_MAX_COL-1; j++)
+        for (int j = 0; j < TAM_MAX_COL - 1; j++)
         {
             if (tabuleiroJogo[i][j] == letra)
             {
@@ -212,7 +212,7 @@ int moverTopo(char tipo, char letra, char tabuleiroJogo[TAM_MAX_LIN][TAM_MAX_COL
 {
     for (int i = 0; i < TAM_MAX_LIN; i++)
     {
-        for (int j = 0; j < TAM_MAX_COL-1; j++)
+        for (int j = 0; j < TAM_MAX_COL - 1; j++)
         {
             if (tabuleiroJogo[i][j] == letra)
             {
@@ -296,7 +296,7 @@ int moverBaixo(char tipo, char letra, char tabuleiroJogo[TAM_MAX_LIN][TAM_MAX_CO
 {
     for (int i = 0; i < TAM_MAX_LIN; i++)
     {
-        for (int j = 0; j < TAM_MAX_COL-1; j++)
+        for (int j = 0; j < TAM_MAX_COL - 1; j++)
         {
             if (tabuleiroJogo[i][j] == letra)
             {
@@ -425,7 +425,7 @@ char checarTipoPeca(char letra, char tabuleiroJogo[TAM_MAX_LIN][TAM_MAX_COL])
 {
     for (int i = 0; i < TAM_MAX_LIN; i++)
     {
-        for (int j = 0; j < TAM_MAX_COL-1; j++)
+        for (int j = 0; j < TAM_MAX_COL - 1; j++)
         {
             if (tabuleiroJogo[i][j] == letra)
             {
@@ -469,12 +469,12 @@ void banner(void)
 
 void banner2(void)
 {
-printf(" _   _       _ _              _ \n");
-printf("| | | | __ _(_) | _____  _ __(_)\n");
-printf("| |_| |/ _` | | |/ / _ \\| '__| |\n");
-printf("|  _  | (_| | |   < (_) | |  | |\n");
-printf("|_| |_|\\__,_|_|_|\\_\\___/|_|  |_|\n");
-printf("Por Larissa, Mirian e Yuri\n");
+    printf(" _   _       _ _              _ \n");
+    printf("| | | | __ _(_) | _____  _ __(_)\n");
+    printf("| |_| |/ _` | | |/ / _ \\| '__| |\n");
+    printf("|  _  | (_| | |   < (_) | |  | |\n");
+    printf("|_| |_|\\__,_|_|_|\\_\\___/|_|  |_|\n");
+    printf("Por Larissa, Mirian e Yuri\n");
 }
 
 void help1(void)
@@ -510,14 +510,17 @@ void help2(void)
     printf("\n========================================================\n");
 }
 
-int verificaFim(int configTabuleiro, char tabuleiro[TAM_MAX_LIN][TAM_MAX_COL]) {
+int verificaFim(int configTabuleiro, char tabuleiro[TAM_MAX_LIN][TAM_MAX_COL])
+{
     if (configTabuleiro == 1)
     {
         if (tabuleiro[4][1] == 'D' && tabuleiro[4][2] == 'D')
         {
             return 1;
         }
-    } else if (configTabuleiro == 2 && tabuleiro[4][5] == 'D') {
+    }
+    else if (configTabuleiro == 2 && tabuleiro[4][5] == 'D')
+    {
         return 1;
     }
     return 0;
@@ -543,14 +546,19 @@ int interacoesUsuario(int argc, char argumento[], int configTabuleiro, int jaEsc
         }
         else if (argumento[0] == 'p')
         {
-            if (jaEscolheuTabuleiro == 0){
+            if (jaEscolheuTabuleiro == 0)
+            {
                 printf("\n[!] Nenhum tabuleiro foi escolhido!\n\n");
                 help2();
                 return 0;
-            } else {
+            }
+            else
+            {
                 return 4; // Mostrar o historico
             }
-        } else if (comandoAtivo == 's') {
+        }
+        else if (comandoAtivo == 's')
+        {
             if ((argumento[0] - '0') >= 1 && (argumento[0] - '0') <= numSugestao)
             {
                 return 6; // Escolha da sugestao
@@ -873,7 +881,7 @@ void mostrarHistoricoOuSugestao(Node *lista, int isSugestao)
 {
     Node *auxiliar = lista;
     int i = 1;
-    
+
     if (isSugestao)
     {
         printf("\nSugestoes de movimentaçao:\n");
@@ -1142,7 +1150,7 @@ void generalizarPecasNaHoraDeSalvar(char tabuleiro[TAM_MAX_LIN][TAM_MAX_COL])
 
     for (int i = 0; i < TAM_MAX_LIN; i++)
     {
-        for (int j = 0; j < TAM_MAX_COL-1; j++)
+        for (int j = 0; j < TAM_MAX_COL - 1; j++)
         {
             if (tabuleiro[i][j] == '\0' || tabuleiro[i][j] == ' ')
                 continue;
@@ -1218,22 +1226,6 @@ int checaRepetidosGlobais(char tabuleiro[TAM_MAX_LIN][TAM_MAX_COL], int configTa
     return 0;
 }
 
-void mostrarListaEncadeada(Node *lista)
-{
-    Node *auxiliar = lista;
-
-    printf("\nImprimindo lista encadeada:\n");
-
-    while (auxiliar != NULL)
-    {
-        printarTabuleiro(auxiliar->numTabuleiro, auxiliar->fotoTabuleiroAtual);
-        printf("\n");
-        auxiliar = auxiliar->proximo;
-    }
-
-    printf("\nFim------------------------\n");
-}
-
 Node *filtroPrioridade(Node *sugestoes, char tabuleiroJogo[TAM_MAX_LIN][TAM_MAX_COL])
 {
     Node *aux = sugestoes;
@@ -1243,7 +1235,7 @@ Node *filtroPrioridade(Node *sugestoes, char tabuleiroJogo[TAM_MAX_LIN][TAM_MAX_
 
     for (int i = 0; i < TAM_MAX_LIN; i++) // Checa se a donzela consegue se mover
     {
-        for (int j = 0; j < TAM_MAX_COL-1; j++)
+        for (int j = 0; j < TAM_MAX_COL - 1; j++)
         {
             if (tabuleiroJogo[i][j] == 'D')
             {
@@ -1370,7 +1362,6 @@ int main(int argc, char *argv[])
 
     Node *historico = NULL;
     Node *sugestoes = NULL;
-    NodeTree *noAtual = NULL;
 
     int jaEscolheuTabuleiro = 0;
     int configTabuleiro = 1;
@@ -1443,12 +1434,16 @@ int main(int argc, char *argv[])
             {
                 fim = 1;
             }
-        } else if (inputUsuario[0] == 's') {
+        }
+        else if (inputUsuario[0] == 's')
+        {
             if (jaEscolheuTabuleiro == 0)
             {
                 printf("\n[!] Erro: Nenhum tabuleiro foi escolhido!\n\n");
                 help2();
-            } else {
+            }
+            else
+            {
                 if (comandoAtivo == 's')
                 {
                     printf("\nComando de sugestao esta ativo, deseja desativar?\nDigite 1 para Sim e qualquer outra tecla para Nao: ");
@@ -1460,7 +1455,9 @@ int main(int argc, char *argv[])
                         printf("\nComando de sugestao desativado!\n");
                         comandoAtivo = ' ';
                     }
-                } else {
+                }
+                else
+                {
                     printf("\nComando de sugestao ativo!\nDigite: 'n', onde n e o numero da sugestao\n");
                     comandoAtivo = 's';
                     sugestoes = encontrarProxsJogadas(configTabuleiro, tabuleiroJogo, sugestoes);
@@ -1468,17 +1465,22 @@ int main(int argc, char *argv[])
                     numSugestao = contSugestoes(sugestoes);
                 }
             }
-        } else if (inputUsuario[0] == 'R') {
+        }
+        else if (inputUsuario[0] == 'R')
+        {
             if (jaEscolheuTabuleiro == 0)
             {
                 printf("\n[!] Erro: Nenhum tabuleiro foi escolhido!\n\n");
                 help2();
-        
-            } else {
-                comandoAtivo = 'R';
             }
-            
-        } else {
+            else
+            {
+                comandoAtivo = 'R';
+                fim = 1;
+            }
+        }
+        else
+        {
             int len = 0;
             for (int i = 0; i != MAX_INPUT_USER; i++)
             {
@@ -1525,14 +1527,16 @@ int main(int argc, char *argv[])
                     printf("\nMovimento %d\n", ++contMov);
                     historico = inserirNodeNoFim(historico, configTabuleiro, tabuleiroJogo);
                     fimDeJogo = verificaFim(configTabuleiro, tabuleiroJogo);
-                } else {
+                }
+                else
+                {
                     printf("\nNao e possivel mover peca\n");
                 }
                 printarTabuleiro(configTabuleiro, tabuleiroJogo);
 
                 if (fimDeJogo)
                 {
-                    printf("\nVoce Ganhou!\nObrigado por ter jogado!");
+                    printf("\n*** Voce Ganhou! ***\n");
                     fim = 1;
                 }
             }
@@ -1549,7 +1553,8 @@ int main(int argc, char *argv[])
                 printf("\n2\n%s\n", titulo2Nome);
                 printarTabuleiro(2, tabuleiro2);
             }
-            else {
+            else
+            {
                 printf("Escolha feita:\n");
                 int fimDeJogo = 0;
                 int sugestaoEscolhida = inputUsuario[0] - '0';
@@ -1570,29 +1575,32 @@ int main(int argc, char *argv[])
 
                 if (fimDeJogo)
                 {
-                    printf("\n*** Voce Ganhou! ***");
+                    printf("\n*** Voce Ganhou! ***\n");
                     fim = 1;
-                } else {
+                }
+                else
+                {
                     sugestoes = encontrarProxsJogadas(configTabuleiro, tabuleiroJogo, sugestoes);
                     mostrarHistoricoOuSugestao(sugestoes, 1);
                     numSugestao = contSugestoes(sugestoes);
                 }
             }
         }
+    }
 
-        if (comandoAtivo == 'R') {
+    if (comandoAtivo == 'R')
+    {
         printf("\nVoce ativou a solucao automatica a partir do momento atual.\n");
         printf("Aguarde enquanto a solucao e calculada para voce...\n");
 
-        noAtual = NULL;
+        NodeTree *noAtual = NULL;
         noAtual = inserirRaizTree(noAtual, tabuleiroJogo, configTabuleiro, NULL, 0);
 
         sugestoes = NULL;
         sugestoes = encontrarProxsJogadas(configTabuleiro, noAtual->fotoTabuleiroAtual, sugestoes);
         sugestoes = filtroPrioridade(sugestoes, noAtual->fotoTabuleiroAtual);
-    
-        fim = interacaoRobo(noAtual, sugestoes, 1);
-        }
+
+        interacaoRobo(noAtual, sugestoes, 1);
     }
 
     printf("\nObrigado por ter jogado!\n");

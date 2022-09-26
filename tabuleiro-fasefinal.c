@@ -2,18 +2,19 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define TAM_MAX_LIN 5
 #define TAM_MAX_COL 7
 #define MAX_INPUT_USER 10
 
-char tabuleiroPecasGenericas[5][TAM_MAX_COL];
+char tabuleiroPecasGenericas[TAM_MAX_LIN][TAM_MAX_COL];
 
-void printarTabuleiro(int num, char tabuleiro[5][TAM_MAX_COL])
+void printarTabuleiro(int num, char tabuleiro[TAM_MAX_LIN][TAM_MAX_COL])
 {
     num == 1 ? printf("    1 2 3 4  \n") : printf("    1 2 3 4 5 6  \n");
     num == 1 ? printf("  * * * * * *\n") : printf("  * * * * * * * *\n");
 
     int cont = 0;
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < TAM_MAX_LIN; i++)
     {
         printf("%d *", i + 1);
         for (int j = 0; j < TAM_MAX_COL; j++)
@@ -28,9 +29,9 @@ void printarTabuleiro(int num, char tabuleiro[5][TAM_MAX_COL])
     num == 1 ? printf("  * *     * *\n") : printf("  * * * * * * * *\n");
 }
 
-void copiarMatriz(char matriz[5][TAM_MAX_COL], char tabuleiroJogo[5][TAM_MAX_COL])
+void copiarMatriz(char matriz[TAM_MAX_LIN][TAM_MAX_COL], char tabuleiroJogo[TAM_MAX_LIN][TAM_MAX_COL])
 {
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < TAM_MAX_LIN; i++)
     {
         for (int j = 0; j < TAM_MAX_COL; j++)
         {
@@ -39,11 +40,11 @@ void copiarMatriz(char matriz[5][TAM_MAX_COL], char tabuleiroJogo[5][TAM_MAX_COL
     }
 }
 
-int moverDireita(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
+int moverDireita(char tipo, char letra, char tabuleiroJogo[TAM_MAX_LIN][TAM_MAX_COL])
 {
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < TAM_MAX_LIN; i++)
     {
-        for (int j = 0; j < 6; j++)
+        for (int j = 0; j < TAM_MAX_COL-1; j++)
         {
             if (tabuleiroJogo[i][j] == letra)
             {
@@ -123,11 +124,11 @@ int moverDireita(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
     return 0;
 }
 
-int moverEsquerda(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
+int moverEsquerda(char tipo, char letra, char tabuleiroJogo[TAM_MAX_LIN][TAM_MAX_COL])
 {
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < TAM_MAX_LIN; i++)
     {
-        for (int j = 0; j < 6; j++)
+        for (int j = 0; j < TAM_MAX_COL-1; j++)
         {
             if (tabuleiroJogo[i][j] == letra)
             {
@@ -207,11 +208,11 @@ int moverEsquerda(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
     return 0;
 }
 
-int moverTopo(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
+int moverTopo(char tipo, char letra, char tabuleiroJogo[TAM_MAX_LIN][TAM_MAX_COL])
 {
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < TAM_MAX_LIN; i++)
     {
-        for (int j = 0; j < 6; j++)
+        for (int j = 0; j < TAM_MAX_COL-1; j++)
         {
             if (tabuleiroJogo[i][j] == letra)
             {
@@ -291,11 +292,11 @@ int moverTopo(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
     return 0;
 }
 
-int moverBaixo(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
+int moverBaixo(char tipo, char letra, char tabuleiroJogo[TAM_MAX_LIN][TAM_MAX_COL])
 {
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < TAM_MAX_LIN; i++)
     {
-        for (int j = 0; j < 6; j++)
+        for (int j = 0; j < TAM_MAX_COL-1; j++)
         {
             if (tabuleiroJogo[i][j] == letra)
             {
@@ -389,7 +390,7 @@ int moverBaixo(char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
     return 0;
 }
 
-int moverDirecao(char direcao, char tipo, char letra, char tabuleiroJogo[5][TAM_MAX_COL])
+int moverDirecao(char direcao, char tipo, char letra, char tabuleiroJogo[TAM_MAX_LIN][TAM_MAX_COL])
 {
     int pecaMov = 0;
     switch (direcao)
@@ -413,18 +414,18 @@ int moverDirecao(char direcao, char tipo, char letra, char tabuleiroJogo[5][TAM_
     return pecaMov;
 }
 
-char encontrarLetra(char char_i, char char_j, char tabuleiroJogo[5][TAM_MAX_COL])
+char encontrarLetra(char char_i, char char_j, char tabuleiroJogo[TAM_MAX_LIN][TAM_MAX_COL])
 {
     int i = (char_i - '0');
     int j = (char_j - '0');
     return tabuleiroJogo[i - 1][j - 1];
 }
 
-char checarTipoPeca(char letra, char tabuleiroJogo[5][TAM_MAX_COL])
+char checarTipoPeca(char letra, char tabuleiroJogo[TAM_MAX_LIN][TAM_MAX_COL])
 {
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < TAM_MAX_LIN; i++)
     {
-        for (int j = 0; j < 6; j++)
+        for (int j = 0; j < TAM_MAX_COL-1; j++)
         {
             if (tabuleiroJogo[i][j] == letra)
             {
@@ -464,7 +465,16 @@ void banner(void)
     printf("HAIKORI\n");
     printf("Por Larissa, Mirian e Yuri\n");
     printf("-----------------\n");
-    printf("\n");
+}
+
+void banner2(void)
+{
+printf(" _   _       _ _              _ \n");
+printf("| | | | __ _(_) | _____  _ __(_)\n");
+printf("| |_| |/ _` | | |/ / _ \\| '__| |\n");
+printf("|  _  | (_| | |   < (_) | |  | |\n");
+printf("|_| |_|\\__,_|_|_|\\_\\___/|_|  |_|\n");
+printf("Por Larissa, Mirian e Yuri\n");
 }
 
 void help1(void)
@@ -472,10 +482,13 @@ void help1(void)
     printf("Modo de uso: ./tabuleiro [opcoes]\n");
 
     printf("\n========================= NOTAS =========================\n");
-    printf("FASE 2 - Ler .txt, movimento iterativo de pecas e historico.\n");
+    printf("ULTIMA FASE - Mostrar sugestoes, criar arvore nao binaria\n");
+    printf("e oferecer opcao para programa procurar a saida automatica-\n");
+    printf("mente, sem a intervencao do usuario.\n");
 
     printf("\n======================== OPCOES ========================\n");
-    printf(" -f <nome_arquivo.txt> : Especifica qual tabuleiro o jogo deve utilizar.\n");
+    printf(" -f <nome_arquivo.txt> : Especifica qual arquivo de tabuleiros\n");
+    printf("                         o jogo deve utilizar.\n");
     printf("                         Default: haikori.txt\n");
 
     printf("\n======================== EXEMPLOS =======================\n");
@@ -485,16 +498,19 @@ void help1(void)
 
 void help2(void)
 {
-    printf("\n======================== OPCOES ========================\n");
-    printf(" l                   : Listar todas as opcoes numeradas dos tabuleiros.\n");
-    printf(" c <config_tab>      : Especifica qual dos tabuleiros disponiveis o jogo deve utilizar.\n");
+    printf("======================== OPCOES ========================\n");
+    printf(" l                   : Lista e exibe todas as opcoes numeradas dos tabuleiros.\n\n");
+    printf(" c <config_tab>      : Especifica qual dos tabuleiros disponiveis (1 ou 2) o jogo deve utilizar.\n");
     printf("                       Se a configuracao for alterada no meio de um jogo, todo o progresso anterior sera perdido.\n\n");
     printf(" m <lin> <col> <dir> : Movimenta a peca que esta na posicao (lin,col) para a direcao dir.\n");
-    printf("                       Direcoes: D - Direita | E - Esquerda | B - Baixo | T - Topo\n");
+    printf("                       Direcoes: D - Direita | E - Esquerda | B - Baixo | T - Topo\n\n");
     printf(" p                   : Imprime o historico de movimentacoes desde a configuracao inicial.\n\n");
+    printf(" s                   : Ativa ou desativa as sugestoes de proximas jogadas para o usuario.\n\n");
+    printf(" R                   : Ativa a procura automatica pela solucao a partir do momento atual e imprime os passos.\n\n");
+    printf("\n========================================================\n");
 }
 
-int verificaFim(int configTabuleiro, char tabuleiro[5][TAM_MAX_COL]) {
+int verificaFim(int configTabuleiro, char tabuleiro[TAM_MAX_LIN][TAM_MAX_COL]) {
     if (configTabuleiro == 1)
     {
         if (tabuleiro[4][1] == 'D' && tabuleiro[4][2] == 'D')
@@ -515,7 +531,7 @@ int interacoesUsuario(int argc, char argumento[], int configTabuleiro, int jaEsc
 
     if (argc == 3 || argc > 4)
     {
-        printf("[!]1 Erro nos argumentos\n\n");
+        printf("\n[!] Erro nos argumentos\n\n");
         help2();
         return 0;
     }
@@ -523,23 +539,29 @@ int interacoesUsuario(int argc, char argumento[], int configTabuleiro, int jaEsc
     {
         if (argumento[0] == 'l')
         {
-            return 5; // listar os tabuleiros disponiveis
+            return 5; // Listar os tabuleiros disponiveis
         }
         else if (argumento[0] == 'p')
         {
-            return 4; // mostrar o historico
+            if (jaEscolheuTabuleiro == 0){
+                printf("\n[!] Nenhum tabuleiro foi escolhido!\n\n");
+                help2();
+                return 0;
+            } else {
+                return 4; // Mostrar o historico
+            }
         } else if (comandoAtivo == 's') {
             if ((argumento[0] - '0') >= 1 && (argumento[0] - '0') <= numSugestao)
             {
-                return 6; // escolha da sugestao
+                return 6; // Escolha da sugestao
             }
-            printf("[!]4 Erro: Argumento invalido\n\n");
+            printf("\n[!] Erro: Argumento invalido\n\n");
             help2();
             return 0;
         }
         else
         {
-            printf("[!]2 Erro: Argumento invalido\n\n");
+            printf("\n[!] Erro: Argumento invalido\n\n");
             help2();
             return 0;
         }
@@ -559,7 +581,7 @@ int interacoesUsuario(int argc, char argumento[], int configTabuleiro, int jaEsc
                     }
                     else
                     {
-                        printf("Tem certeza que quer trocar de tabuleiro? Todo o seu progresso sera perdido.\n");
+                        printf("\nTem certeza que quer trocar de tabuleiro? Todo o seu progresso sera perdido.\n");
                         printf("Digite 1 para Sim e qualquer outra tecla para Nao: ");
                         char temCerteza[MAX_INPUT_USER];
                         fgets(temCerteza, MAX_INPUT_USER, stdin);
@@ -590,7 +612,7 @@ int interacoesUsuario(int argc, char argumento[], int configTabuleiro, int jaEsc
                     }
                     else
                     {
-                        printf("Tem certeza que quer trocar de tabuleiro? Todo o seu progresso sera perdido.\n");
+                        printf("\nTem certeza que quer trocar de tabuleiro? Todo o seu progresso sera perdido.\n");
                         printf("Digite 1 para Sim e qualquer outra tecla para Nao: ");
                         char temCerteza[MAX_INPUT_USER];
                         fgets(temCerteza, MAX_INPUT_USER, stdin);
@@ -612,14 +634,14 @@ int interacoesUsuario(int argc, char argumento[], int configTabuleiro, int jaEsc
             }
             else
             {
-                printf("[!]3 Erro: Configuração de tabuleiro invalida\n\n");
+                printf("\n[!] Erro: Configuração de tabuleiro invalida\n\n");
                 help2();
                 return 0;
             }
         }
         else
         {
-            printf("[!]5 Erro: Argumento invalido\n\n");
+            printf("\n[!] Erro: Argumento invalido\n\n");
             help2();
             return 0;
         }
@@ -631,7 +653,7 @@ int interacoesUsuario(int argc, char argumento[], int configTabuleiro, int jaEsc
         {
             if (jaEscolheuTabuleiro == 0)
             {
-                printf("[!]6 Erro: Tabuleiro nao escolhido\n\n");
+                printf("\n[!] Erro: Nenhum tabuleiro foi escolhido!\n\n");
                 help2();
                 return 0;
             }
@@ -640,7 +662,7 @@ int interacoesUsuario(int argc, char argumento[], int configTabuleiro, int jaEsc
 
             if (direcao != 'D' && direcao != 'E' && direcao != 'T' && direcao != 'B')
             {
-                printf("[!]7 Erro: Direção inválida\n\n");
+                printf("\n[!] Erro: Direção inválida\n\n");
                 help2();
                 return 0;
             }
@@ -658,7 +680,7 @@ int interacoesUsuario(int argc, char argumento[], int configTabuleiro, int jaEsc
                 }
                 else
                 {
-                    printf("[!] Erro6: Coordenadas inválidas\n\n");
+                    printf("\n[!] Erro: Coordenadas inválidas\n\n");
                     help2();
                     return 0;
                 }
@@ -671,7 +693,7 @@ int interacoesUsuario(int argc, char argumento[], int configTabuleiro, int jaEsc
                 }
                 else
                 {
-                    printf("[!] Erro7: Coordenadas inválidas\n\n");
+                    printf("\n[!] Erro: Coordenadas inválidas\n\n");
                     help2();
                     return 0;
                 }
@@ -680,28 +702,28 @@ int interacoesUsuario(int argc, char argumento[], int configTabuleiro, int jaEsc
         }
         else
         {
-            printf("[!] Erro8: Argumento invalido\n\n");
+            printf("\n[!] Erro: Argumento invalido\n\n");
             help2();
             return 0;
         }
     }
-    printf("[!] ERRO 9: INTERNAL ERROR\n\n");
+    printf("\n[!] ERRO: INTERNAL ERROR\n\n");
     return 0;
 }
 
-void abreArquivo(char nomeArquivoTxt[], char tabuleiro1[5][TAM_MAX_COL], char tabuleiro2[5][TAM_MAX_COL], char titulo1Nome[14], char titulo2Nome[15])
+void abreArquivo(char nomeArquivoTxt[], char tabuleiro1[TAM_MAX_LIN][TAM_MAX_COL], char tabuleiro2[TAM_MAX_LIN][TAM_MAX_COL], char titulo1Nome[14], char titulo2Nome[15])
 {
 
     FILE *arqTxtTabuleiros;
 
     if ((arqTxtTabuleiros = fopen(nomeArquivoTxt, "r")) == NULL)
     {
-        printf("[!] Erro na abertura do arquivo de tabuleiros.\n");
+        printf("\n[!] Erro na abertura do arquivo de tabuleiros.\n");
         exit(1);
     }
     else
     {
-        printf("Arquivo aberto com sucesso.\n\n");
+        printf("\n[+] Arquivo de tabuleiros carregado com sucesso.\n\n");
 
         char str1;
         int titulo1 = 0;
@@ -774,9 +796,10 @@ void abreArquivo(char nomeArquivoTxt[], char tabuleiro1[5][TAM_MAX_COL], char ta
         fclose(arqTxtTabuleiros);
     }
 }
+
 typedef struct node
 {
-    char fotoTabuleiroAtual[5][TAM_MAX_COL];
+    char fotoTabuleiroAtual[TAM_MAX_LIN][TAM_MAX_COL];
     int numTabuleiro;
     struct node *proximo;
 } Node;
@@ -787,20 +810,20 @@ Node *criarNode()
     return novoNode;
 }
 
-Node *inserirNodeNoFim(Node *historico, int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_COL])
+Node *inserirNodeNoFim(Node *listaEncadeada, int configTabuleiro, char tabuleiroJogo[TAM_MAX_LIN][TAM_MAX_COL])
 {
     Node *novoNode = criarNode();
     copiarMatriz(tabuleiroJogo, novoNode->fotoTabuleiroAtual);
     novoNode->numTabuleiro = configTabuleiro;
 
-    if (historico == NULL)
+    if (listaEncadeada == NULL)
     {
-        historico = novoNode;
+        listaEncadeada = novoNode;
         novoNode->proximo = NULL;
     }
     else
     {
-        Node *auxiliar = historico;
+        Node *auxiliar = listaEncadeada;
 
         while ((auxiliar->proximo) != NULL)
         {
@@ -811,27 +834,25 @@ Node *inserirNodeNoFim(Node *historico, int configTabuleiro, char tabuleiroJogo[
         novoNode->proximo = NULL;
     }
 
-    return historico;
+    return listaEncadeada;
 }
 
 Node *listaRepetidosGlobal = NULL;
 
 typedef struct nodeTree
 {
-    char fotoTabuleiroAtual[5][TAM_MAX_COL];
+    char fotoTabuleiroAtual[TAM_MAX_LIN][TAM_MAX_COL];
     int numTabuleiro;
     struct nodeTree *filhos[8];
     struct nodeTree *pai;
     int quantNivel;
 } NodeTree;
 
-NodeTree *inserirRaizTree(NodeTree *noAtual, char tabuleiro[5][TAM_MAX_COL], int numTab, NodeTree *ptPai, int nivel)
+NodeTree *inserirRaizTree(NodeTree *noAtual, char tabuleiro[TAM_MAX_LIN][TAM_MAX_COL], int numTab, NodeTree *ptPai, int nivel)
 {
-    // printf("\nInserir raiz\n");
     NodeTree *novoNode = (NodeTree *)malloc(sizeof(NodeTree));
     if (noAtual == NULL)
     {
-        // é verdadeira penas a primeira vez para criar a raiz primaria
         copiarMatriz(tabuleiro, novoNode->fotoTabuleiroAtual);
         novoNode->numTabuleiro = numTab;
         novoNode->quantNivel = nivel;
@@ -848,23 +869,21 @@ NodeTree *inserirRaizTree(NodeTree *noAtual, char tabuleiro[5][TAM_MAX_COL], int
     return novoNode;
 }
 
-void mostrarHistoricoOuSugestao(Node *historico, int isSugestao)
+void mostrarHistoricoOuSugestao(Node *lista, int isSugestao)
 {
-    Node *auxiliar = historico;
+    Node *auxiliar = lista;
     int i = 1;
     
     if (isSugestao)
     {
-        printf("\nSugestoes\n");
-    } else {
-        printf("\nHistorico\n");
+        printf("\nSugestoes de movimentaçao:\n");
     }
 
     while (auxiliar != NULL)
     {
         if (isSugestao)
         {
-            printf("%d Sugestao\n", i);
+            printf("%da Sugestao:\n", i);
         }
         printarTabuleiro(auxiliar->numTabuleiro, auxiliar->fotoTabuleiroAtual);
         printf("\n");
@@ -876,20 +895,20 @@ void mostrarHistoricoOuSugestao(Node *historico, int isSugestao)
 int contSugestoes(Node *sugestoes)
 {
     Node *auxiliar = sugestoes;
-    int i = 0;
+    int numSugestoes = 0;
 
     while (auxiliar != NULL)
     {
         auxiliar = auxiliar->proximo;
-        ++i;
+        ++numSugestoes;
     }
-    return i;
+    return numSugestoes;
 }
 
-Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_COL], Node *sugestoes)
+Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[TAM_MAX_LIN][TAM_MAX_COL], Node *sugestoes)
 {
     Node *possiveisJogadas = sugestoes;
-    char tabuleiroAux[5][TAM_MAX_COL];
+    char tabuleiroAux[TAM_MAX_LIN][TAM_MAX_COL];
     copiarMatriz(tabuleiroJogo, tabuleiroAux);
     char tipoPeca = ' ';
     int movValido;
@@ -902,13 +921,12 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
             {
                 if (tabuleiroJogo[i][j + 1] == ' ')
                 {
-                    // vazio horizontal ['', '']
+                    // Vazio horizontal ['', '']
                     if (i > 0)
                     {
                         // Checando em cima
                         tipoPeca = checarTipoPeca(tabuleiroJogo[i - 1][j], tabuleiroJogo);
                         movValido = moverDirecao('B', tipoPeca, tabuleiroJogo[i - 1][j], tabuleiroAux);
-                        // if (tipoPeca == 'D' && movValido == 1) printf("Movi D Baixo\n");
                         if (movValido)
                         {
                             possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
@@ -931,7 +949,6 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                         // Checando embaixo
                         tipoPeca = checarTipoPeca(tabuleiroJogo[i + 1][j], tabuleiroJogo);
                         movValido = moverDirecao('T', tipoPeca, tabuleiroJogo[i + 1][j], tabuleiroAux);
-                        // if (tipoPeca == 'D' && movValido == 1) printf("Movi D Topo\n");
                         if (movValido)
                         {
                             possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
@@ -980,7 +997,7 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                 {
                     if (i > 0)
                     {
-                        // vazio Vertical ['']
+                        // Vazio Vertical ['']
                         //                ['']
                         // Checando em cima
                         tipoPeca = checarTipoPeca(tabuleiroJogo[i - 1][j], tabuleiroJogo);
@@ -1009,7 +1026,6 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                         // Checando esquerda
                         tipoPeca = checarTipoPeca(tabuleiroJogo[i][j - 1], tabuleiroJogo);
                         movValido = moverDirecao('D', tipoPeca, tabuleiroJogo[i][j - 1], tabuleiroAux);
-                        // if (tipoPeca == 'D' && movValido == 1) printf("Movi D Dir\n");
                         if (movValido)
                         {
                             possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
@@ -1035,7 +1051,6 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
                         // Checando direita
                         tipoPeca = checarTipoPeca(tabuleiroJogo[i][j + 1], tabuleiroJogo);
                         movValido = moverDirecao('E', tipoPeca, tabuleiroJogo[i][j + 1], tabuleiroAux);
-                        // if (tipoPeca == 'D' && movValido == 1) printf("Movi D Esq\n");
                         if (movValido)
                         {
                             possiveisJogadas = inserirNodeNoFim(possiveisJogadas, configTabuleiro, tabuleiroAux);
@@ -1112,10 +1127,10 @@ Node *encontrarProxsJogadas(int configTabuleiro, char tabuleiroJogo[5][TAM_MAX_C
     return possiveisJogadas;
 }
 
-void generalizarPecasNaHoraDeSalvar(char tabuleiro[5][TAM_MAX_COL])
+void generalizarPecasNaHoraDeSalvar(char tabuleiro[TAM_MAX_LIN][TAM_MAX_COL])
 {
 
-    char tabuleiroBranco[5][TAM_MAX_COL] = {
+    char tabuleiroBranco[TAM_MAX_LIN][TAM_MAX_COL] = {
         {'\0', '\0', '\0', '\0', '\0', '\0', '\0'},
         {'\0', '\0', '\0', '\0', '\0', '\0', '\0'},
         {'\0', '\0', '\0', '\0', '\0', '\0', '\0'},
@@ -1125,9 +1140,9 @@ void generalizarPecasNaHoraDeSalvar(char tabuleiro[5][TAM_MAX_COL])
     copiarMatriz(tabuleiro, tabuleiroPecasGenericas);
     char tipoPeca = ' ';
 
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < TAM_MAX_LIN; i++)
     {
-        for (int j = 0; j < 6; j++)
+        for (int j = 0; j < TAM_MAX_COL-1; j++)
         {
             if (tabuleiro[i][j] == '\0' || tabuleiro[i][j] == ' ')
                 continue;
@@ -1137,7 +1152,7 @@ void generalizarPecasNaHoraDeSalvar(char tabuleiro[5][TAM_MAX_COL])
     }
 }
 
-int compararTabuleiros(int num, char tabuleiro1[5][TAM_MAX_COL], char tabuleiro2[5][TAM_MAX_COL])
+int compararTabuleiros(int num, char tabuleiro1[TAM_MAX_LIN][TAM_MAX_COL], char tabuleiro2[TAM_MAX_LIN][TAM_MAX_COL])
 {
     for (int i = 0; i < 5; i++)
     {
@@ -1150,7 +1165,7 @@ int compararTabuleiros(int num, char tabuleiro1[5][TAM_MAX_COL], char tabuleiro2
     return 1;
 }
 
-int checaPaisIguais(NodeTree *no, char candidatoSugestao[5][TAM_MAX_COL])
+int checaPaisIguais(NodeTree *no, char candidatoSugestao[TAM_MAX_LIN][TAM_MAX_COL])
 {
     NodeTree *auxiliar = no;
 
@@ -1172,7 +1187,7 @@ int checaPaisIguais(NodeTree *no, char candidatoSugestao[5][TAM_MAX_COL])
     return 0; // Tudo certo com o candidato, nao existe nenhum pai igual
 }
 
-int checaRepetidosGlobais(char tabuleiro[5][7], int configTabuleiro)
+int checaRepetidosGlobais(char tabuleiro[TAM_MAX_LIN][TAM_MAX_COL], int configTabuleiro)
 {
     generalizarPecasNaHoraDeSalvar(tabuleiro);
 
@@ -1203,16 +1218,32 @@ int checaRepetidosGlobais(char tabuleiro[5][7], int configTabuleiro)
     return 0;
 }
 
-Node *filtroPrioridade(Node *sugestoes, char tabuleiroJogo[5][TAM_MAX_COL])
+void mostrarListaEncadeada(Node *lista)
+{
+    Node *auxiliar = lista;
+
+    printf("\nImprimindo lista encadeada:\n");
+
+    while (auxiliar != NULL)
+    {
+        printarTabuleiro(auxiliar->numTabuleiro, auxiliar->fotoTabuleiroAtual);
+        printf("\n");
+        auxiliar = auxiliar->proximo;
+    }
+
+    printf("\nFim------------------------\n");
+}
+
+Node *filtroPrioridade(Node *sugestoes, char tabuleiroJogo[TAM_MAX_LIN][TAM_MAX_COL])
 {
     Node *aux = sugestoes;
     Node *ordemNova = NULL;
     int posicaoDaDonzela = 1;
     int n = (aux->numTabuleiro == 1 ? 3 : 4);
 
-    for (int i = 0; i < 5; i++) // checa se a donzela consegue mover
+    for (int i = 0; i < TAM_MAX_LIN; i++) // Checa se a donzela consegue se mover
     {
-        for (int j = 0; j < 6; j++)
+        for (int j = 0; j < TAM_MAX_COL-1; j++)
         {
             if (tabuleiroJogo[i][j] == 'D')
             {
@@ -1221,7 +1252,7 @@ Node *filtroPrioridade(Node *sugestoes, char tabuleiroJogo[5][TAM_MAX_COL])
                     (i < 3 && tabuleiroJogo[i + 2][j] == ' ' && tabuleiroJogo[i + 2][j + 1] == ' ') ||
                     (i > 0 && tabuleiroJogo[i - 1][j] == ' ' && tabuleiroJogo[i - 1][j + 1] == ' '))
                 {
-                    while (aux != NULL) // se ela move colocar a sugestão dela como 1 da lista dentro do ordemNova
+                    while (aux != NULL) // Se ela move, colocar a sugestao dela como 1a da lista dentro da ordemNova
                     {
                         if ((j > 0 && aux->fotoTabuleiroAtual[i][j - 1] == 'D' && aux->fotoTabuleiroAtual[i + 1][j - 1] == 'D') ||
                             (j < n && aux->fotoTabuleiroAtual[i][j + 2] == 'D' && aux->fotoTabuleiroAtual[i + 1][j + 2] == 'D') ||
@@ -1242,7 +1273,7 @@ Node *filtroPrioridade(Node *sugestoes, char tabuleiroJogo[5][TAM_MAX_COL])
         }
     }
 
-    if (ordemNova != NULL) // se ela move colocar coloca as outras sugestoes atras dele
+    if (ordemNova != NULL) // Se ela move, colocar as outras sugestoes atras dele
     {
         int posicaoDaLista = 1;
         aux = sugestoes;
@@ -1260,7 +1291,7 @@ Node *filtroPrioridade(Node *sugestoes, char tabuleiroJogo[5][TAM_MAX_COL])
     return sugestoes;
 }
 
-Node *filtroRepetido(Node *sugestoes, NodeTree *noAtual) // usado somente para o robo
+Node *filtroRepetido(Node *sugestoes, NodeTree *noAtual) // Usado somente para o robo (evita entrar em loops)
 {
     Node *filtro = NULL;
     int matrizRepetidaGlobal = 0;
@@ -1277,11 +1308,8 @@ Node *filtroRepetido(Node *sugestoes, NodeTree *noAtual) // usado somente para o
                 filtro = inserirNodeNoFim(filtro, sugestoes->numTabuleiro, sugestoes->fotoTabuleiroAtual);
             }
         }
-        matrizRepetida = 0;
-        matrizRepetidaGlobal = 0;
         sugestoes = sugestoes->proximo;
     }
-
     return filtro;
 }
 
@@ -1338,10 +1366,11 @@ int interacaoRobo(NodeTree *noAtual, Node *sugestoes, int nivel)
 
 int main(int argc, char *argv[])
 {
-    banner();
+    banner2();
 
     Node *historico = NULL;
     Node *sugestoes = NULL;
+    NodeTree *noAtual = NULL;
 
     int jaEscolheuTabuleiro = 0;
     int configTabuleiro = 1;
@@ -1353,21 +1382,21 @@ int main(int argc, char *argv[])
     char titulo1Nome[14];
     char titulo2Nome[15];
 
-    char tabuleiro1[5][TAM_MAX_COL] = {
+    char tabuleiro1[TAM_MAX_LIN][TAM_MAX_COL] = {
         {'\0', '\0', '\0', '\0', '\0', '\0', '\0'},
         {'\0', '\0', '\0', '\0', '\0', '\0', '\0'},
         {'\0', '\0', '\0', '\0', '\0', '\0', '\0'},
         {'\0', '\0', '\0', '\0', '\0', '\0', '\0'},
         {'\0', '\0', '\0', '\0', '\0', '\0', '\0'}};
 
-    char tabuleiro2[5][TAM_MAX_COL] = {
+    char tabuleiro2[TAM_MAX_LIN][TAM_MAX_COL] = {
         {'\0', '\0', '\0', '\0', '\0', '\0', '\0'},
         {'\0', '\0', '\0', '\0', '\0', '\0', '\0'},
         {'\0', '\0', '\0', '\0', '\0', '\0', '\0'},
         {'\0', '\0', '\0', '\0', '\0', '\0', '\0'},
         {'\0', '\0', '\0', '\0', '\0', '\0', '\0'}};
 
-    char tabuleiroJogo[5][TAM_MAX_COL];
+    char tabuleiroJogo[TAM_MAX_LIN][TAM_MAX_COL];
 
     if (argc == 1)
     {
@@ -1383,22 +1412,24 @@ int main(int argc, char *argv[])
         }
         else
         {
-            printf("[!] Erro nos argumentos\n\n");
+            printf("\n[!] Erro nos argumentos\n\n");
             help1();
             return 1;
         }
     }
     else
     {
-        printf("[!] Erro nos argumentos\n\n");
+        printf("\n[!] Erro nos argumentos\n\n");
         help1();
         return 1;
     }
 
+    help2();
+
     while (fim != 1)
     {
         char inputUsuario[MAX_INPUT_USER] = "          ";
-        printf("Digite o comando: ");
+        printf("\nDigite o comando: ");
         fgets(inputUsuario, MAX_INPUT_USER, stdin);
 
         if (inputUsuario[0] == 'q')
@@ -1410,31 +1441,43 @@ int main(int argc, char *argv[])
             printf("\n");
             if (temCerteza[0] == '1')
             {
-                printf("\nTchau, obrigado por ter jogado!");
                 fim = 1;
             }
         } else if (inputUsuario[0] == 's') {
-            if (comandoAtivo == 's')
+            if (jaEscolheuTabuleiro == 0)
             {
-                printf("\nComando de sugestao ja ativo, deseja desativar?\nDigite 1 para Sim e qualquer outra tecla para Nao: ");
-                char desativar[MAX_INPUT_USER];
-                fgets(desativar, MAX_INPUT_USER, stdin);
-                printf("\n");
-                if (desativar[0] == '1')
-                {
-                    printf("\nComando de sugestao desativado!\n");
-                    comandoAtivo = ' ';
-                }
+                printf("\n[!] Erro: Nenhum tabuleiro foi escolhido!\n\n");
+                help2();
             } else {
-                printf("\nComando de sugestao ativo!\nDigite: 'n', onde n e o numero da sugestao\n");
-                comandoAtivo = 's';
-                sugestoes = encontrarProxsJogadas(configTabuleiro, tabuleiroJogo, sugestoes);
-                mostrarHistoricoOuSugestao(sugestoes, 1);
-                numSugestao = contSugestoes(sugestoes);
+                if (comandoAtivo == 's')
+                {
+                    printf("\nComando de sugestao esta ativo, deseja desativar?\nDigite 1 para Sim e qualquer outra tecla para Nao: ");
+                    char desativar[MAX_INPUT_USER];
+                    fgets(desativar, MAX_INPUT_USER, stdin);
+                    printf("\n");
+                    if (desativar[0] == '1')
+                    {
+                        printf("\nComando de sugestao desativado!\n");
+                        comandoAtivo = ' ';
+                    }
+                } else {
+                    printf("\nComando de sugestao ativo!\nDigite: 'n', onde n e o numero da sugestao\n");
+                    comandoAtivo = 's';
+                    sugestoes = encontrarProxsJogadas(configTabuleiro, tabuleiroJogo, sugestoes);
+                    mostrarHistoricoOuSugestao(sugestoes, 1);
+                    numSugestao = contSugestoes(sugestoes);
+                }
             }
         } else if (inputUsuario[0] == 'R') {
-            comandoAtivo = 'R';
-            fim = 1;
+            if (jaEscolheuTabuleiro == 0)
+            {
+                printf("\n[!] Erro: Nenhum tabuleiro foi escolhido!\n\n");
+                help2();
+        
+            } else {
+                comandoAtivo = 'R';
+            }
+            
         } else {
             int len = 0;
             for (int i = 0; i != MAX_INPUT_USER; i++)
@@ -1489,7 +1532,7 @@ int main(int argc, char *argv[])
 
                 if (fimDeJogo)
                 {
-                    printf("\nVoce Ganhou!\nTchau, obrigado por ter jogado!");
+                    printf("\nVoce Ganhou!\nObrigado por ter jogado!");
                     fim = 1;
                 }
             }
@@ -1507,7 +1550,7 @@ int main(int argc, char *argv[])
                 printarTabuleiro(2, tabuleiro2);
             }
             else {
-                printf("ESCOLHA FEITA\n");
+                printf("Escolha feita:\n");
                 int fimDeJogo = 0;
                 int sugestaoEscolhida = inputUsuario[0] - '0';
                 int i = 1;
@@ -1527,7 +1570,7 @@ int main(int argc, char *argv[])
 
                 if (fimDeJogo)
                 {
-                    printf("\nVoce Ganhou!");
+                    printf("\n*** Voce Ganhou! ***");
                     fim = 1;
                 } else {
                     sugestoes = encontrarProxsJogadas(configTabuleiro, tabuleiroJogo, sugestoes);
@@ -1536,20 +1579,23 @@ int main(int argc, char *argv[])
                 }
             }
         }
-    }
-    
-    if (comandoAtivo == 'R') {
-        printf("\nAtivndo robo...");
 
-        NodeTree *noAtual = NULL;
+        if (comandoAtivo == 'R') {
+        printf("\nVoce ativou a solucao automatica a partir do momento atual.\n");
+        printf("Aguarde enquanto a solucao e calculada para voce...\n");
+
+        noAtual = NULL;
         noAtual = inserirRaizTree(noAtual, tabuleiroJogo, configTabuleiro, NULL, 0);
 
-        Node *sugestoes = NULL;
+        sugestoes = NULL;
         sugestoes = encontrarProxsJogadas(configTabuleiro, noAtual->fotoTabuleiroAtual, sugestoes);
         sugestoes = filtroPrioridade(sugestoes, noAtual->fotoTabuleiroAtual);
-
-        interacaoRobo(noAtual, sugestoes, 1);
+    
+        fim = interacaoRobo(noAtual, sugestoes, 1);
+        }
     }
-    printf("\nTchau, obrigado por ter jogado!\nPrograma encerrado!\n");
+
+    printf("\nObrigado por ter jogado!\n");
+
     return 0;
 }
